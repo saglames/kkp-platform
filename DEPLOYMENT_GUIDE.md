@@ -36,7 +36,7 @@
    ```
 
    **Not:** `KULLANICI_ADINIZ` yerine kendi GitHub kullanıcı adınızı yazın
-
+<>
 ### Adım 2: PostgreSQL Veritabanı Oluşturun
 
 1. Render Dashboard'a gidin: https://dashboard.render.com

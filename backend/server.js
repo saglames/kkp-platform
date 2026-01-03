@@ -63,20 +63,39 @@ app.post('/api/setup-database', async (req, res) => {
   try {
     // Read SQL file
     const sqlFile = path.join(__dirname, 'database.sql');
-    const sql = await fs.readFile(sqlFile, 'utf8');
+    console.log('Reading SQL file from:', sqlFile);
 
-    // Execute SQL
-    await pool.query(sql);
+    const sql = await fs.readFile(sqlFile, 'utf8');
+    console.log('SQL file size:', sql.length, 'bytes');
+
+    // Split by semicolon and filter empty statements
+    const statements = sql
+      .split(';')
+      .map(s => s.trim())
+      .filter(s => s.length > 0 && !s.startsWith('--'));
+
+    console.log('Found', statements.length, 'SQL statements');
+
+    // Execute each statement separately
+    for (let i = 0; i < statements.length; i++) {
+      const statement = statements[i];
+      if (statement) {
+        console.log(`Executing statement ${i + 1}/${statements.length}`);
+        await pool.query(statement);
+      }
+    }
 
     res.json({
       success: true,
-      message: 'Database tables created successfully!'
+      message: `Database setup complete! Executed ${statements.length} statements.`
     });
   } catch (error) {
     console.error('Database setup error:', error);
+    console.error('Error stack:', error.stack);
     res.status(500).json({
       success: false,
-      error: error.message
+      error: error.message,
+      details: error.stack
     });
   }
 });

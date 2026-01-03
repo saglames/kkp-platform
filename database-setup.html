@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K.K.P. Platform - Database Setup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .loading {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗄️ Database Kurulumu</h1>
+        <p>Backend deploy'u tamamlandıktan sonra bu butona tıklayın</p>
+
+        <button onclick="setupDatabase()" id="setupBtn">
+            Veritabanını Kur
+        </button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function setupDatabase() {
+            const resultDiv = document.getElementById('result');
+            const btn = document.getElementById('setupBtn');
+
+            // Reset
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'loading';
+            resultDiv.innerHTML = '<div class="spinner"></div><p>Veritabanı kuruluyor, lütfen bekleyin...</p>';
+            btn.disabled = true;
+
+            const backendUrl = 'https://kkp-platform.onrender.com/api/setup-database';
+
+            try {
+                const response = await fetch(backendUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultDiv.className = 'success';
+                    resultDiv.innerHTML = `
+                        <h3>✅ Başarılı!</h3>
+                        <p>${data.message}</p>
+                        <p><strong>Artık siteniz kullanıma hazır!</strong></p>
+                        <p>Frontend URL'nize gidebilirsiniz.</p>
+                    `;
+                } else {
+                    throw new Error(data.error || 'Bilinmeyen hata');
+                }
+            } catch (error) {
+                resultDiv.className = 'error';
+                resultDiv.innerHTML = `
+                    <h3>❌ Hata!</h3>
+                    <p>${error.message}</p>
+                    <pre>${error.stack || 'Detay yok'}</pre>
+                    <p><strong>Kontrol Edin:</strong></p>
+                    <ul style="text-align: left; margin-top: 10px;">
+                        <li>Backend deploy'u tamamlandı mı?</li>
+                        <li>Backend URL doğru mu?</li>
+                        <li>DATABASE_URL environment variable ekli mi?</li>
+                    </ul>
+                    <button onclick="setupDatabase()" style="margin-top: 15px; padding: 10px;">
+                        Tekrar Dene
+                    </button>
+                `;
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

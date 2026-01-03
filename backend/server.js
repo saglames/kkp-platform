@@ -54,6 +54,24 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'K.K.P. Platform API çalışıyor' });
 });
 
+// Database test endpoint
+app.get('/api/test-db', async (req, res) => {
+  const pool = require('./db');
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.json({
+      success: true,
+      message: 'Database connection works!',
+      time: result.rows[0].now
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 // Database setup endpoint (one-time use for deployment)
 app.post('/api/setup-database', async (req, res) => {
   const pool = require('./db');

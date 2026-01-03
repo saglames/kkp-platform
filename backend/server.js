@@ -72,6 +72,31 @@ app.get('/api/test-db', async (req, res) => {
   }
 });
 
+// Check imported data
+app.get('/api/check-data', async (req, res) => {
+  const pool = require('./db');
+  try {
+    const users = await pool.query('SELECT * FROM users');
+    const products = await pool.query('SELECT * FROM urun_tanimlari');
+    res.json({
+      success: true,
+      data: {
+        users: users.rows,
+        products: products.rows,
+        counts: {
+          users: users.rows.length,
+          products: products.rows.length
+        }
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 // Database setup endpoint (one-time use for deployment)
 app.post('/api/setup-database', async (req, res) => {
   const pool = require('./db');

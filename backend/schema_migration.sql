@@ -113,3 +113,93 @@ CREATE TABLE IF NOT EXISTS surec_hareket_log (
     notlar text,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
 );
+
+-- surec_urunler
+CREATE TABLE IF NOT EXISTS surec_urunler (
+    id SERIAL PRIMARY KEY,
+    tip character varying(10) NOT NULL,
+    urun_kodu character varying(255) NOT NULL,
+    urun_kodu_base character varying(255) NOT NULL,
+    aktif boolean DEFAULT true,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+-- urun_recetesi
+CREATE TABLE IF NOT EXISTS urun_recetesi (
+    id SERIAL PRIMARY KEY,
+    urun_kodu character varying(100) NOT NULL,
+    urun_adi character varying(255) NOT NULL,
+    aciklama text,
+    koli_tipi character varying(50),
+    koli_kapasitesi integer DEFAULT 1,
+    kutu_tipi character varying(50),
+    olusturma_tarihi timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    guncelleme_tarihi timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+-- recete_malzemeler
+CREATE TABLE IF NOT EXISTS recete_malzemeler (
+    id SERIAL PRIMARY KEY,
+    urun_id integer,
+    malzeme_tipi character varying(50) NOT NULL,
+    malzeme_kodu character varying(100) NOT NULL,
+    malzeme_adi character varying(255),
+    adet integer DEFAULT 1 NOT NULL,
+    birim character varying(20) DEFAULT 'adet',
+    kategori character varying(50),
+    notlar text,
+    olusturma_tarihi timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+-- kesim_olculeri
+CREATE TABLE IF NOT EXISTS kesim_olculeri (
+    id SERIAL PRIMARY KEY,
+    model character varying(100) NOT NULL,
+    alt_grup character varying(50),
+    parca character varying(50),
+    dis_cap numeric,
+    et_kalinligi numeric,
+    uzunluk integer,
+    genisletme numeric,
+    punch character varying(100),
+    birim_agirlik numeric,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+-- urun_agirliklari_master
+CREATE TABLE IF NOT EXISTS urun_agirliklari_master (
+    id SERIAL PRIMARY KEY,
+    urun_kodu character varying(50) NOT NULL,
+    agirlik_a numeric NOT NULL,
+    agirlik_b numeric NOT NULL,
+    agirlik_c numeric NOT NULL,
+    agirlik_d numeric NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+-- urun_agirliklari_fittinglar
+CREATE TABLE IF NOT EXISTS urun_agirliklari_fittinglar (
+    id SERIAL PRIMARY KEY,
+    tip character varying(50) NOT NULL,
+    boyut character varying(50) NOT NULL,
+    agirlik numeric NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+-- urun_agirliklari_hesaplamalar
+CREATE TABLE IF NOT EXISTS urun_agirliklari_hesaplamalar (
+    id SERIAL PRIMARY KEY,
+    hesaplama_tipi character varying(50) NOT NULL,
+    urun_kodu character varying(100),
+    kalite character varying(10),
+    adet integer NOT NULL,
+    birim_agirlik numeric NOT NULL,
+    toplam_agirlik numeric NOT NULL,
+    batch_id character varying(50),
+    batch_detay text,
+    yapan character varying(100),
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);

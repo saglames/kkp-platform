@@ -180,6 +180,59 @@ app.post('/api/setup-database', async (req, res) => {
   }
 });
 
+// Batch import endpoint (accepts array of SQL statements)
+app.post('/api/import-batch', async (req, res) => {
+  const pool = require('./db');
+  try {
+    const { statements } = req.body;
+
+    if (!Array.isArray(statements)) {
+      return res.status(400).json({
+        success: false,
+        error: 'statements must be an array'
+      });
+    }
+
+    console.log(`Batch import: ${statements.length} statements`);
+
+    // Execute each statement with detailed error tracking
+    let successCount = 0;
+    let errorCount = 0;
+    const errors = [];
+
+    for (let i = 0; i < statements.length; i++) {
+      const statement = statements[i];
+      try {
+        await pool.query(statement);
+        successCount++;
+      } catch (error) {
+        errorCount++;
+        errors.push({
+          statementIndex: i + 1,
+          preview: statement.substring(0, 100),
+          table: statement.match(/INSERT INTO (\w+)/)?.[1] || 'unknown',
+          error: error.message
+        });
+      }
+    }
+
+    res.json({
+      success: errorCount === 0,
+      message: `Batch complete: ${successCount} success, ${errorCount} errors`,
+      totalStatements: statements.length,
+      successCount,
+      errorCount,
+      errors: errors.slice(0, 10) // Return first 10 errors
+    });
+  } catch (error) {
+    console.error('Batch import error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 // Data import endpoint (one-time use for deployment)
 app.post('/api/import-data', async (req, res) => {
   const pool = require('./db');

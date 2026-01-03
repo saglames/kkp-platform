@@ -92,16 +92,41 @@ app.post('/api/setup-database', async (req, res) => {
       .filter(line => !line.trim().startsWith('--'))
       .join('\n');
 
-    // Split by semicolon and filter empty statements
-    const statements = sqlWithoutComments
-      .split(';')
-      .map(s => s.trim())
-      .filter(s => {
-        // Skip empty lines and CREATE DATABASE statements
-        if (!s || s.length === 0) return false;
-        if (s.toUpperCase().includes('CREATE DATABASE')) return false;
-        return true;
-      });
+    // Smart split: handle dollar-quoted strings ($$)
+    const statements = [];
+    let currentStatement = '';
+    let inDollarQuote = false;
+
+    for (let i = 0; i < sqlWithoutComments.length; i++) {
+      const char = sqlWithoutComments[i];
+      const nextChar = sqlWithoutComments[i + 1];
+
+      // Check for $$ delimiter
+      if (char === '$' && nextChar === '$') {
+        inDollarQuote = !inDollarQuote;
+        currentStatement += '$$';
+        i++; // skip next $
+        continue;
+      }
+
+      // If we hit a semicolon and not inside $$, end statement
+      if (char === ';' && !inDollarQuote) {
+        currentStatement = currentStatement.trim();
+        if (currentStatement &&
+            !currentStatement.toUpperCase().includes('CREATE DATABASE')) {
+          statements.push(currentStatement);
+        }
+        currentStatement = '';
+      } else {
+        currentStatement += char;
+      }
+    }
+
+    // Add last statement if exists
+    if (currentStatement.trim() &&
+        !currentStatement.toUpperCase().includes('CREATE DATABASE')) {
+      statements.push(currentStatement.trim());
+    }
 
     console.log('Found', statements.length, 'SQL statements');
 

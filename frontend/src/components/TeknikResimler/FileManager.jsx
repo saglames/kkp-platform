@@ -106,8 +106,9 @@ const FileManager = ({ user }) => {
   };
 
   const handleViewPDF = (dosya) => {
-    // PDF'i yeni sekmede aç (iframe yerine)
-    window.open(dosya.dosya_yolu, '_blank');
+    // Google Docs Viewer ile PDF'i görüntüle
+    const googleDocsUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(dosya.dosya_yolu)}&embedded=true`;
+    setPdfViewerURL(googleDocsUrl);
   };
 
   const formatFileSize = (bytes) => {

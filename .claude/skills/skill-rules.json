@@ -1,0 +1,331 @@
+{
+    "version": "1.0",
+    "description": "Skill activation triggers for Claude Code. Controls when skills automatically suggest or block actions.",
+    "skills": {
+        "skill-developer": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Meta-skill for creating and managing Claude Code skills",
+            "promptTriggers": {
+                "keywords": [
+                    "skill system",
+                    "create skill",
+                    "add skill",
+                    "skill triggers",
+                    "skill rules",
+                    "hook system",
+                    "skill development",
+                    "skill-rules.json"
+                ],
+                "intentPatterns": [
+                    "(how do|how does|explain).*?skill",
+                    "(create|add|modify|build).*?skill",
+                    "skill.*?(work|trigger|activate|system)"
+                ]
+            }
+        },
+        "backend-dev-guidelines": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Backend development patterns for Node.js/Express/TypeScript",
+            "promptTriggers": {
+                "keywords": [
+                    "backend",
+                    "backend development",
+                    "microservice",
+                    "controller",
+                    "service",
+                    "repository",
+                    "route",
+                    "routing",
+                    "express",
+                    "API",
+                    "endpoint",
+                    "middleware",
+                    "validation",
+                    "Zod",
+                    "Prisma",
+                    "database access",
+                    "BaseController",
+                    "dependency injection",
+                    "unifiedConfig",
+                    "configuration"
+                ],
+                "intentPatterns": [
+                    "(create|add|implement|build).*?(route|endpoint|API|controller|service|repository)",
+                    "(fix|handle|debug).*?(error|exception|backend)",
+                    "(add|implement).*?(middleware|validation|error.*?handling)",
+                    "(organize|structure|refactor).*?(backend|service|API)",
+                    "(how to|best practice).*?(backend|route|controller|service)"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "backend/**/*.js",
+                    "backend/routes/**/*.js",
+                    "backend/migrate-*.js",
+                    "backend/sync-*.js",
+                    "backend/cleanup-*.js",
+                    "backend/check-*.js"
+                ],
+                "pathExclusions": [
+                    "**/*.test.js",
+                    "**/*.spec.js",
+                    "**/node_modules/**"
+                ],
+                "contentPatterns": [
+                    "router\\.",
+                    "app\\.(get|post|put|delete|patch)",
+                    "pool\\.query",
+                    "require\\('express'\\)"
+                ]
+            }
+        },
+        "frontend-dev-guidelines": {
+            "type": "guardrail",
+            "enforcement": "block",
+            "priority": "high",
+            "description": "React/TypeScript best practices including MUI v7 compatibility",
+            "promptTriggers": {
+                "keywords": [
+                    "component",
+                    "react component",
+                    "UI",
+                    "interface",
+                    "page",
+                    "modal",
+                    "dialog",
+                    "form",
+                    "MUI",
+                    "Material-UI",
+                    "Grid",
+                    "styling",
+                    "frontend",
+                    "React"
+                ],
+                "intentPatterns": [
+                    "(create|add|make|build|update|modify|edit).*?(component|UI|page|modal|dialog|form)",
+                    "(how to|best practice).*?(component|react|MUI)",
+                    "(style|design|layout).*?(component|UI)"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "frontend/src/**/*.jsx",
+                    "frontend/src/**/*.js",
+                    "frontend/src/components/**/*.jsx",
+                    "frontend/src/pages/**/*.jsx"
+                ],
+                "pathExclusions": [
+                    "**/*.test.jsx",
+                    "**/*.test.js",
+                    "**/*.spec.jsx",
+                    "**/*.spec.js",
+                    "**/vite.config.js",
+                    "**/node_modules/**"
+                ],
+                "contentPatterns": [
+                    "from '@mui/material';",
+                    "import.*Grid.*from.*@mui",
+                    "<Grid ",
+                    "Grid2",
+                    "Unstable_Grid",
+                    "makeStyles",
+                    "@material-ui/core"
+                ]
+            },
+            "blockMessage": "⚠️ BLOCKED - Frontend Best Practices Required\n\n📋 REQUIRED ACTION:\n1. Use Skill tool: 'frontend-dev-guidelines'\n2. Review MUI v7 patterns (Grid uses size={{}} prop, NOT xs/sm props)\n3. Check React/TypeScript best practices\n4. Use proper styling patterns\n5. Then retry this edit\n\nReason: Enforce MUI v7 compatibility and React best practices\nFile: {file_path}\n\n💡 TIP: Add '// @skip-validation' comment to skip future checks",
+            "skipConditions": {
+                "sessionSkillUsed": true,
+                "fileMarkers": [
+                    "@skip-validation"
+                ],
+                "envOverride": "SKIP_FRONTEND_GUIDELINES"
+            }
+        },
+        "route-tester": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Testing authenticated API routes with JWT cookie-based auth",
+            "promptTriggers": {
+                "keywords": [
+                    "test route",
+                    "test endpoint",
+                    "test API",
+                    "route testing",
+                    "API testing",
+                    "authenticated route",
+                    "JWT testing",
+                    "cookie auth",
+                    "test with auth"
+                ],
+                "intentPatterns": [
+                    "(test|debug|verify).*?(route|endpoint|API)",
+                    "(how to|how do I).*?test.*?(route|endpoint|API)",
+                    "test.*?(authenticated|auth|JWT|cookie)"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "**/routes/**/*.ts",
+                    "**/test-*.js",
+                    "**/test-*.ts"
+                ],
+                "contentPatterns": [
+                    "router\\.(get|post|put|delete|patch)",
+                    "app\\.(get|post|put|delete|patch)"
+                ]
+            }
+        },
+        "error-tracking": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Sentry error tracking and performance monitoring patterns",
+            "promptTriggers": {
+                "keywords": [
+                    "error handling",
+                    "exception",
+                    "sentry",
+                    "error tracking",
+                    "captureException",
+                    "monitoring",
+                    "performance tracking"
+                ],
+                "intentPatterns": [
+                    "(add|create|implement|setup).*?(error handling|sentry|error tracking)",
+                    "(fix|handle|catch).*?(error|exception)",
+                    "(how to|best practice).*?(error|sentry|monitoring)"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "**/instrument.js",
+                    "**/sentry*.js",
+                    "backend/routes/**/*.js"
+                ],
+                "contentPatterns": [
+                    "@sentry",
+                    "Sentry\\.",
+                    "captureException",
+                    "captureMessage"
+                ]
+            }
+        },
+        "database-migration-guide": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Render PostgreSQL migration patterns for KKP Platform",
+            "promptTriggers": {
+                "keywords": [
+                    "migration",
+                    "database migration",
+                    "Render database",
+                    "PostgreSQL",
+                    "create table",
+                    "alter table",
+                    "schema sync",
+                    "duplicate cleanup",
+                    "UNIQUE constraint",
+                    "CREATE VIEW",
+                    "sync data"
+                ],
+                "intentPatterns": [
+                    "(create|add|migrate).*?(table|view|schema)",
+                    "(fix|sync|align).*?(schema|database)",
+                    "Render.*?(migration|database|deploy)",
+                    "(clean|remove).*?duplicate"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "backend/migrate-*.js",
+                    "backend/check-*.js",
+                    "backend/sync-*.js",
+                    "backend/cleanup-*.js",
+                    "backend/database.sql",
+                    "backend/tum_surec_schema.sql",
+                    "backend/*_schema.sql"
+                ],
+                "contentPatterns": [
+                    "RENDER_DATABASE_URL",
+                    "CREATE TABLE",
+                    "CREATE OR REPLACE VIEW",
+                    "ALTER TABLE",
+                    "UNIQUE\\(",
+                    "pool\\.query",
+                    "BEGIN.*COMMIT",
+                    "renderPool"
+                ]
+            }
+        },
+        "render-deployment-guide": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Render.com deployment guide for full-stack apps",
+            "promptTriggers": {
+                "keywords": [
+                    "render",
+                    "deployment",
+                    "deploy",
+                    "production",
+                    "Cloudinary",
+                    "environment variables",
+                    "CORS",
+                    "production error",
+                    "SSL",
+                    "free tier",
+                    "ephemeral filesystem"
+                ],
+                "intentPatterns": [
+                    "(deploy|push|upload).*?(render|production)",
+                    "(fix|debug).*?production",
+                    "environment.*?variable",
+                    "Cloudinary.*?(setup|integration|upload)",
+                    "(how to|guide).*?deploy"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "backend/.env",
+                    "frontend/.env",
+                    "backend/routes/teknikalResimler.js",
+                    "backend/upload-pdfs-to-cloudinary.js",
+                    ".env",
+                    ".env.production"
+                ],
+                "contentPatterns": [
+                    "RENDER_DATABASE_URL",
+                    "cloudinary\\.config",
+                    "CLOUDINARY_",
+                    "process\\.env\\.NODE_ENV === 'production'",
+                    "ssl:.*?rejectUnauthorized",
+                    "streamifier"
+                ]
+            }
+        }
+    },
+    "notes": {
+        "enforcement_types": {
+            "suggest": "Skill suggestion appears but doesn't block execution",
+            "block": "Requires skill to be used before proceeding (guardrail)",
+            "warn": "Shows warning but allows proceeding"
+        },
+        "priority_levels": {
+            "critical": "Highest - Always trigger when matched",
+            "high": "Important - Trigger for most matches",
+            "medium": "Moderate - Trigger for clear matches",
+            "low": "Optional - Trigger only for explicit matches"
+        },
+        "customization": {
+            "pathPatterns": "Adjust to match your project structure (blog-api, auth-service, etc.)",
+            "keywords": "Add domain-specific terms relevant to your project",
+            "intentPatterns": "Use regex for flexible user intent matching"
+        }
+    }
+}

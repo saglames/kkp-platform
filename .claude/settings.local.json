@@ -46,7 +46,25 @@
       "Bash(git add:*)",
       "Bash(if exist nul del nul)",
       "Bash(git rm:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nFix database setup endpoint with better error handling\n\n- Skip CREATE DATABASE statement \\(database already exists on Render\\)\n- Add statement preview logging for debugging\n- Filter out empty and comment lines more robustly\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push)",
+      "Bash(git fetch:*)",
+      "Bash(powershell -Command \"& ''C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\bin\\\\psql.exe'' -U postgres -d kkp_platform -c ''\\\\dt''\")",
+      "Bash(where psql:*)",
+      "Bash(dir \"C:\\\\Program Files\\\\PostgreSQL\"\")",
+      "Bash(timeout /t 30 /nobreak)",
+      "Bash(copy /Y:*)",
+      "Bash(powershell -Command \"& ''C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\bin\\\\psql.exe'' -U postgres -d kkp_platform -c ''\\\\d gorevler''\")",
+      "Bash(ls:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nIntegrate Cloudinary for PDF file storage\n\n- Add cloudinary and streamifier packages\n- Update teknikalResimler.js to use Cloudinary for file uploads\n- Update FileManager.jsx to use Cloudinary URLs directly\n- Migrate existing PDFs to Cloudinary\n- Fix PDF viewing in production environment\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(node -e:*)",
+      "Bash(node check-siparis-gonderimler.js:*)",
+      "Bash(node check-enum-render.js:*)",
+      "Bash(node check-anasayfa-view.js:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nUpdate database.sql with complete local schema export\n\n- Export actual table structures from local PostgreSQL database\n- Replace old schema with current production-ready structure\n- Include all tables: surec, recete, kesim, agirliklar, mamul, etc.\n- Align with Render database structure\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
     ]
   }
 }

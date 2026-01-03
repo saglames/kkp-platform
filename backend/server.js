@@ -155,6 +155,62 @@ app.post('/api/setup-database', async (req, res) => {
   }
 });
 
+// Data import endpoint (one-time use for deployment)
+app.post('/api/import-data', async (req, res) => {
+  const pool = require('./db');
+  const fs = require('fs').promises;
+  const path = require('path');
+
+  try {
+    // Read import SQL file
+    const sqlFile = path.join(__dirname, 'import_data.sql');
+    console.log('Reading import SQL file from:', sqlFile);
+
+    const sql = await fs.readFile(sqlFile, 'utf8');
+    console.log('Import SQL file size:', sql.length, 'bytes');
+
+    // Remove comments
+    const lines = sql.split('\n');
+    const sqlWithoutComments = lines
+      .filter(line => !line.trim().startsWith('--'))
+      .join('\n');
+
+    // Split by semicolon (simple approach for data imports)
+    const statements = sqlWithoutComments
+      .split(';')
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
+
+    console.log(`Found ${statements.length} statements to execute`);
+
+    // Execute each statement
+    for (let i = 0; i < statements.length; i++) {
+      const statement = statements[i];
+      try {
+        console.log(`[${i + 1}/${statements.length}] Executing statement (${statement.substring(0, 50)}...)`);
+        await pool.query(statement);
+        console.log(`[${i + 1}/${statements.length}] Success`);
+      } catch (error) {
+        console.error(`[${i + 1}/${statements.length}] Error:`, error.message);
+        // Continue with other statements
+      }
+    }
+
+    res.json({
+      success: true,
+      message: `Data import complete! Processed ${statements.length} statements.`
+    });
+  } catch (error) {
+    console.error('Data import error:', error);
+    console.error('Error stack:', error.stack);
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      details: error.stack
+    });
+  }
+});
+
 // 404 Handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Endpoint bulunamadı' });

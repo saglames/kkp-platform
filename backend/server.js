@@ -90,7 +90,13 @@ app.post('/api/setup-database', async (req, res) => {
     const statements = sql
       .split(';')
       .map(s => s.trim())
-      .filter(s => s.length > 0 && !s.startsWith('--'));
+      .filter(s => {
+        // Skip empty lines, comments, and CREATE DATABASE statements
+        if (!s || s.length === 0) return false;
+        if (s.startsWith('--')) return false;
+        if (s.toUpperCase().includes('CREATE DATABASE')) return false;
+        return true;
+      });
 
     console.log('Found', statements.length, 'SQL statements');
 
@@ -99,6 +105,7 @@ app.post('/api/setup-database', async (req, res) => {
       const statement = statements[i];
       if (statement) {
         console.log(`Executing statement ${i + 1}/${statements.length}`);
+        console.log('Statement preview:', statement.substring(0, 100) + '...');
         await pool.query(statement);
       }
     }

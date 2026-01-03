@@ -1,0 +1,6 @@
+{
+  "statements": [
+    "INSERT INTO gorevler (baslik, aciklama, aciliyet, atanan, tamamlandi, sira, olusturma_tarihi, baslama_tarihi, bitis_tarihi) VALUES ('DIS-22', 'Test with ''quotes''', 'acil', '', true, 999, '2025-10-21T10:13:23.207Z', NULL, NULL)",
+    "INSERT INTO mamul_izolasyon (name, stock) VALUES ('TEST', 1)"
+  ]
+}

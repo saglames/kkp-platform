@@ -54,6 +54,33 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'K.K.P. Platform API çalışıyor' });
 });
 
+// Database setup endpoint (one-time use for deployment)
+app.post('/api/setup-database', async (req, res) => {
+  const pool = require('./db');
+  const fs = require('fs').promises;
+  const path = require('path');
+
+  try {
+    // Read SQL file
+    const sqlFile = path.join(__dirname, 'database.sql');
+    const sql = await fs.readFile(sqlFile, 'utf8');
+
+    // Execute SQL
+    await pool.query(sql);
+
+    res.json({
+      success: true,
+      message: 'Database tables created successfully!'
+    });
+  } catch (error) {
+    console.error('Database setup error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 // 404 Handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Endpoint bulunamadı' });

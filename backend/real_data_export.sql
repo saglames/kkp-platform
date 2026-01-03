@@ -1,5 +1,5 @@
 -- FULL DATA EXPORT from local K.K.P. Platform database
--- Generated: 2026-01-03T16:50:45.924Z
+-- Generated: 2026-01-03T16:56:55.830Z
 -- This file contains ALL data from ALL tables
 
 -- ========================================
@@ -200,42 +200,8 @@ INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stoc
 INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Eklendi', 1, 'deneme', -2005, -2004);
 
 -- ========================================
--- MAMUL_IZOLASYON (68 rows)
+-- MAMUL_IZOLASYON (34 rows)
 -- ========================================
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B335A (A)', ARRAY['FOG-B335A (A)'], 3425);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B335A (B) - FOG-B506A (B)', ARRAY['FOG-B335A (B)', 'FOG-B506A (B)'], 5126);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B730A (B)', ARRAY['FOG-B730A (B)'], 36);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B1350 (A)', ARRAY['FOG-B1350 (A)'], 50);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B1350A (B)', ARRAY['FOG-B1350A (B)'], 69);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('HZG20B (B) - HZG30B (D)', ARRAY['HZG20B (B)', 'HZG30B (D)'], 26);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('HZG20B (A) - HZG30B (B)', ARRAY['HZG20B (A)', 'HZG30B (B)'], 22);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('HZG30B (A)', ARRAY['HZG30B (A)'], 10);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('HZG30B (C) - FQ-01B/A (A)', ARRAY['HZG30B (C)', 'FQ-01B/A (A)'], 37);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FQ-01B/A-B', ARRAY['FQ-01B/A-B'], 126);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('KHRQ22M20T (A)', ARRAY['KHRQ22M20T (A)'], 411);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('KHRQ22M20T (B)', ARRAY['KHRQ22M20T (B)'], 439);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('MXJ-YA1509M/R1 (A) - MXJ-YA1500M', ARRAY['MXJ-YA1509M/R1 (A)', 'MXJ-YA1500M'], 7263);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('MXJ-YA1509M/R1 (B) - MXJ-YA2812M (B) - MXJ-YA2815M (B) - MXJ-YA3419M (B)', ARRAY['MXJ-YA1509M/R1 (B)', 'MXJ-YA2812M (B)', 'MXJ-YA2815M (B)', 'MXJ-YA3419M (B)'], 6062);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('MXJ-YA2812M (A) - MXJ-YA2815M (A)', ARRAY['MXJ-YA2812M (A)', 'MXJ-YA2815M (A)'], 2700);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('MXJ-YA3419M (A) - MXJ-YA4119M (A)', ARRAY['MXJ-YA3419M (A)', 'MXJ-YA4119M (A)'], 800);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('MXJ-YA4119M (B)', ARRAY['MXJ-YA4119M (B)'], 300);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B335A/Y (A)', ARRAY['FOG-B335A/Y (A)'], 245);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B335A/Y (B)', ARRAY['FOG-B335A/Y (B)'], 418);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('MXJ-YA2512M/R3 (B)', ARRAY['MXJ-YA2512M/R3 (B)'], 4572);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('MXJ-YA2512M/R3 (A)', ARRAY['MXJ-YA2512M/R3 (A)'], 4687);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B506A/Y (A) - FOG-B730A (A)', ARRAY['FOG-B506A/Y (A)', 'FOG-B730A (A)'], 1243);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B506A/Y (B)', ARRAY['FOG-B506A/Y (B)'], 128);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B506A (A) - FOG-B730A (A)', ARRAY['FOG-B506A (A)', 'FOG-B730A (A)'], 1500);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('X', ARRAY['X'], 149);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B730A/Y (B)', ARRAY['FOG-B730A/Y (B)'], 5);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('CMY-Y102SS-TR (A)', ARRAY['CMY-Y102SS-TR (A)'], 2473);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('CMY-Y102SS-TR (B)', ARRAY['CMY-Y102SS-TR (B)'], 2517);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('CMY-Y102SS-TR (A1)', ARRAY['CMY-Y102SS-TR (A1)'], 3500);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('CMY-Y102SS-TR (B1)', ARRAY['CMY-Y102SS-TR (B1)'], 2000);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('CMY-202S', ARRAY['CMY-202S'], 1501);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FQ01A/AA-ISL', ARRAY['FQ01A/AA-ISL'], 0);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FQ01B/AA-ISL', ARRAY['FQ01B/AA-ISL'], 0);
-INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FQ02/AA-ISL', ARRAY['FQ02/AA-ISL'], 0);
 INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B335A (A)', ARRAY['FOG-B335A (A)'], 3425);
 INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B335A (B) - FOG-B506A (B)', ARRAY['FOG-B335A (B)', 'FOG-B506A (B)'], 5126);
 INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FOG-B730A (B)', ARRAY['FOG-B730A (B)'], 36);
@@ -272,17 +238,8 @@ INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FQ01B/AA-
 INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ('FQ02/AA-ISL', ARRAY['FQ02/AA-ISL'], 0);
 
 -- ========================================
--- MAMUL_KOLI (18 rows)
+-- MAMUL_KOLI (9 rows)
 -- ========================================
-INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B8', '65.5*38*41', '2815(10)- DIS 371(16)', 403);
-INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B6', '59.5*41.5*30', 'HZG 30B(6)', 391);
-INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B5', '61*28*40', 'FQG-B1350A(5)', 404);
-INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B4', '68.5*36*35', 'FQG-B506A GRİ(15)- FQG-B730A(15)-', 364);
-INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B3', '68.5*45.5*32', '1509(20)- 335A YEŞİL(20)- 335A GRİ(20)- FQG-B506A YEŞİL(20)', 573);
-INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B2', '56.5*34.4*38.2', 'DIS 180(20)- FQ04NaA(20)- HZG20B(10)- KHR22M20T(10)- 2512(10)- FQG-B730A/Y(10)', 724);
-INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B1', '70*46*28', 'DIS 22 (35) - FQ01B/A (20)', 825);
-INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B9', '72*36*38', '72*36*38', 7);
-INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B7 (Fittings)', '38.5x26.5x22', '38.5x26.5x22', 175);
 INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B8', '65.5*38*41', '2815(10)- DIS 371(16)', 403);
 INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B6', '59.5*41.5*30', 'HZG 30B(6)', 391);
 INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B5', '61*28*40', 'FQG-B1350A(5)', 404);
@@ -294,19 +251,8 @@ INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B
 INSERT INTO mamul_koli (name, dimensions, icine_giren_urunler, stock) VALUES ('B7 (Fittings)', '38.5x26.5x22', '38.5x26.5x22', 175);
 
 -- ========================================
--- MAMUL_KUTU (22 rows)
+-- MAMUL_KUTU (11 rows)
 -- ========================================
-INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K1', '45*13.5*3.5', 'DIS 22', 3736);
-INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K2', '45*13.5*6', 'FQ01B/A', 650);
-INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K3', '55.5*16.5*3.5', 'DIS 180- FQ04NaA', 6358);
-INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K4', '45*17*6', '1509- 335A YEŞİL- 335A GRİ- FQG-B506A YEŞİL', 4384);
-INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K5', '35*22*6.5', 'FQG-B506A GRİ- FQG-B730A', 1550);
-INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K6', '60*27*7.5', 'FQG-B1350A', 414);
-INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K7', '55.5*16.5*7.2', '2512-    FQG-B730A/Y- KHR22M20T- HZG20B', 5119);
-INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K8', '58*20*9', 'HZG 30B', 438);
-INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K9', '63.5 × 17.5 × 7', '2815', 1496);
-INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K10', '63.5*17.5*4.5', 'DIS 371', 2860);
-INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K11', '35*11.5*5', 'CMY-Y102SS', 0);
 INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K1', '45*13.5*3.5', 'DIS 22', 3736);
 INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K2', '45*13.5*6', 'FQ01B/A', 650);
 INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K3', '55.5*16.5*3.5', 'DIS 180- FQ04NaA', 6358);
@@ -320,36 +266,8 @@ INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K10'
 INSERT INTO mamul_kutu (name, dimensions, icine_giren_urun, stock) VALUES ('K11', '35*11.5*5', 'CMY-Y102SS', 0);
 
 -- ========================================
--- MAMUL_TAPA (56 rows)
+-- MAMUL_TAPA (28 rows)
 -- ========================================
-INSERT INTO mamul_tapa (name, stock) VALUES ('8x15 - Çin - Kırmızı', 193836);
-INSERT INTO mamul_tapa (name, stock) VALUES ('9x15 Çin - Kırmızı', 41746);
-INSERT INTO mamul_tapa (name, stock) VALUES ('10x20 - Çin - Kırmızı', 10750);
-INSERT INTO mamul_tapa (name, stock) VALUES ('11x15 - Çin - Kırmızı', 88413);
-INSERT INTO mamul_tapa (name, stock) VALUES ('12x15 - Çin - Kırmızı', 316300);
-INSERT INTO mamul_tapa (name, stock) VALUES ('14x15 - Çin - Kırmızı', 169035);
-INSERT INTO mamul_tapa (name, stock) VALUES ('16x15 - Çin - Kırmızı', 181335);
-INSERT INTO mamul_tapa (name, stock) VALUES ('18x15 - Çin - Kırmızı', 366800);
-INSERT INTO mamul_tapa (name, stock) VALUES ('19x20 - Çin - Kırmızı', 76970);
-INSERT INTO mamul_tapa (name, stock) VALUES ('21x20 - Çin - Kırmızı', 38800);
-INSERT INTO mamul_tapa (name, stock) VALUES ('22x20 - Çin - Kırmızı', 5250);
-INSERT INTO mamul_tapa (name, stock) VALUES ('23x20 - Çin - Kırmızı', 5900);
-INSERT INTO mamul_tapa (name, stock) VALUES ('25x20 - Çin - Kırmızı', 5800);
-INSERT INTO mamul_tapa (name, stock) VALUES ('31x25 - Çin - Kırmızı', 18450);
-INSERT INTO mamul_tapa (name, stock) VALUES ('38x30 - Çin - Kırmızı', 2450);
-INSERT INTO mamul_tapa (name, stock) VALUES ('45x30 - Çin - Kırmızı', 5700);
-INSERT INTO mamul_tapa (name, stock) VALUES ('57x40 - Çin - Kırmızı', 2500);
-INSERT INTO mamul_tapa (name, stock) VALUES ('7x15 - Türk - Kırmızı', 14648);
-INSERT INTO mamul_tapa (name, stock) VALUES ('8x15 - Türk - Kırmızı', 1000);
-INSERT INTO mamul_tapa (name, stock) VALUES ('12x15 - Türk - Kırmızı', 1000);
-INSERT INTO mamul_tapa (name, stock) VALUES ('15x15 - Türk - Kırmızı', 3600);
-INSERT INTO mamul_tapa (name, stock) VALUES ('18x15 - Türk - Kırmızı', 2000);
-INSERT INTO mamul_tapa (name, stock) VALUES ('22x20 - Türk - Kırmızı', 3500);
-INSERT INTO mamul_tapa (name, stock) VALUES ('31x25 - Türk - Kırmızı', 3000);
-INSERT INTO mamul_tapa (name, stock) VALUES ('11x15 - Türk - Sarı', 350);
-INSERT INTO mamul_tapa (name, stock) VALUES ('14x15 - Türk - Sarı', 4000);
-INSERT INTO mamul_tapa (name, stock) VALUES ('18x15 - Türk - Sarı', 950);
-INSERT INTO mamul_tapa (name, stock) VALUES ('11x15 - Türk - Siyah', 1174);
 INSERT INTO mamul_tapa (name, stock) VALUES ('8x15 - Çin - Kırmızı', 193836);
 INSERT INTO mamul_tapa (name, stock) VALUES ('9x15 Çin - Kırmızı', 41746);
 INSERT INTO mamul_tapa (name, stock) VALUES ('10x20 - Çin - Kırmızı', 10750);

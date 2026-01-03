@@ -236,6 +236,52 @@ app.post('/api/import-data', async (req, res) => {
   }
 });
 
+// Clear all data endpoint (for re-import)
+app.post('/api/clear-all-data', async (req, res) => {
+  const pool = require('./db');
+  try {
+    console.log('Clearing all data from tables...');
+
+    const tables = [
+      'mamul_history',
+      'mamul_tapa',
+      'mamul_kutu',
+      'mamul_koli',
+      'mamul_izolasyon',
+      'gorevler',
+      'siparis_hazirlik_gonderim',
+      'siparis_hazirlik_degisiklik_log',
+      'siparis_hazirlik',
+      'urun_siparisler_degisiklik_log',
+      'urun_siparisler',
+      'simulasyon_stok_hareket_log',
+      'simulasyon_stok',
+      'hatali_urunler_gecmis',
+      'hatali_urunler_aktif'
+    ];
+
+    for (const table of tables) {
+      try {
+        await pool.query(`TRUNCATE TABLE ${table} RESTART IDENTITY CASCADE`);
+        console.log(`Cleared ${table}`);
+      } catch (error) {
+        console.log(`Table ${table} - ${error.message}`);
+      }
+    }
+
+    res.json({
+      success: true,
+      message: 'All data cleared successfully'
+    });
+  } catch (error) {
+    console.error('Clear data error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 // 404 Handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Endpoint bulunamadı' });

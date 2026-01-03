@@ -1,28 +1,40 @@
-// Export all data from local database to SQL file
+// Export ALL data from local database to SQL file
 const pool = require('./db');
 const fs = require('fs').promises;
 
 async function exportData() {
   try {
-    console.log('Starting data export from local database...');
+    console.log('Starting FULL data export from local database...\n');
 
-    const tables = [
-      'mamul_izolasyon',
-      'mamul_koli',
-      'mamul_kutu',
-      'mamul_tapa'
-    ];
+    // Get all tables from database
+    const tablesResult = await pool.query(`
+      SELECT table_name
+      FROM information_schema.tables
+      WHERE table_schema = 'public'
+      AND table_type = 'BASE TABLE'
+      AND table_name NOT IN ('users', 'urun_tanimlari')
+      ORDER BY table_name
+    `);
 
-    let sqlOutput = '-- Real data export from local K.K.P. Platform database\n';
-    sqlOutput += '-- Generated: ' + new Date().toISOString() + '\n\n';
+    const tables = tablesResult.rows.map(row => row.table_name);
+    console.log('Found tables:', tables.join(', '), '\n');
+
+    let sqlOutput = '-- FULL DATA EXPORT from local K.K.P. Platform database\n';
+    sqlOutput += '-- Generated: ' + new Date().toISOString() + '\n';
+    sqlOutput += '-- This file contains ALL data from ALL tables\n\n';
+
+    let totalRows = 0;
 
     for (const table of tables) {
       console.log(`Exporting ${table}...`);
-      const result = await pool.query(`SELECT * FROM ${table}`);
+      const result = await pool.query(`SELECT * FROM ${table} ORDER BY id`);
       console.log(`  Found ${result.rows.length} rows`);
 
       if (result.rows.length > 0) {
-        sqlOutput += `-- ${table.toUpperCase()}\n`;
+        totalRows += result.rows.length;
+        sqlOutput += `-- ========================================\n`;
+        sqlOutput += `-- ${table.toUpperCase()} (${result.rows.length} rows)\n`;
+        sqlOutput += `-- ========================================\n`;
 
         for (const row of result.rows) {
           const columns = Object.keys(row).filter(col =>
@@ -32,24 +44,35 @@ async function exportData() {
           const values = columns.map(col => {
             const val = row[col];
             if (val === null) return 'NULL';
-            if (Array.isArray(val)) return `ARRAY[${val.map(v => `'${v}'`).join(', ')}]`;
+            if (Array.isArray(val)) {
+              const arrayValues = val.map(v => {
+                if (typeof v === 'string') return `'${v.replace(/'/g, "''")}'`;
+                return v;
+              });
+              return `ARRAY[${arrayValues.join(', ')}]`;
+            }
             if (typeof val === 'string') return `'${val.replace(/'/g, "''")}'`;
+            if (typeof val === 'boolean') return val;
+            if (val instanceof Date) return `'${val.toISOString()}'`;
             return val;
           });
 
-          sqlOutput += `INSERT INTO ${table} (${columns.join(', ')}) VALUES (${values.join(', ')}) ON CONFLICT DO NOTHING;\n`;
+          sqlOutput += `INSERT INTO ${table} (${columns.join(', ')}) VALUES (${values.join(', ')});\n`;
         }
         sqlOutput += '\n';
       }
     }
 
     await fs.writeFile('./real_data_export.sql', sqlOutput, 'utf8');
-    console.log('\n✅ Export complete! File saved: real_data_export.sql');
-    console.log('Total size:', (sqlOutput.length / 1024).toFixed(2), 'KB');
+    console.log('\n✅ FULL Export complete!');
+    console.log('📊 Total tables:', tables.length);
+    console.log('📊 Total rows:', totalRows);
+    console.log('📄 File: real_data_export.sql');
+    console.log('💾 Size:', (sqlOutput.length / 1024).toFixed(2), 'KB');
 
     process.exit(0);
   } catch (error) {
-    console.error('Export error:', error);
+    console.error('❌ Export error:', error);
     process.exit(1);
   }
 }

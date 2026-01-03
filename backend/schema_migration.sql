@@ -5,7 +5,33 @@
 ALTER TABLE gorevler ADD COLUMN IF NOT EXISTS baslama_tarihi date;
 ALTER TABLE gorevler ADD COLUMN IF NOT EXISTS bitis_tarihi date;
 
--- Create missing tables if they don't exist
+-- Create missing log tables
+
+-- siparis_degisiklik_log
+CREATE TABLE IF NOT EXISTS siparis_degisiklik_log (
+    id SERIAL PRIMARY KEY,
+    siparis_id integer,
+    degistiren character varying(100),
+    degisiklik_turu character varying(50) NOT NULL,
+    eski_deger text,
+    yeni_deger text,
+    aciklama text,
+    tarih timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+-- urun_siparis_degisiklik_log
+CREATE TABLE IF NOT EXISTS urun_siparis_degisiklik_log (
+    id SERIAL PRIMARY KEY,
+    siparis_id integer,
+    degistiren character varying(100),
+    degisiklik_turu character varying(50) NOT NULL,
+    eski_deger text,
+    yeni_deger text,
+    aciklama text,
+    tarih timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create missing surec tables if they don't exist
 
 -- surec_temizlemeye_gidecek
 CREATE TABLE IF NOT EXISTS surec_temizlemeye_gidecek (

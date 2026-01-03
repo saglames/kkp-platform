@@ -106,8 +106,8 @@ const FileManager = ({ user }) => {
   };
 
   const handleViewPDF = (dosya) => {
-    // Cloudinary URL'ini direkt kullan
-    setPdfViewerURL(dosya.dosya_yolu);
+    // PDF'i yeni sekmede aç (iframe yerine)
+    window.open(dosya.dosya_yolu, '_blank');
   };
 
   const formatFileSize = (bytes) => {

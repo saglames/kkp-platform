@@ -6,18 +6,67 @@ async function exportData() {
   try {
     console.log('Starting FULL data export from local database...\n');
 
-    // Get all tables from database
-    const tablesResult = await pool.query(`
-      SELECT table_name
-      FROM information_schema.tables
-      WHERE table_schema = 'public'
-      AND table_type = 'BASE TABLE'
-      AND table_name NOT IN ('users', 'urun_tanimlari')
-      ORDER BY table_name
-    `);
+    // Get all tables in correct dependency order (parents first)
+    const tables = [
+      // Core tables first
+      'gorevler',
+      'gorev_notlar',
+      'siparis_hazirlik',
+      'siparis_gonderimler',
+      'siparis_degisiklik_log',
+      'urun_siparisler',
+      'urun_siparis_degisiklik_log',
 
-    const tables = tablesResult.rows.map(row => row.table_name);
-    console.log('Found tables:', tables.join(', '), '\n');
+      // Mamul stok
+      'mamul_izolasyon',
+      'mamul_koli',
+      'mamul_kutu',
+      'mamul_tapa',
+      'mamul_history',
+
+      // Hatali urunler
+      'hatali_urunler',
+      'hatali_urunler_log',
+
+      // Is emirleri
+      'is_emirleri',
+      'is_emri_sablonlari',
+      'is_emri_operasyon_takip',
+
+      // Kesim
+      'kesim_olculeri',
+
+      // Urun recetesi
+      'urun_recetesi',
+      'recete_malzemeler',
+      'siparis_hesaplama_kayitlari',
+
+      // Simulasyon stok
+      'simulasyon_stok',
+      'simulasyon_stok_hareket_log',
+
+      // Surec
+      'surec_urunler',
+      'surec_temizlemeye_gidecek',
+      'surec_temizlemede_olan',
+      'surec_temizlemeden_gelen',
+      'surec_sevke_hazir',
+      'surec_sevk_edilen',
+      'surec_kalan',
+      'surec_hareket_log',
+
+      // Teknik resimler
+      'teknik_resimler_kategoriler',
+      'teknik_resimler_dosyalar',
+      'teknik_resimler_login_log',
+
+      // Urun agirliklari
+      'urun_agirliklari_master',
+      'urun_agirliklari_fittinglar',
+      'urun_agirliklari_hesaplamalar'
+    ];
+
+    console.log('Exporting tables in dependency order:', tables.length, 'tables\n');
 
     let sqlOutput = '-- FULL DATA EXPORT from local K.K.P. Platform database\n';
     sqlOutput += '-- Generated: ' + new Date().toISOString() + '\n';

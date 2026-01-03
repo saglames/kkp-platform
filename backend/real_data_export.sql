@@ -1,18 +1,6 @@
 -- FULL DATA EXPORT from local K.K.P. Platform database
--- Generated: 2026-01-03T16:56:55.830Z
+-- Generated: 2026-01-03T17:12:36.337Z
 -- This file contains ALL data from ALL tables
-
--- ========================================
--- GOREV_NOTLAR (8 rows)
--- ========================================
-INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (21, 'Kullanıcı', 'Ürünlerin kontrolü bitti hepsine tekrar temizleme gerekiyor.', '2025-10-08T11:15:56.267Z');
-INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (21, 'Kullanıcı', 'Ürünler temizlemeden geri geldi kontrol tekrar başlıyor.', '2025-10-14T11:43:05.810Z');
-INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (23, 'Kullanıcı', 'Kutuların siparişi verildi geldiğinde yapılacak.', '2025-10-06T05:22:56.991Z');
-INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (27, 'Kullanıcı', 'Poşet gelince devam edilecek kalite kontrolü bitti.', '2025-10-08T14:16:24.546Z');
-INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (41, 'Kullanıcı', 'Ürünlerin kontrolü bitti hepsine tekrar temizleme gerekiyor.', '2025-10-08T11:15:56.267Z');
-INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (41, 'Kullanıcı', 'Ürünler temizlemeden geri geldi kontrol tekrar başlıyor.', '2025-10-14T11:43:05.810Z');
-INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (43, 'Kullanıcı', 'Kutuların siparişi verildi geldiğinde yapılacak.', '2025-10-06T05:22:56.991Z');
-INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (47, 'Kullanıcı', 'Poşet gelince devam edilecek kalite kontrolü bitti.', '2025-10-08T14:16:24.546Z');
 
 -- ========================================
 -- GOREVLER (33 rows)
@@ -68,136 +56,170 @@ INSERT INTO gorevler (baslik, aciklama, aciliyet, atanan, tamamlandi, sira, olus
 INSERT INTO gorevler (baslik, aciklama, aciliyet, atanan, tamamlandi, sira, olusturma_tarihi, baslama_tarihi, bitis_tarihi) VALUES ('Paketleme', 'Temizlemeye giden bütün ürünler kontrol edilip paketlenecek set olmayanlar gelene kadar hazırlanıp bekletilecek.', 'normal', '', true, 15, '2025-10-27T05:02:48.892Z', NULL, NULL);
 
 -- ========================================
--- IS_EMIRLERI (3 rows)
+-- GOREV_NOTLAR (8 rows)
 -- ========================================
-INSERT INTO is_emirleri (is_emri_no, model, alt_grup, sablon_tipi, malzeme_adi, malzeme_kodu, siparis_adeti, uretim_adeti, tarih, durum, operasyonlar, notlar, olusturan) VALUES ('KAY2026001A', 'MXJ-YA1509M', 'A', 'KAYNAK', 'MXJ-YA1509M', 'A', 155, 155, '2026-01-01T21:00:00.000Z', 'BEKLEMEDE', ARRAY[[object Object], [object Object], [object Object]], NULL, 'Sistem');
-INSERT INTO is_emirleri (is_emri_no, model, alt_grup, sablon_tipi, malzeme_adi, malzeme_kodu, siparis_adeti, uretim_adeti, tarih, durum, operasyonlar, notlar, olusturan) VALUES ('KAY2026002A', 'MXJ-YA1509M', 'A', 'KAYNAK', 'MXJ-YA1509M', 'A', 150, 150, '2026-01-01T21:00:00.000Z', 'BEKLEMEDE', ARRAY[[object Object], [object Object], [object Object]], NULL, 'Sistem');
-INSERT INTO is_emirleri (is_emri_no, model, alt_grup, sablon_tipi, malzeme_adi, malzeme_kodu, siparis_adeti, uretim_adeti, tarih, durum, operasyonlar, notlar, olusturan) VALUES ('AKG2026001Y', 'MXJ-YA1509M', 'Y', 'YARI_MAMUL', 'MXJ-YA1509M', 'Y', 345, 345, '2026-01-01T21:00:00.000Z', 'BEKLEMEDE', ARRAY[[object Object], [object Object], [object Object], [object Object]], NULL, 'Sistem');
+INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (21, 'Kullanıcı', 'Ürünlerin kontrolü bitti hepsine tekrar temizleme gerekiyor.', '2025-10-08T11:15:56.267Z');
+INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (21, 'Kullanıcı', 'Ürünler temizlemeden geri geldi kontrol tekrar başlıyor.', '2025-10-14T11:43:05.810Z');
+INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (23, 'Kullanıcı', 'Kutuların siparişi verildi geldiğinde yapılacak.', '2025-10-06T05:22:56.991Z');
+INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (27, 'Kullanıcı', 'Poşet gelince devam edilecek kalite kontrolü bitti.', '2025-10-08T14:16:24.546Z');
+INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (41, 'Kullanıcı', 'Ürünlerin kontrolü bitti hepsine tekrar temizleme gerekiyor.', '2025-10-08T11:15:56.267Z');
+INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (41, 'Kullanıcı', 'Ürünler temizlemeden geri geldi kontrol tekrar başlıyor.', '2025-10-14T11:43:05.810Z');
+INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (43, 'Kullanıcı', 'Kutuların siparişi verildi geldiğinde yapılacak.', '2025-10-06T05:22:56.991Z');
+INSERT INTO gorev_notlar (gorev_id, ekleyen, metin, tarih) VALUES (47, 'Kullanıcı', 'Poşet gelince devam edilecek kalite kontrolü bitti.', '2025-10-08T14:16:24.546Z');
 
 -- ========================================
--- KESIM_OLCULERI (80 rows)
+-- SIPARIS_HAZIRLIK (58 rows)
 -- ========================================
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'A', 'Aa', '19.00', '1.00', 95, '60.00', '19.1×15.88×12.7', '47.90');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'A', 'Ab', '16.00', '0.80', 116, '55.00', '15.88×12.7×9.5', '39.50');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'A', 'Ac', '16.00', '0.80', 173, '55.00', '15.88×12.7×9.5', '58.90');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'Y', 'Y', '35.00', '1.40', 50, 'NaN', NULL, '65.90');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'B', 'Baş', '9.50', '0.70', 78, '9.00', '9.5×6.3', '13.50');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'B', 'Bb', '9.50', '0.70', 108, '28.00', '9.5×6.3', '18.60');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'B', 'Bc', '9.50', '0.70', 143, '28.00', '9.5×6.3', '24.70');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'Y', 'Y', '21.00', '1.00', 35, 'NaN', NULL, '19.60');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'A', 'Aa', '22.00', '1.10', 85, '42.00', '22×19.1', '54.70');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'A', 'Ab', '19.00', '1.00', 117, '40.00', '19.1×15.88', '59.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'A', 'Ac', '19.00', '1.00', 228, '70.00', '19.1×15.88×12.7', '114.90');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.60');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'B', 'Baş', '12.70', '0.70', 68, '33.00', '12.7×9.5', '16.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'B', 'Bb', '12.70', '0.70', 96, '30.00', '12.7×9.5', '22.60');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'B', 'Bc', '12.70', '0.70', 174, '45.00', '12.7×9.5×6.3', '40.90');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'Y', 'Y', '28.00', '1.20', 42, 'NaN', NULL, '37.90');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'A', 'Aa', '54.00', '1.70', 160, '100.00', '54×42×35', '398.30');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'A', 'Ab', '42.00', '1.50', 260, '110.00', '42×35×28', '442.30');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'A', 'Ac', '28.00', '1.20', 382, '115.00', '28×25×22×19', '288.20');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'Y', 'Y', '76.00', '2.50', 100, 'NaN', NULL, '514.50');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'B', 'Baş', '22.00', '1.10', 120, '65.00', '22×19.05×15.88', '77.30');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'B', 'Bb', '22.00', '1.10', 214, '130.00', '22×19.05×15.88×12.7', '137.80');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'B', 'Bc', '16.00', '0.80', 156, 'NaN', '12.7×9.5', '53.10');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.60');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'A', 'Aa', '28.00', '1.20', 125, '75.00', '28×25×22', '112.60');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'A', 'Ab', '28.00', '1.20', 196, '112.00', '28×25×22×19.05×15.88', '176.50');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'A', 'Ac', '19.00', '1.00', 240, '80.00', '19.05×15.88×12.7×9.5', '121.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'Y', 'Y', '47.00', '1.60', 60, 'NaN', NULL, '122.10');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'B', 'Baş', '16.00', '0.80', 98, '55.00', '15.88×12.7×9.5', '33.40');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'B', 'Bb', '16.00', '0.80', 113, '55.00', '15.88×12.7×9.5', '38.50');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'B', 'Bc', '16.00', '0.80', 184, 'NaN', '12.7×9.5×6.3', '62.70');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'Y', 'Y', '35.00', '1.40', 50, 'NaN', NULL, '65.90');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'A', 'Aa', '42.00', '1.50', 146, '65.00', '42×35', '248.30');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'A', 'Ab', '42.00', '1.50', 270, '160.00', '42×35×28×25×22', '459.30');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'A', 'Ac', '28.00', '1.20', 382, '115.00', '28×25×22×19', '344.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'Y', 'Y', '76.00', '2.50', 100, 'NaN', NULL, '514.50');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'B', 'Baş', '19.00', '1.00', 80, '50.00', '19.05×15.88', '40.30');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'B', 'Bb', '19.00', '1.00', 186, '82.00', '19.05×15.88×12.7×9.5', '93.80');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'B', 'Bc', '19.00', '1.00', 190, 'NaN', '15.88×12.7×9.5×6.35', '95.80');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.60');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'A', 'Aa', '45.00', '1.50', 235, '90.00', '54×42', '429.40');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'A', 'Ab', '45.00', '1.50', 284, '158.00', '54×42×35×28', '518.90');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'A', 'Ac', '32.00', '1.40', 350, '110.00', '35×28×25', '419.90');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'Y', 'Y', '79.00', '2.50', 100, 'NaN', NULL, '538.30');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'B', 'Baş', '22.00', '1.10', 160, '65.00', '22×19.05', '103.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'B', 'Bb', '22.00', '1.10', 245, '85.00', '22×19.05×15.88', '157.70');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'B', 'Bc', '19.00', '1.00', 280, '105.00', '19.05×15.88×12.7×9.5', '141.20');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'A', 'Aa', '19.00', '1.00', 135, '80.00', '19.2×16.1×12.7', '68.10');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'A', 'Ab', '19.00', '1.00', 225, '80.00', '19.2×16.1×12.9', '113.40');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'A', 'Ac', '19.00', '1.00', 250, '80.00', '19.2×16.1×12.9', '126.40');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.30');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'B', 'Ba', '12.70', '0.70', 115, '65.00', '12.9×9.7×6.35', '27.10');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'B', 'Bb', '12.70', '0.70', 185, '65.00', '12.9×9.7×6.5', '43.30');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'B', 'Bc', '12.70', '0.70', 206, '65.00', '12.9×9.7×6.5', '48.70');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'Y', 'Y', '28.00', '1.20', 42, 'NaN', NULL, '38.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'A', 'Aa', '25.00', '1.40', 160, '85.00', '28×22×19.05', '149.40');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'A', 'Ab', '25.00', '1.40', 265, '110.00', '28×22×19.05×15.88', '247.70');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'A', 'Ac', '22.00', '1.10', 275, '105.00', '22×19.2×16.1×12.9', '179.90');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'Y', 'Y', '47.00', '1.60', 65, 'NaN', NULL, '134.80');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'B', 'Ba', '16.00', '0.80', 115, '75.00', '15.88×12.9×9.7', '39.50');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'B', 'Bb', '16.00', '0.80', 180, '95.00', '15.88×12.9×9.7×6.5', '61.70');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'B', 'Bc', '12.70', '0.70', 206, '65.00', '12.9×9.7×6.5', '48.70');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'Y', 'Y', '28.00', '1.20', 42, 'NaN', NULL, '42.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'A', 'Aa', '42.00', '1.50', 165, '85.00', '42×35', '279.50');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'A', 'Ab', '42.00', '1.50', 325, '145.00', '42×35×28×25', '506.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'A', 'Ac', '32.00', '1.40', 335, '100.00', '35×28×25', '391.50');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'Y', 'Y', '79.40', '2.50', 100, 'NaN', NULL, '538.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'B', 'Ba', '22.00', '1.10', 135, '80.00', '22×19.2×16.1', '84.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'B', 'Bb', '19.00', '1.00', 240, '80.00', '19.2×16.1×12.9', '120.70');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'B', 'Bc', '19.00', '1.00', 285, '110.00', '19.2×16.1×12.9×9.7×6.5', '143.50');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.30');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'A', 'Aa', '42.00', '1.50', 120, 'NaN', NULL, '200.60');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'A', 'Ab', '42.00', '1.50', 375, '145.00', '42×35×28×25', '586.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'A', 'Ac', '32.00', '1.40', 370, '100.00', '35×28×25', '434.80');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'Y', 'Y', '79.40', '2.50', 100, 'NaN', NULL, '538.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'B', 'Ba', '22.00', '1.10', 135, '80.00', '22×19.2×16.1', '79.10');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'B', 'Bb', '22.00', '1.10', 240, '105.00', '22×19.2×16.1×12.9', '141.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'B', 'Bc', '19.00', '1.00', 260, '100.00', '19.2×16.1×12.9×9.7', '131.00');
-INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.30');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25001', 'MXJ-YA2815M', 1161, 0, 'tamamlandi', true, true, true, true, true, 'Kutu ve Koli etiketli olarak hazırlandı. İzolasyon hazır. Ürünün ek parçası yok. Poşet yeterli.  Ürün paketlenmeye hazır hale geldi. Tamamlandı.
+
+A1154	B1161', '2025-09-12T12:12:50.179Z', '2025-11-06T08:26:14.321Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25001 - FO25004', 'MXJ-YA2512M', 2923, 2923, 'beklemede', true, true, true, true, true, 'A 2233	B 1804', '2025-09-12T12:14:09.607Z', '2025-11-20T09:06:04.749Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25005', 'MXJ-YA1509M', 628, 0, 'tamamlandi', true, true, true, true, true, '', '2025-09-12T12:15:26.379Z', '2025-11-06T08:28:39.883Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25005', 'FQG-B506A/Y', 900, 400, 'beklemede', true, true, true, true, true, 'A izalasyonunda 69 eksik var eksik kutu siparişi verildi bekleniyor.A eksik sebebi kontrol edilecek.
+A 725	B 901', '2025-09-12T12:16:15.499Z', '2025-12-30T09:01:49.441Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25005', 'DIS-180-1GAT', 123, 123, 'tamamlandi', true, true, true, true, true, '', '2025-09-12T12:20:26.034Z', '2025-11-13T12:32:05.765Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', '25007', 'KHRQ22M20T', 189, 189, 'tamamlandi', true, true, true, true, true, '51 ADET FAZLA GÖNDERİLDİ', '2025-09-12T12:21:04.762Z', '2025-12-30T09:01:21.061Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25007', 'DIS-22-1GAT', 200, 0, 'tamamlandi', true, true, true, true, true, '', '2025-09-12T12:21:40.899Z', '2025-11-06T08:52:23.598Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25007', 'DIS-180-1GAT', 900, 900, 'beklemede', true, true, true, true, true, 'Total: A3479	B3141 *260 gönderildi', '2025-09-12T12:22:39.435Z', '2025-11-13T12:31:18.673Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25009', 'FQG-B730A/Y', 1072, 340, 'beklemede', true, true, true, true, true, 'A 1086	B 1072', '2025-09-12T12:24:18.762Z', '2025-11-26T11:38:46.521Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25009', 'FQG-B335A/Y', 2100, 2100, 'tamamlandi', true, true, true, true, true, '160 ADET FAZLA GÖNDERİLDİ', '2025-09-12T12:24:51.930Z', '2025-12-30T08:57:17.870Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25011', 'DIS-22-GAT', 3100, 3100, 'beklemede', true, true, true, true, true, 'Total A 3287	B 3407', '2025-09-12T12:26:35.043Z', '2025-11-18T13:55:56.966Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25008', 'DIS-371-2GAT', 1000, 1000, 'beklemede', true, true, true, true, true, 'Total: A 2229	B 2099', '2025-09-12T12:28:41.855Z', '2025-11-20T06:17:32.877Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25010', 'DIS-371-2GAT', 1000, 568, 'beklemede', true, true, true, true, true, 'Total A 2229	B 2099', '2025-09-12T12:29:35.111Z', '2025-12-30T09:00:44.125Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25011', 'DIS-371-2GAT', 1500, 0, 'beklemede', true, true, true, true, true, 'Total: A 2229 B 2099', '2025-09-12T12:30:11.247Z', '2025-11-06T09:07:03.181Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25011', 'DIS-180-1GAT', 2100, 2100, 'beklemede', true, true, true, true, true, 'Total: A3479	B3141', '2025-09-12T12:31:04.494Z', '2025-11-13T12:31:55.425Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25012', 'MXJ-YA2512M', 1500, 406, 'beklemede', true, true, true, true, true, 'ort 1500-1700 adet üretimde', '2025-09-12T12:31:32.030Z', '2025-12-30T08:55:03.914Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25012', 'MXJ-YA1509M', 1500, 340, 'beklemede', true, true, true, true, true, 'Sip ve kalan adet farkı? A 659	B 850', '2025-09-12T12:31:58.727Z', '2025-12-04T06:44:46.224Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25012', 'CMY-Y102SS-TR', 1100, 936, 'hazirlanıyor', false, false, true, true, true, '', '2025-09-12T12:32:28.894Z', '2025-11-26T11:39:55.578Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-24T21:00:00.000Z', 'Melisa', 'FO25013', 'DIS-180-1GAT', 2000, 200, 'beklemede', true, true, true, true, true, 'kaynak sırasında', '2025-09-25T12:11:13.803Z', '2025-12-30T08:59:59.208Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-24T21:00:00.000Z', 'Melisa', 'FO25013', 'DIS-371-2GAT', 1500, 0, 'beklemede', true, true, true, true, false, '1500 adet üretimde', '2025-09-25T12:11:34.555Z', '2025-11-18T14:33:11.163Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-24T21:00:00.000Z', 'Melisa', 'FO25013', 'FQG-B335A (GRİ)', 1500, 449, 'beklemede', true, true, true, true, false, '', '2025-09-25T12:12:06.787Z', '2025-12-30T08:59:22.329Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-10-01T21:00:00.000Z', 'Esat', 'X', 'FQG-B335A (GRİ) (ÖNCEDEN KALAN)', 111, 111, 'beklemede', true, true, true, true, true, '', '2025-10-02T12:17:28.172Z', '2025-11-26T11:41:24.827Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-18T21:00:00.000Z', 'Esat', 'FO25014', 'FQG-B335A (GRİ)', 1500, 0, 'beklemede', false, false, false, true, false, '', '2025-11-19T07:49:57.015Z', '2025-12-30T13:22:06.964Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'CMY-Y102SS-TR', 1750, 0, 'beklemede', false, false, true, true, false, 'kalan? toplam adet 1750 miydi?', '2025-11-24T02:41:45.396Z', '2025-11-27T12:28:06.345Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'FQ01A/AA-ISL', 1500, 0, 'beklemede', false, false, false, false, false, '', '2025-11-24T02:42:21.092Z', '2025-11-24T03:21:40.994Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'FQ01B/AA-ISL', 1500, 0, 'beklemede', false, false, false, false, false, '', '2025-11-24T02:42:41.796Z', '2025-11-24T03:21:33.315Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'FQ02/AA-ISL', 1500, 0, 'beklemede', true, true, false, false, false, '', '2025-11-24T02:43:06.092Z', '2025-11-24T03:21:20.947Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-12-30T21:00:00.000Z', 'Esat', 'x', 'MXJ-YA1509M', 21600, 0, 'beklemede', false, false, false, true, true, '', '2025-11-24T16:10:16.687Z', '2025-12-31T11:12:10.320Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-12-30T21:00:00.000Z', 'Melisa', 'x', 'MXJ-YA2512M', 21500, 0, 'beklemede', false, false, false, true, true, '', '2025-11-24T16:10:40.591Z', '2025-12-31T11:44:35.475Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25001', 'MXJ-YA2815M', 1161, 0, 'tamamlandi', true, true, true, true, true, 'Kutu ve Koli etiketli olarak hazırlandı. İzolasyon hazır. Ürünün ek parçası yok. Poşet yeterli.  Ürün paketlenmeye hazır hale geldi. Tamamlandı.
+
+A1154	B1161', '2025-09-12T12:12:50.179Z', '2025-11-06T08:26:14.321Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25001 - FO25004', 'MXJ-YA2512M', 2923, 2923, 'beklemede', true, true, true, true, true, 'A 2233	B 1804', '2025-09-12T12:14:09.607Z', '2025-11-20T09:06:04.749Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25005', 'MXJ-YA1509M', 628, 0, 'tamamlandi', true, true, true, true, true, '', '2025-09-12T12:15:26.379Z', '2025-11-06T08:28:39.883Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25005', 'FQG-B506A/Y', 900, 400, 'beklemede', true, true, true, true, true, 'A izalasyonunda 69 eksik var eksik kutu siparişi verildi bekleniyor.A eksik sebebi kontrol edilecek.
+A 725	B 901', '2025-09-12T12:16:15.499Z', '2025-12-30T09:01:49.441Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25005', 'DIS-180-1GAT', 123, 123, 'tamamlandi', true, true, true, true, true, '', '2025-09-12T12:20:26.034Z', '2025-11-13T12:32:05.765Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', '25007', 'KHRQ22M20T', 189, 189, 'tamamlandi', true, true, true, true, true, '51 ADET FAZLA GÖNDERİLDİ', '2025-09-12T12:21:04.762Z', '2025-12-30T09:01:21.061Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25007', 'DIS-22-1GAT', 200, 0, 'tamamlandi', true, true, true, true, true, '', '2025-09-12T12:21:40.899Z', '2025-11-06T08:52:23.598Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25007', 'DIS-180-1GAT', 900, 900, 'beklemede', true, true, true, true, true, 'Total: A3479	B3141 *260 gönderildi', '2025-09-12T12:22:39.435Z', '2025-11-13T12:31:18.673Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25009', 'FQG-B730A/Y', 1072, 340, 'beklemede', true, true, true, true, true, 'A 1086	B 1072', '2025-09-12T12:24:18.762Z', '2025-11-26T11:38:46.521Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25009', 'FQG-B335A/Y', 2100, 2100, 'tamamlandi', true, true, true, true, true, '160 ADET FAZLA GÖNDERİLDİ', '2025-09-12T12:24:51.930Z', '2025-12-30T08:57:17.870Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25011', 'DIS-22-GAT', 3100, 3100, 'beklemede', true, true, true, true, true, 'Total A 3287	B 3407', '2025-09-12T12:26:35.043Z', '2025-11-18T13:55:56.966Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25008', 'DIS-371-2GAT', 1000, 1000, 'beklemede', true, true, true, true, true, 'Total: A 2229	B 2099', '2025-09-12T12:28:41.855Z', '2025-11-20T06:17:32.877Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25010', 'DIS-371-2GAT', 1000, 568, 'beklemede', true, true, true, true, true, 'Total A 2229	B 2099', '2025-09-12T12:29:35.111Z', '2025-12-30T09:00:44.125Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25011', 'DIS-371-2GAT', 1500, 0, 'beklemede', true, true, true, true, true, 'Total: A 2229 B 2099', '2025-09-12T12:30:11.247Z', '2025-11-06T09:07:03.181Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25011', 'DIS-180-1GAT', 2100, 2100, 'beklemede', true, true, true, true, true, 'Total: A3479	B3141', '2025-09-12T12:31:04.494Z', '2025-11-13T12:31:55.425Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25012', 'MXJ-YA2512M', 1500, 406, 'beklemede', true, true, true, true, true, 'ort 1500-1700 adet üretimde', '2025-09-12T12:31:32.030Z', '2025-12-30T08:55:03.914Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25012', 'MXJ-YA1509M', 1500, 340, 'beklemede', true, true, true, true, true, 'Sip ve kalan adet farkı? A 659	B 850', '2025-09-12T12:31:58.727Z', '2025-12-04T06:44:46.224Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25012', 'CMY-Y102SS-TR', 1100, 936, 'hazirlanıyor', false, false, true, true, true, '', '2025-09-12T12:32:28.894Z', '2025-11-26T11:39:55.578Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-24T21:00:00.000Z', 'Melisa', 'FO25013', 'DIS-180-1GAT', 2000, 200, 'beklemede', true, true, true, true, true, 'kaynak sırasında', '2025-09-25T12:11:13.803Z', '2025-12-30T08:59:59.208Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-24T21:00:00.000Z', 'Melisa', 'FO25013', 'DIS-371-2GAT', 1500, 0, 'beklemede', true, true, true, true, false, '1500 adet üretimde', '2025-09-25T12:11:34.555Z', '2025-11-18T14:33:11.163Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-24T21:00:00.000Z', 'Melisa', 'FO25013', 'FQG-B335A (GRİ)', 1500, 449, 'beklemede', true, true, true, true, false, '', '2025-09-25T12:12:06.787Z', '2025-12-30T08:59:22.329Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-10-01T21:00:00.000Z', 'Esat', 'X', 'FQG-B335A (GRİ) (ÖNCEDEN KALAN)', 111, 111, 'beklemede', true, true, true, true, true, '', '2025-10-02T12:17:28.172Z', '2025-11-26T11:41:24.827Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-18T21:00:00.000Z', 'Esat', 'FO25014', 'FQG-B335A (GRİ)', 1500, 0, 'beklemede', false, false, false, true, false, '', '2025-11-19T07:49:57.015Z', '2026-01-02T06:03:43.577Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'CMY-Y102SS-TR', 1750, 0, 'beklemede', false, false, true, true, false, 'kalan? toplam adet 1750 miydi?', '2025-11-24T02:41:45.396Z', '2025-11-27T12:28:06.345Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'FQ01A/AA-ISL', 1500, 0, 'beklemede', false, false, false, false, false, '', '2025-11-24T02:42:21.092Z', '2025-11-24T03:21:40.994Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'FQ01B/AA-ISL', 1500, 0, 'beklemede', false, false, false, false, false, '', '2025-11-24T02:42:41.796Z', '2025-11-24T03:21:33.315Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'FQ02/AA-ISL', 1500, 0, 'beklemede', true, true, false, false, false, '', '2025-11-24T02:43:06.092Z', '2025-11-24T03:21:20.947Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'x', 'MXJ-YA1509M', 21600, 0, 'beklemede', false, false, false, true, true, '', '2025-11-24T16:10:16.687Z', '2026-01-02T06:03:43.580Z');
+INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'x', 'MXJ-YA2512M', 21500, 0, 'beklemede', false, false, false, true, true, '', '2025-11-24T16:10:40.591Z', '2026-01-02T06:03:43.580Z');
 
 -- ========================================
--- MAMUL_HISTORY (37 rows)
+-- SIPARIS_GONDERIMLER (5 rows)
 -- ========================================
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'CMY-Y102SS-TR (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 1517, 2517);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'CMY-Y102SS-TR (A)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 1473, 2473);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA2512M/R3 (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 3572, 4572);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA2512M/R3 (A)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 3687, 4687);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (B) - FOG-B506A (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 4126, 5126);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA1509M/R1 (B) - MXJ-YA2812M (B) - MXJ-YA2815M (B) - MXJ-YA3419M (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 5062, 6062);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA1509M/R1 (A) - MXJ-YA1500M', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 6263, 7263);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 2425, 3425);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Eklendi', 5, 'deneme1', 2420, 2425);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Çıkarıldı', 5, 'fo25012 sip de kullanıldı', 2425, 2420);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('tapa', '8x15 - Çin - Kırmızı', 'Çıkarıldı', 1, 'deneme', 70169, 70168);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('tapa', '8x15 - Çin - Kırmızı', 'Eklendi', 1, 'deneme', 70168, 70169);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('koli', 'B8 - 65.5*38*41', 'Çıkarıldı', 1, 'deneme', 130, 129);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('koli', 'B8 - 65.5*38*41', 'Eklendi', 1, 'deneme', 129, 130);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B1350 (A)', 'Çıkarıldı', 2, 'deneme', 51, 49);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B1350 (A)', 'Eklendi', 1, 'deneme', 50, 51);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Eklendi', 1, 'deneme', -2005, -2004);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'CMY-202S', 'Eklendi', 1, 'deneme', 1500, 1501);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('koli', 'B1', 'Eklendi', 1, 'deneme', 825, 826);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('koli', 'B1', 'Çıkarıldı', 1, 'deneme', 826, 825);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'CMY-Y102SS-TR (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 1517, 2517);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'CMY-Y102SS-TR (A)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 1473, 2473);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA2512M/R3 (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 3572, 4572);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA2512M/R3 (A)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 3687, 4687);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (B) - FOG-B506A (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 4126, 5126);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA1509M/R1 (B) - MXJ-YA2812M (B) - MXJ-YA2815M (B) - MXJ-YA3419M (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 5062, 6062);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA1509M/R1 (A) - MXJ-YA1500M', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 6263, 7263);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 2425, 3425);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Eklendi', 5, 'deneme1', 2420, 2425);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Çıkarıldı', 5, 'fo25012 sip de kullanıldı', 2425, 2420);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('tapa', '8x15 - Çin - Kırmızı', 'Çıkarıldı', 1, 'deneme', 70169, 70168);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('tapa', '8x15 - Çin - Kırmızı', 'Eklendi', 1, 'deneme', 70168, 70169);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('koli', 'B8 - 65.5*38*41', 'Çıkarıldı', 1, 'deneme', 130, 129);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('koli', 'B8 - 65.5*38*41', 'Eklendi', 1, 'deneme', 129, 130);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B1350 (A)', 'Çıkarıldı', 2, 'deneme', 51, 49);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B1350 (A)', 'Eklendi', 1, 'deneme', 50, 51);
-INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Eklendi', 1, 'deneme', -2005, -2004);
+INSERT INTO siparis_gonderimler (siparis_id, gonderen, gonderilen_adet, gonderim_tarihi, notlar) VALUES (51, '1', 1, '2025-12-31T06:33:29.360Z', '1');
+INSERT INTO siparis_gonderimler (siparis_id, gonderen, gonderilen_adet, gonderim_tarihi, notlar) VALUES (51, '1', 1, '2025-12-31T06:37:57.202Z', '1');
+INSERT INTO siparis_gonderimler (siparis_id, gonderen, gonderilen_adet, gonderim_tarihi, notlar) VALUES (50, '1', 21600, '2025-12-31T11:08:19.686Z', '');
+INSERT INTO siparis_gonderimler (siparis_id, gonderen, gonderilen_adet, gonderim_tarihi, notlar) VALUES (50, 'esat', 1, '2025-12-31T11:10:07.593Z', '1');
+INSERT INTO siparis_gonderimler (siparis_id, gonderen, gonderilen_adet, gonderim_tarihi, notlar) VALUES (51, '1', 5, '2025-12-31T11:10:44.251Z', '1');
+
+-- ========================================
+-- SIPARIS_DEGISIKLIK_LOG (14 rows)
+-- ========================================
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (50, 'Esat', 'Tarih', '2025-11-24T00:00:00.000+03:00', '2025-12-31', 'Tarih değiştirildi: "Mon Nov 24 2025 00:00:00 GMT+0300 (GMT+03:00)" → "2025-12-31"', '2025-12-31T11:09:40.309Z');
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (50, 'Esat', 'Operator', 'Melisa', 'Esat', 'Operator değiştirildi: "Melisa" → "Esat"', '2025-12-31T11:09:40.312Z');
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (50, 'Esat', 'Gönderilen Adet', '21600', '0', 'Gönderilen Adet değiştirildi: "21600" → "0"', '2025-12-31T11:09:40.314Z');
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Tarih', '2025-11-24T00:00:00.000+03:00', '2025-12-31', 'Tarih değiştirildi: "Mon Nov 24 2025 00:00:00 GMT+0300 (GMT+03:00)" → "2025-12-31"', '2025-12-31T11:11:56.129Z');
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Gönderilen Adet', '5', '0', 'Gönderilen Adet değiştirildi: "5" → "0"', '2025-12-31T11:11:56.131Z');
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (50, 'Esat', 'Tarih', '2025-12-31T00:00:00.000+03:00', '2025-12-31', 'Tarih değiştirildi: "Wed Dec 31 2025 00:00:00 GMT+0300 (GMT+03:00)" → "2025-12-31"', '2025-12-31T11:12:10.323Z');
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (50, 'Esat', 'Gönderilen Adet', '1', '0', 'Gönderilen Adet değiştirildi: "1" → "0"', '2025-12-31T11:12:10.325Z');
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Tarih', '2025-12-31T00:00:00.000+03:00', '2025-12-31', 'Tarih değiştirildi: "Wed Dec 31 2025 00:00:00 GMT+0300 (GMT+03:00)" → "2025-12-31"', '2025-12-31T11:43:25.710Z');
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Sipariş Adet', '21500', '21499', 'Sipariş Adet değiştirildi: "21500" → "21499"', '2025-12-31T11:43:25.712Z');
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Gönderilen Adet', '0', '1', 'Gönderilen Adet değiştirildi: "0" → "1"', '2025-12-31T11:43:25.714Z');
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Tarih', '2025-12-31T00:00:00.000+03:00', '2025-12-31', 'Tarih değiştirildi: "Wed Dec 31 2025 00:00:00 GMT+0300 (GMT+03:00)" → "2025-12-31"', '2025-12-31T11:44:11.221Z');
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Sipariş Adet', '21499', '21500', 'Sipariş Adet değiştirildi: "21499" → "21500"', '2025-12-31T11:44:11.224Z');
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Tarih', '2025-12-31T00:00:00.000+03:00', '2025-12-31', 'Tarih değiştirildi: "Wed Dec 31 2025 00:00:00 GMT+0300 (GMT+03:00)" → "2025-12-31"', '2025-12-31T11:44:35.478Z');
+INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Gönderilen Adet', '1', '0', 'Gönderilen Adet değiştirildi: "1" → "0"', '2025-12-31T11:44:35.480Z');
+
+-- ========================================
+-- URUN_SIPARISLER (45 rows)
+-- ========================================
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Etiket', '20 Rulo', '1000x1000', 'Melisa', 'Elimizde son bir tane kaldı.', 'geldi', '20 Rulo', '', '2025-10-01T14:43:39.170Z', '2025-11-14T13:01:01.436Z');
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Ribon', '20 Rulo', 'x', 'Melisa', 'Son 4 adet kaldı.', 'geldi', '20 Rulo', '', '2025-10-01T14:46:06.770Z', '2025-11-14T13:00:56.288Z');
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Para bandı', '30', 'x', 'Melisa', '6 adet kaldı 2000 tane sette ortalama 5 bant gidiyor.', 'bekleniyor', '', '', '2025-10-01T14:48:08.642Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Etiket', '10 rulo', '1000x500', 'Melisa', '6 adet kaldı şuanlık yetiyor ama yeni siparişlere az kalıyor.', 'geldi', '10 rulo', '', '2025-10-01T14:48:58.610Z', '2025-11-14T13:00:49.524Z');
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kumanda pili', '30', 'x', 'Melisa', 'El fenerine takılan pil şuan elimizde hiç kalmadı.', 'bekleniyor', '', '', '2025-10-01T14:49:24.138Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kilitli torba', '5 kutu', '13x16', 'Melisa', '1 kutu kaldı sadece en son gelen siparişlere yetmiyor.', 'bekleniyor', '', '', '2025-10-01T14:54:58.418Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Tapa', '20000', '22', 'Melisa', '22,23,38,57,45,28 numaralı tapalar sayıları çok az kaldı.(28 numaralı tapa dıs371 için yeni gelecek )', 'bekleniyor', '', '', '2025-10-14T13:38:51.706Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('335a gri (A) izalasyon', '2005', '335L大', 'Melisa', '', 'bekleniyor', '', '', '2025-11-19T03:42:28.387Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('335a gri (B) izalasyon', '1874', '102SN小', 'Melisa', '', 'bekleniyor', '', '', '2025-11-19T03:44:00.166Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('K-4 kutu', '27500', '45*17*6', 'Melisa', '', 'bekleniyor', '', '', '2025-11-19T03:45:13.894Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kutu k-11', '1866', '35*11.5*5', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T03:20:27.690Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('koli B-9', '45', '72*36*38', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T03:21:00.994Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('CMY-Y102SS-TR (A) izalasyon', '186', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T12:41:16.414Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('CMY-Y102SS-TR (B) izalasyon', '186', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T12:41:40.422Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kutu k-7', '19819', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:06:00.887Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('koli b-3', '1024', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:06:31.023Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('koli b-2', '1933', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:06:50.187Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('1509 (A) izalasyon', '17012', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:07:21.695Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('1509 (B) izalasyon', '18293', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:07:45.399Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('2512 (B) izalasyon', '20863', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:08:21.503Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('2512 (A) izalasyon', '20916', 'x', 'Melisa', '', 'bekleniyor', '1', 'deneme', '2025-11-24T16:08:42.207Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('deneme', '1', '1', '1', '1', 'Geldi', '1', '1', '2025-12-31T04:45:59.608Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('deneme', '1', '1', '1', 'deneme', 'Geldi', '1', '1', '2025-12-31T06:34:25.712Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('1', '2', '1', '1', '1', 'Geldi', '1', 'sdasdsadsdf', '2025-12-31T11:46:29.271Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Etiket', '20 Rulo', '1000x1000', 'Melisa', 'Elimizde son bir tane kaldı.', 'geldi', '20 Rulo', '', '2025-10-01T14:43:39.170Z', '2025-11-14T13:01:01.436Z');
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Ribon', '20 Rulo', 'x', 'Melisa', 'Son 4 adet kaldı.', 'geldi', '20 Rulo', '', '2025-10-01T14:46:06.770Z', '2025-11-14T13:00:56.288Z');
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Para bandı', '30', 'x', 'Melisa', '6 adet kaldı 2000 tane sette ortalama 5 bant gidiyor.', 'bekleniyor', '', '', '2025-10-01T14:48:08.642Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Etiket', '10 rulo', '1000x500', 'Melisa', '6 adet kaldı şuanlık yetiyor ama yeni siparişlere az kalıyor.', 'geldi', '10 rulo', '', '2025-10-01T14:48:58.610Z', '2025-11-14T13:00:49.524Z');
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kumanda pili', '30', 'x', 'Melisa', 'El fenerine takılan pil şuan elimizde hiç kalmadı.', 'bekleniyor', '', '', '2025-10-01T14:49:24.138Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kilitli torba', '5 kutu', '13x16', 'Melisa', '1 kutu kaldı sadece en son gelen siparişlere yetmiyor.', 'bekleniyor', '', '', '2025-10-01T14:54:58.418Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Tapa', '20000', '22', 'Melisa', '22,23,38,57,45,28 numaralı tapalar sayıları çok az kaldı.(28 numaralı tapa dıs371 için yeni gelecek )', 'bekleniyor', '', '', '2025-10-14T13:38:51.706Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('335a gri (A) izalasyon', '2005', '335L大', 'Melisa', '', 'bekleniyor', '', '', '2025-11-19T03:42:28.387Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('335a gri (B) izalasyon', '1874', '102SN小', 'Melisa', '', 'bekleniyor', '', '', '2025-11-19T03:44:00.166Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('K-4 kutu', '27500', '45*17*6', 'Melisa', '', 'bekleniyor', '', '', '2025-11-19T03:45:13.894Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kutu k-11', '1866', '35*11.5*5', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T03:20:27.690Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('koli B-9', '45', '72*36*38', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T03:21:00.994Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('CMY-Y102SS-TR (A) izalasyon', '186', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T12:41:16.414Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('CMY-Y102SS-TR (B) izalasyon', '186', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T12:41:40.422Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kutu k-7', '19819', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:06:00.887Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('koli b-3', '1024', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:06:31.023Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('koli b-2', '1933', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:06:50.187Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('1509 (A) izalasyon', '17012', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:07:21.695Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('1509 (B) izalasyon', '18293', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:07:45.399Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('2512 (B) izalasyon', '20863', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:08:21.503Z', NULL);
+INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('2512 (A) izalasyon', '20916', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:08:42.207Z', NULL);
+
+-- ========================================
+-- URUN_SIPARIS_DEGISIKLIK_LOG (6 rows)
+-- ========================================
+INSERT INTO urun_siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (23, '1', 'Durum', 'Beklemede', 'Geldi', 'Durum değiştirildi: "Beklemede" → "Geldi"', '2025-12-31T06:34:41.795Z');
+INSERT INTO urun_siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (23, '1', 'Gelen Adet', '-', '1', 'Gelen Adet değiştirildi: "-" → "1"', '2025-12-31T06:34:41.798Z');
+INSERT INTO urun_siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (23, '1', 'Gelen Notlar', '-', '1', 'Gelen Notlar değiştirildi: "-" → "1"', '2025-12-31T06:34:41.800Z');
+INSERT INTO urun_siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (24, '1', 'Durum', 'Beklemede', 'Geldi', 'Durum değiştirildi: "Beklemede" → "Geldi"', '2025-12-31T11:46:52.551Z');
+INSERT INTO urun_siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (24, '1', 'Gelen Adet', '-', '1', 'Gelen Adet değiştirildi: "-" → "1"', '2025-12-31T11:46:52.553Z');
+INSERT INTO urun_siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (24, '1', 'Gelen Notlar', '-', 'sdasdsadsdf', 'Gelen Notlar değiştirildi: "-" → "sdasdsadsdf"', '2025-12-31T11:46:52.555Z');
 
 -- ========================================
 -- MAMUL_IZOLASYON (34 rows)
@@ -298,6 +320,154 @@ INSERT INTO mamul_tapa (name, stock) VALUES ('18x15 - Türk - Sarı', 950);
 INSERT INTO mamul_tapa (name, stock) VALUES ('11x15 - Türk - Siyah', 1174);
 
 -- ========================================
+-- MAMUL_HISTORY (37 rows)
+-- ========================================
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'CMY-Y102SS-TR (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 1517, 2517);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'CMY-Y102SS-TR (A)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 1473, 2473);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA2512M/R3 (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 3572, 4572);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA2512M/R3 (A)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 3687, 4687);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (B) - FOG-B506A (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 4126, 5126);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA1509M/R1 (B) - MXJ-YA2812M (B) - MXJ-YA2815M (B) - MXJ-YA3419M (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 5062, 6062);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA1509M/R1 (A) - MXJ-YA1500M', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 6263, 7263);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 2425, 3425);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Eklendi', 5, 'deneme1', 2420, 2425);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Çıkarıldı', 5, 'fo25012 sip de kullanıldı', 2425, 2420);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('tapa', '8x15 - Çin - Kırmızı', 'Çıkarıldı', 1, 'deneme', 70169, 70168);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('tapa', '8x15 - Çin - Kırmızı', 'Eklendi', 1, 'deneme', 70168, 70169);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('koli', 'B8 - 65.5*38*41', 'Çıkarıldı', 1, 'deneme', 130, 129);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('koli', 'B8 - 65.5*38*41', 'Eklendi', 1, 'deneme', 129, 130);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B1350 (A)', 'Çıkarıldı', 2, 'deneme', 51, 49);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B1350 (A)', 'Eklendi', 1, 'deneme', 50, 51);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Eklendi', 1, 'deneme', -2005, -2004);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'CMY-202S', 'Eklendi', 1, 'deneme', 1500, 1501);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('koli', 'B1', 'Eklendi', 1, 'deneme', 825, 826);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('koli', 'B1', 'Çıkarıldı', 1, 'deneme', 826, 825);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'CMY-Y102SS-TR (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 1517, 2517);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'CMY-Y102SS-TR (A)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 1473, 2473);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA2512M/R3 (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 3572, 4572);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA2512M/R3 (A)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 3687, 4687);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (B) - FOG-B506A (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 4126, 5126);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA1509M/R1 (B) - MXJ-YA2812M (B) - MXJ-YA2815M (B) - MXJ-YA3419M (B)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 5062, 6062);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'MXJ-YA1509M/R1 (A) - MXJ-YA1500M', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 6263, 7263);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Eklendi', 1000, '29.12.2025 Tayfun Bey''in Getirdikleri', 2425, 3425);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Eklendi', 5, 'deneme1', 2420, 2425);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Çıkarıldı', 5, 'fo25012 sip de kullanıldı', 2425, 2420);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('tapa', '8x15 - Çin - Kırmızı', 'Çıkarıldı', 1, 'deneme', 70169, 70168);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('tapa', '8x15 - Çin - Kırmızı', 'Eklendi', 1, 'deneme', 70168, 70169);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('koli', 'B8 - 65.5*38*41', 'Çıkarıldı', 1, 'deneme', 130, 129);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('koli', 'B8 - 65.5*38*41', 'Eklendi', 1, 'deneme', 129, 130);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B1350 (A)', 'Çıkarıldı', 2, 'deneme', 51, 49);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B1350 (A)', 'Eklendi', 1, 'deneme', 50, 51);
+INSERT INTO mamul_history (category, item_name, action, amount, reason, old_stock, new_stock) VALUES ('izolasyon', 'FOG-B335A (A)', 'Eklendi', 1, 'deneme', -2005, -2004);
+
+-- ========================================
+-- IS_EMIRLERI (3 rows)
+-- ========================================
+INSERT INTO is_emirleri (is_emri_no, model, alt_grup, sablon_tipi, malzeme_adi, malzeme_kodu, siparis_adeti, uretim_adeti, tarih, durum, operasyonlar, notlar, olusturan) VALUES ('KAY2026001A', 'MXJ-YA1509M', 'A', 'KAYNAK', 'MXJ-YA1509M', 'A', 155, 155, '2026-01-01T21:00:00.000Z', 'BEKLEMEDE', ARRAY[[object Object], [object Object], [object Object]], NULL, 'Sistem');
+INSERT INTO is_emirleri (is_emri_no, model, alt_grup, sablon_tipi, malzeme_adi, malzeme_kodu, siparis_adeti, uretim_adeti, tarih, durum, operasyonlar, notlar, olusturan) VALUES ('KAY2026002A', 'MXJ-YA1509M', 'A', 'KAYNAK', 'MXJ-YA1509M', 'A', 150, 150, '2026-01-01T21:00:00.000Z', 'BEKLEMEDE', ARRAY[[object Object], [object Object], [object Object]], NULL, 'Sistem');
+INSERT INTO is_emirleri (is_emri_no, model, alt_grup, sablon_tipi, malzeme_adi, malzeme_kodu, siparis_adeti, uretim_adeti, tarih, durum, operasyonlar, notlar, olusturan) VALUES ('AKG2026001Y', 'MXJ-YA1509M', 'Y', 'YARI_MAMUL', 'MXJ-YA1509M', 'Y', 345, 345, '2026-01-01T21:00:00.000Z', 'BEKLEMEDE', ARRAY[[object Object], [object Object], [object Object], [object Object]], NULL, 'Sistem');
+
+-- ========================================
+-- KESIM_OLCULERI (80 rows)
+-- ========================================
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'A', 'Aa', '19.00', '1.00', 95, '60.00', '19.1×15.88×12.7', '47.90');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'A', 'Ab', '16.00', '0.80', 116, '55.00', '15.88×12.7×9.5', '39.50');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'A', 'Ac', '16.00', '0.80', 173, '55.00', '15.88×12.7×9.5', '58.90');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'Y', 'Y', '35.00', '1.40', 50, 'NaN', NULL, '65.90');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'B', 'Baş', '9.50', '0.70', 78, '9.00', '9.5×6.3', '13.50');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'B', 'Bb', '9.50', '0.70', 108, '28.00', '9.5×6.3', '18.60');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'B', 'Bc', '9.50', '0.70', 143, '28.00', '9.5×6.3', '24.70');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01A/AA', 'Y', 'Y', '21.00', '1.00', 35, 'NaN', NULL, '19.60');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'A', 'Aa', '22.00', '1.10', 85, '42.00', '22×19.1', '54.70');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'A', 'Ab', '19.00', '1.00', 117, '40.00', '19.1×15.88', '59.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'A', 'Ac', '19.00', '1.00', 228, '70.00', '19.1×15.88×12.7', '114.90');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.60');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'B', 'Baş', '12.70', '0.70', 68, '33.00', '12.7×9.5', '16.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'B', 'Bb', '12.70', '0.70', 96, '30.00', '12.7×9.5', '22.60');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'B', 'Bc', '12.70', '0.70', 174, '45.00', '12.7×9.5×6.3', '40.90');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ01B/AA', 'Y', 'Y', '28.00', '1.20', 42, 'NaN', NULL, '37.90');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'A', 'Aa', '54.00', '1.70', 160, '100.00', '54×42×35', '398.30');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'A', 'Ab', '42.00', '1.50', 260, '110.00', '42×35×28', '442.30');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'A', 'Ac', '28.00', '1.20', 382, '115.00', '28×25×22×19', '288.20');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'Y', 'Y', '76.00', '2.50', 100, 'NaN', NULL, '514.50');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'B', 'Baş', '22.00', '1.10', 120, '65.00', '22×19.05×15.88', '77.30');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'B', 'Bb', '22.00', '1.10', 214, '130.00', '22×19.05×15.88×12.7', '137.80');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'B', 'Bc', '16.00', '0.80', 156, 'NaN', '12.7×9.5', '53.10');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('ML01/AA', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.60');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'A', 'Aa', '28.00', '1.20', 125, '75.00', '28×25×22', '112.60');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'A', 'Ab', '28.00', '1.20', 196, '112.00', '28×25×22×19.05×15.88', '176.50');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'A', 'Ac', '19.00', '1.00', 240, '80.00', '19.05×15.88×12.7×9.5', '121.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'Y', 'Y', '47.00', '1.60', 60, 'NaN', NULL, '122.10');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'B', 'Baş', '16.00', '0.80', 98, '55.00', '15.88×12.7×9.5', '33.40');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'B', 'Bb', '16.00', '0.80', 113, '55.00', '15.88×12.7×9.5', '38.50');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'B', 'Bc', '16.00', '0.80', 184, 'NaN', '12.7×9.5×6.3', '62.70');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ02/AA', 'Y', 'Y', '35.00', '1.40', 50, 'NaN', NULL, '65.90');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'A', 'Aa', '42.00', '1.50', 146, '65.00', '42×35', '248.30');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'A', 'Ab', '42.00', '1.50', 270, '160.00', '42×35×28×25×22', '459.30');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'A', 'Ac', '28.00', '1.20', 382, '115.00', '28×25×22×19', '344.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'Y', 'Y', '76.00', '2.50', 100, 'NaN', NULL, '514.50');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'B', 'Baş', '19.00', '1.00', 80, '50.00', '19.05×15.88', '40.30');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'B', 'Bb', '19.00', '1.00', 186, '82.00', '19.05×15.88×12.7×9.5', '93.80');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'B', 'Bc', '19.00', '1.00', 190, 'NaN', '15.88×12.7×9.5×6.35', '95.80');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ03/AA', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.60');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'A', 'Aa', '45.00', '1.50', 235, '90.00', '54×42', '429.40');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'A', 'Ab', '45.00', '1.50', 284, '158.00', '54×42×35×28', '518.90');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'A', 'Ac', '32.00', '1.40', 350, '110.00', '35×28×25', '419.90');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'Y', 'Y', '79.00', '2.50', 100, 'NaN', NULL, '538.30');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'B', 'Baş', '22.00', '1.10', 160, '65.00', '22×19.05', '103.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'B', 'Bb', '22.00', '1.10', 245, '85.00', '22×19.05×15.88', '157.70');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'B', 'Bc', '19.00', '1.00', 280, '105.00', '19.05×15.88×12.7×9.5', '141.20');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('FQ04/AA', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'A', 'Aa', '19.00', '1.00', 135, '80.00', '19.2×16.1×12.7', '68.10');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'A', 'Ab', '19.00', '1.00', 225, '80.00', '19.2×16.1×12.9', '113.40');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'A', 'Ac', '19.00', '1.00', 250, '80.00', '19.2×16.1×12.9', '126.40');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.30');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'B', 'Ba', '12.70', '0.70', 115, '65.00', '12.9×9.7×6.35', '27.10');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'B', 'Bb', '12.70', '0.70', 185, '65.00', '12.9×9.7×6.5', '43.30');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'B', 'Bc', '12.70', '0.70', 206, '65.00', '12.9×9.7×6.5', '48.70');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA1509M', 'Y', 'Y', '28.00', '1.20', 42, 'NaN', NULL, '38.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'A', 'Aa', '25.00', '1.40', 160, '85.00', '28×22×19.05', '149.40');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'A', 'Ab', '25.00', '1.40', 265, '110.00', '28×22×19.05×15.88', '247.70');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'A', 'Ac', '22.00', '1.10', 275, '105.00', '22×19.2×16.1×12.9', '179.90');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'Y', 'Y', '47.00', '1.60', 65, 'NaN', NULL, '134.80');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'B', 'Ba', '16.00', '0.80', 115, '75.00', '15.88×12.9×9.7', '39.50');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'B', 'Bb', '16.00', '0.80', 180, '95.00', '15.88×12.9×9.7×6.5', '61.70');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'B', 'Bc', '12.70', '0.70', 206, '65.00', '12.9×9.7×6.5', '48.70');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA2512M', 'Y', 'Y', '28.00', '1.20', 42, 'NaN', NULL, '42.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'A', 'Aa', '42.00', '1.50', 165, '85.00', '42×35', '279.50');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'A', 'Ab', '42.00', '1.50', 325, '145.00', '42×35×28×25', '506.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'A', 'Ac', '32.00', '1.40', 335, '100.00', '35×28×25', '391.50');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'Y', 'Y', '79.40', '2.50', 100, 'NaN', NULL, '538.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'B', 'Ba', '22.00', '1.10', 135, '80.00', '22×19.2×16.1', '84.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'B', 'Bb', '19.00', '1.00', 240, '80.00', '19.2×16.1×12.9', '120.70');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'B', 'Bc', '19.00', '1.00', 285, '110.00', '19.2×16.1×12.9×9.7×6.5', '143.50');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA3419M', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.30');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'A', 'Aa', '42.00', '1.50', 120, 'NaN', NULL, '200.60');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'A', 'Ab', '42.00', '1.50', 375, '145.00', '42×35×28×25', '586.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'A', 'Ac', '32.00', '1.40', 370, '100.00', '35×28×25', '434.80');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'Y', 'Y', '79.40', '2.50', 100, 'NaN', NULL, '538.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'B', 'Ba', '22.00', '1.10', 135, '80.00', '22×19.2×16.1', '79.10');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'B', 'Bb', '22.00', '1.10', 240, '105.00', '22×19.2×16.1×12.9', '141.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'B', 'Bc', '19.00', '1.00', 260, '100.00', '19.2×16.1×12.9×9.7', '131.00');
+INSERT INTO kesim_olculeri (model, alt_grup, parca, dis_cap, et_kalinligi, uzunluk, genisletme, punch, birim_agirlik) VALUES ('MXJ-YA4119M', 'Y', 'Y', '41.00', '1.50', 57, 'NaN', NULL, '94.30');
+
+-- ========================================
+-- URUN_RECETESI (12 rows)
+-- ========================================
+INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('MXJ-YA2512M/R', 'MXJ-YA2512M/R', '', 'B2 - 56.5*34.4*38.2', 10, '2025-12-31T20:33:45.602Z', '2025-12-31T20:33:45.602Z', 'K7 - 55.5*16.5*7.2');
+INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('DIS-22-1GAT', 'DIS-22-1GAT', '', 'B1 - 70*46*28', 35, '2026-01-02T06:21:31.049Z', '2026-01-02T06:21:31.049Z', 'K1 - 45*13.5*3.5');
+INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('DIS-180-1GAT', 'DIS-180-1GAT', '', 'B2 - 56.5*34.4*38.2', 20, '2026-01-02T06:25:43.192Z', '2026-01-02T06:25:43.192Z', 'K3 - 55.5*16.5*3.5');
+INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('FQG-B730A-Y', 'FQG-B730A-Y', '', 'B2 - 56.5*34.4*38.2', 10, '2026-01-02T06:29:20.970Z', '2026-01-02T06:29:20.970Z', 'K7 - 55.5*16.5*7.2');
+INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('KHRQ22M20T', 'KHRQ22M20T', '', 'B2 - 56.5*34.4*38.2', 10, '2026-01-02T08:00:33.873Z', '2026-01-02T08:00:33.873Z', 'K7 - 55.5*16.5*7.2');
+INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('FQG-335A', 'FQG-335A', '', 'B3 - 68.5*45.5*32', 20, '2026-01-02T08:04:37.683Z', '2026-01-02T08:04:37.683Z', 'K4 - 45*17*6');
+INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('FQG-335A-Y', 'FQG-335A-Y', '', 'B3 - 68.5*45.5*32', 20, '2026-01-02T08:07:37.461Z', '2026-01-02T08:07:37.461Z', 'K4 - 45*17*6');
+INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('FQG-B506A-Y', 'FQG-B506A-Y', '', 'B3 - 68.5*45.5*32', 20, '2026-01-02T08:10:03.197Z', '2026-01-02T08:10:03.197Z', 'K4 - 45*17*6');
+INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('DIS-371-2GAT', 'DIS-371-2GAT', '', '📦 B8 - 65.5*38*41', 16, '2026-01-02T08:20:36.342Z', '2026-01-02T08:20:36.342Z', 'K10 - 63.5*17.5*4.5');
+INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('MXJ-YA2815M/R', 'MXJ-YA2815M/R', '', '📦 B8 - 65.5*38*41', 10, '2026-01-02T08:23:00.713Z', '2026-01-02T08:23:00.713Z', 'K9 - 63.5 × 17.5 × 7');
+INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('CMY-Y102SS-TR', 'CMY-Y102SS-TR', '', 'B9 - 72*36*38 CMY-Y102SS', 42, '2026-01-02T08:25:13.007Z', '2026-01-02T08:25:13.007Z', 'K11 - 35*11.5*5');
+INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('MXJ-YA1509M-R1', 'MXJ-YA1509M-R1', '', 'B3 - 68.5*45.5*32', 20, '2026-01-02T08:30:02.368Z', '2026-01-02T08:30:02.368Z', 'K4 - 45*17*6');
+
+-- ========================================
 -- RECETE_MALZEMELER (77 rows)
 -- ========================================
 INSERT INTO recete_malzemeler (urun_id, malzeme_tipi, malzeme_kodu, malzeme_adi, adet, birim, kategori, notlar, olusturma_tarihi) VALUES (20, 'Tapa', '19x20 - Çin - Kırmızı', '', 1, 'adet', 'Paketleme', '', '2025-12-31T20:34:46.889Z');
@@ -377,6 +547,17 @@ INSERT INTO recete_malzemeler (urun_id, malzeme_tipi, malzeme_kodu, malzeme_adi,
 INSERT INTO recete_malzemeler (urun_id, malzeme_tipi, malzeme_kodu, malzeme_adi, adet, birim, kategori, notlar, olusturma_tarihi) VALUES (31, 'İzolasyon', 'MXJ-YA1509M/R1 (B) - MXJ-YA2812M (B) - MXJ-YA2815M (B) -  MXJ-YA3419M (B)', '1509小 - B15K - MAVİ', 1, 'adet', 'B', '', '2026-01-02T08:30:36.856Z');
 INSERT INTO recete_malzemeler (urun_id, malzeme_tipi, malzeme_kodu, malzeme_adi, adet, birim, kategori, notlar, olusturma_tarihi) VALUES (31, 'Tapa', '14x15 - Çin - Kırmızı', '', 3, 'adet', 'A', '', '2026-01-02T08:30:46.739Z');
 INSERT INTO recete_malzemeler (urun_id, malzeme_tipi, malzeme_kodu, malzeme_adi, adet, birim, kategori, notlar, olusturma_tarihi) VALUES (31, 'Tapa', '8x15 - Çin - Kırmızı', '', 3, 'adet', 'B', '', '2026-01-02T08:31:04.310Z');
+
+-- ========================================
+-- SIPARIS_HESAPLAMA_KAYITLARI (7 rows)
+-- ========================================
+INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('1', 10, 'Test User', '2025-12-31T19:34:21.750Z', [object Object], false, NULL, NULL, [object Object], NULL);
+INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('1', 50, 'Test User', '2025-12-31T19:35:38.347Z', [object Object], true, '2025-12-31T19:35:50.765Z', 'Test User', [object Object], NULL);
+INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('MXJ-YA2512M/R3', 1000, 'Esat', '2025-12-31T19:50:46.381Z', [object Object], false, NULL, NULL, [object Object], NULL);
+INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('MXJ-YA2512M/R', 100, 'Esat', '2025-12-31T20:37:00.491Z', [object Object], true, '2025-12-31T20:40:09.799Z', 'Esat', [object Object], NULL);
+INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('MXJ-YA2512M/R', 100, '1', '2026-01-02T03:04:56.568Z', [object Object], false, NULL, NULL, [object Object], NULL);
+INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('DIS-180-1GAT', 50, 'esat', '2026-01-02T08:31:50.138Z', [object Object], false, NULL, NULL, [object Object], NULL);
+INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('DIS-180-1GAT', 1500, 'esat', '2026-01-02T19:48:13.291Z', [object Object], false, NULL, NULL, [object Object], NULL);
 
 -- ========================================
 -- SIMULASYON_STOK (189 rows)
@@ -592,171 +773,34 @@ INSERT INTO simulasyon_stok_hareket_log (stok_id, islem_turu, miktar, onceki_sto
 INSERT INTO simulasyon_stok_hareket_log (stok_id, islem_turu, miktar, onceki_stok, yeni_stok, yapan, sebep, tarih) VALUES (6, 'kullanim', 10, -1685, -1695, 'Sistem', 'Sipariş Hesaplama - MXJ-YA2512M/R - 100 adet', '2025-12-31T20:40:09.799Z');
 
 -- ========================================
--- SIPARIS_DEGISIKLIK_LOG (14 rows)
+-- SUREC_URUNLER (26 rows)
 -- ========================================
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (50, 'Esat', 'Tarih', '2025-11-24T00:00:00.000+03:00', '2025-12-31', 'Tarih değiştirildi: "Mon Nov 24 2025 00:00:00 GMT+0300 (GMT+03:00)" → "2025-12-31"', '2025-12-31T11:09:40.309Z');
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (50, 'Esat', 'Operator', 'Melisa', 'Esat', 'Operator değiştirildi: "Melisa" → "Esat"', '2025-12-31T11:09:40.312Z');
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (50, 'Esat', 'Gönderilen Adet', '21600', '0', 'Gönderilen Adet değiştirildi: "21600" → "0"', '2025-12-31T11:09:40.314Z');
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Tarih', '2025-11-24T00:00:00.000+03:00', '2025-12-31', 'Tarih değiştirildi: "Mon Nov 24 2025 00:00:00 GMT+0300 (GMT+03:00)" → "2025-12-31"', '2025-12-31T11:11:56.129Z');
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Gönderilen Adet', '5', '0', 'Gönderilen Adet değiştirildi: "5" → "0"', '2025-12-31T11:11:56.131Z');
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (50, 'Esat', 'Tarih', '2025-12-31T00:00:00.000+03:00', '2025-12-31', 'Tarih değiştirildi: "Wed Dec 31 2025 00:00:00 GMT+0300 (GMT+03:00)" → "2025-12-31"', '2025-12-31T11:12:10.323Z');
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (50, 'Esat', 'Gönderilen Adet', '1', '0', 'Gönderilen Adet değiştirildi: "1" → "0"', '2025-12-31T11:12:10.325Z');
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Tarih', '2025-12-31T00:00:00.000+03:00', '2025-12-31', 'Tarih değiştirildi: "Wed Dec 31 2025 00:00:00 GMT+0300 (GMT+03:00)" → "2025-12-31"', '2025-12-31T11:43:25.710Z');
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Sipariş Adet', '21500', '21499', 'Sipariş Adet değiştirildi: "21500" → "21499"', '2025-12-31T11:43:25.712Z');
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Gönderilen Adet', '0', '1', 'Gönderilen Adet değiştirildi: "0" → "1"', '2025-12-31T11:43:25.714Z');
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Tarih', '2025-12-31T00:00:00.000+03:00', '2025-12-31', 'Tarih değiştirildi: "Wed Dec 31 2025 00:00:00 GMT+0300 (GMT+03:00)" → "2025-12-31"', '2025-12-31T11:44:11.221Z');
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Sipariş Adet', '21499', '21500', 'Sipariş Adet değiştirildi: "21499" → "21500"', '2025-12-31T11:44:11.224Z');
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Tarih', '2025-12-31T00:00:00.000+03:00', '2025-12-31', 'Tarih değiştirildi: "Wed Dec 31 2025 00:00:00 GMT+0300 (GMT+03:00)" → "2025-12-31"', '2025-12-31T11:44:35.478Z');
-INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (51, '1', 'Gönderilen Adet', '1', '0', 'Gönderilen Adet değiştirildi: "1" → "0"', '2025-12-31T11:44:35.480Z');
-
--- ========================================
--- SIPARIS_GONDERIMLER (5 rows)
--- ========================================
-INSERT INTO siparis_gonderimler (siparis_id, gonderen, gonderilen_adet, gonderim_tarihi, notlar) VALUES (51, '1', 1, '2025-12-31T06:33:29.360Z', '1');
-INSERT INTO siparis_gonderimler (siparis_id, gonderen, gonderilen_adet, gonderim_tarihi, notlar) VALUES (51, '1', 1, '2025-12-31T06:37:57.202Z', '1');
-INSERT INTO siparis_gonderimler (siparis_id, gonderen, gonderilen_adet, gonderim_tarihi, notlar) VALUES (50, '1', 21600, '2025-12-31T11:08:19.686Z', '');
-INSERT INTO siparis_gonderimler (siparis_id, gonderen, gonderilen_adet, gonderim_tarihi, notlar) VALUES (50, 'esat', 1, '2025-12-31T11:10:07.593Z', '1');
-INSERT INTO siparis_gonderimler (siparis_id, gonderen, gonderilen_adet, gonderim_tarihi, notlar) VALUES (51, '1', 5, '2025-12-31T11:10:44.251Z', '1');
-
--- ========================================
--- SIPARIS_HAZIRLIK (58 rows)
--- ========================================
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25001', 'MXJ-YA2815M', 1161, 0, 'tamamlandi', true, true, true, true, true, 'Kutu ve Koli etiketli olarak hazırlandı. İzolasyon hazır. Ürünün ek parçası yok. Poşet yeterli.  Ürün paketlenmeye hazır hale geldi. Tamamlandı.
-
-A1154	B1161', '2025-09-12T12:12:50.179Z', '2025-11-06T08:26:14.321Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25001 - FO25004', 'MXJ-YA2512M', 2923, 2923, 'beklemede', true, true, true, true, true, 'A 2233	B 1804', '2025-09-12T12:14:09.607Z', '2025-11-20T09:06:04.749Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25005', 'MXJ-YA1509M', 628, 0, 'tamamlandi', true, true, true, true, true, '', '2025-09-12T12:15:26.379Z', '2025-11-06T08:28:39.883Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25005', 'FQG-B506A/Y', 900, 400, 'beklemede', true, true, true, true, true, 'A izalasyonunda 69 eksik var eksik kutu siparişi verildi bekleniyor.A eksik sebebi kontrol edilecek.
-A 725	B 901', '2025-09-12T12:16:15.499Z', '2025-12-30T09:01:49.441Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25005', 'DIS-180-1GAT', 123, 123, 'tamamlandi', true, true, true, true, true, '', '2025-09-12T12:20:26.034Z', '2025-11-13T12:32:05.765Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', '25007', 'KHRQ22M20T', 189, 189, 'tamamlandi', true, true, true, true, true, '51 ADET FAZLA GÖNDERİLDİ', '2025-09-12T12:21:04.762Z', '2025-12-30T09:01:21.061Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25007', 'DIS-22-1GAT', 200, 0, 'tamamlandi', true, true, true, true, true, '', '2025-09-12T12:21:40.899Z', '2025-11-06T08:52:23.598Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25007', 'DIS-180-1GAT', 900, 900, 'beklemede', true, true, true, true, true, 'Total: A3479	B3141 *260 gönderildi', '2025-09-12T12:22:39.435Z', '2025-11-13T12:31:18.673Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25009', 'FQG-B730A/Y', 1072, 340, 'beklemede', true, true, true, true, true, 'A 1086	B 1072', '2025-09-12T12:24:18.762Z', '2025-11-26T11:38:46.521Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25009', 'FQG-B335A/Y', 2100, 2100, 'tamamlandi', true, true, true, true, true, '160 ADET FAZLA GÖNDERİLDİ', '2025-09-12T12:24:51.930Z', '2025-12-30T08:57:17.870Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25011', 'DIS-22-GAT', 3100, 3100, 'beklemede', true, true, true, true, true, 'Total A 3287	B 3407', '2025-09-12T12:26:35.043Z', '2025-11-18T13:55:56.966Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25008', 'DIS-371-2GAT', 1000, 1000, 'beklemede', true, true, true, true, true, 'Total: A 2229	B 2099', '2025-09-12T12:28:41.855Z', '2025-11-20T06:17:32.877Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25010', 'DIS-371-2GAT', 1000, 568, 'beklemede', true, true, true, true, true, 'Total A 2229	B 2099', '2025-09-12T12:29:35.111Z', '2025-12-30T09:00:44.125Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25011', 'DIS-371-2GAT', 1500, 0, 'beklemede', true, true, true, true, true, 'Total: A 2229 B 2099', '2025-09-12T12:30:11.247Z', '2025-11-06T09:07:03.181Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25011', 'DIS-180-1GAT', 2100, 2100, 'beklemede', true, true, true, true, true, 'Total: A3479	B3141', '2025-09-12T12:31:04.494Z', '2025-11-13T12:31:55.425Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25012', 'MXJ-YA2512M', 1500, 406, 'beklemede', true, true, true, true, true, 'ort 1500-1700 adet üretimde', '2025-09-12T12:31:32.030Z', '2025-12-30T08:55:03.914Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25012', 'MXJ-YA1509M', 1500, 340, 'beklemede', true, true, true, true, true, 'Sip ve kalan adet farkı? A 659	B 850', '2025-09-12T12:31:58.727Z', '2025-12-04T06:44:46.224Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25012', 'CMY-Y102SS-TR', 1100, 936, 'hazirlanıyor', false, false, true, true, true, '', '2025-09-12T12:32:28.894Z', '2025-11-26T11:39:55.578Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-24T21:00:00.000Z', 'Melisa', 'FO25013', 'DIS-180-1GAT', 2000, 200, 'beklemede', true, true, true, true, true, 'kaynak sırasında', '2025-09-25T12:11:13.803Z', '2025-12-30T08:59:59.208Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-24T21:00:00.000Z', 'Melisa', 'FO25013', 'DIS-371-2GAT', 1500, 0, 'beklemede', true, true, true, true, false, '1500 adet üretimde', '2025-09-25T12:11:34.555Z', '2025-11-18T14:33:11.163Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-24T21:00:00.000Z', 'Melisa', 'FO25013', 'FQG-B335A (GRİ)', 1500, 449, 'beklemede', true, true, true, true, false, '', '2025-09-25T12:12:06.787Z', '2025-12-30T08:59:22.329Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-10-01T21:00:00.000Z', 'Esat', 'X', 'FQG-B335A (GRİ) (ÖNCEDEN KALAN)', 111, 111, 'beklemede', true, true, true, true, true, '', '2025-10-02T12:17:28.172Z', '2025-11-26T11:41:24.827Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-18T21:00:00.000Z', 'Esat', 'FO25014', 'FQG-B335A (GRİ)', 1500, 0, 'beklemede', false, false, false, true, false, '', '2025-11-19T07:49:57.015Z', '2025-12-30T13:22:06.964Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'CMY-Y102SS-TR', 1750, 0, 'beklemede', false, false, true, true, false, 'kalan? toplam adet 1750 miydi?', '2025-11-24T02:41:45.396Z', '2025-11-27T12:28:06.345Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'FQ01A/AA-ISL', 1500, 0, 'beklemede', false, false, false, false, false, '', '2025-11-24T02:42:21.092Z', '2025-11-24T03:21:40.994Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'FQ01B/AA-ISL', 1500, 0, 'beklemede', false, false, false, false, false, '', '2025-11-24T02:42:41.796Z', '2025-11-24T03:21:33.315Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'FQ02/AA-ISL', 1500, 0, 'beklemede', true, true, false, false, false, '', '2025-11-24T02:43:06.092Z', '2025-11-24T03:21:20.947Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-12-30T21:00:00.000Z', 'Esat', 'x', 'MXJ-YA1509M', 21600, 0, 'beklemede', false, false, false, true, true, '', '2025-11-24T16:10:16.687Z', '2025-12-31T11:12:10.320Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-12-30T21:00:00.000Z', 'Melisa', 'x', 'MXJ-YA2512M', 21500, 0, 'beklemede', false, false, false, true, true, '', '2025-11-24T16:10:40.591Z', '2025-12-31T11:44:35.475Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25001', 'MXJ-YA2815M', 1161, 0, 'tamamlandi', true, true, true, true, true, 'Kutu ve Koli etiketli olarak hazırlandı. İzolasyon hazır. Ürünün ek parçası yok. Poşet yeterli.  Ürün paketlenmeye hazır hale geldi. Tamamlandı.
-
-A1154	B1161', '2025-09-12T12:12:50.179Z', '2025-11-06T08:26:14.321Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25001 - FO25004', 'MXJ-YA2512M', 2923, 2923, 'beklemede', true, true, true, true, true, 'A 2233	B 1804', '2025-09-12T12:14:09.607Z', '2025-11-20T09:06:04.749Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25005', 'MXJ-YA1509M', 628, 0, 'tamamlandi', true, true, true, true, true, '', '2025-09-12T12:15:26.379Z', '2025-11-06T08:28:39.883Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25005', 'FQG-B506A/Y', 900, 400, 'beklemede', true, true, true, true, true, 'A izalasyonunda 69 eksik var eksik kutu siparişi verildi bekleniyor.A eksik sebebi kontrol edilecek.
-A 725	B 901', '2025-09-12T12:16:15.499Z', '2025-12-30T09:01:49.441Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25005', 'DIS-180-1GAT', 123, 123, 'tamamlandi', true, true, true, true, true, '', '2025-09-12T12:20:26.034Z', '2025-11-13T12:32:05.765Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', '25007', 'KHRQ22M20T', 189, 189, 'tamamlandi', true, true, true, true, true, '51 ADET FAZLA GÖNDERİLDİ', '2025-09-12T12:21:04.762Z', '2025-12-30T09:01:21.061Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25007', 'DIS-22-1GAT', 200, 0, 'tamamlandi', true, true, true, true, true, '', '2025-09-12T12:21:40.899Z', '2025-11-06T08:52:23.598Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25007', 'DIS-180-1GAT', 900, 900, 'beklemede', true, true, true, true, true, 'Total: A3479	B3141 *260 gönderildi', '2025-09-12T12:22:39.435Z', '2025-11-13T12:31:18.673Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25009', 'FQG-B730A/Y', 1072, 340, 'beklemede', true, true, true, true, true, 'A 1086	B 1072', '2025-09-12T12:24:18.762Z', '2025-11-26T11:38:46.521Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25009', 'FQG-B335A/Y', 2100, 2100, 'tamamlandi', true, true, true, true, true, '160 ADET FAZLA GÖNDERİLDİ', '2025-09-12T12:24:51.930Z', '2025-12-30T08:57:17.870Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25011', 'DIS-22-GAT', 3100, 3100, 'beklemede', true, true, true, true, true, 'Total A 3287	B 3407', '2025-09-12T12:26:35.043Z', '2025-11-18T13:55:56.966Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25008', 'DIS-371-2GAT', 1000, 1000, 'beklemede', true, true, true, true, true, 'Total: A 2229	B 2099', '2025-09-12T12:28:41.855Z', '2025-11-20T06:17:32.877Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25010', 'DIS-371-2GAT', 1000, 568, 'beklemede', true, true, true, true, true, 'Total A 2229	B 2099', '2025-09-12T12:29:35.111Z', '2025-12-30T09:00:44.125Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25011', 'DIS-371-2GAT', 1500, 0, 'beklemede', true, true, true, true, true, 'Total: A 2229 B 2099', '2025-09-12T12:30:11.247Z', '2025-11-06T09:07:03.181Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25011', 'DIS-180-1GAT', 2100, 2100, 'beklemede', true, true, true, true, true, 'Total: A3479	B3141', '2025-09-12T12:31:04.494Z', '2025-11-13T12:31:55.425Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25012', 'MXJ-YA2512M', 1500, 406, 'beklemede', true, true, true, true, true, 'ort 1500-1700 adet üretimde', '2025-09-12T12:31:32.030Z', '2025-12-30T08:55:03.914Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25012', 'MXJ-YA1509M', 1500, 340, 'beklemede', true, true, true, true, true, 'Sip ve kalan adet farkı? A 659	B 850', '2025-09-12T12:31:58.727Z', '2025-12-04T06:44:46.224Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-11T21:00:00.000Z', 'Esat', 'FO25012', 'CMY-Y102SS-TR', 1100, 936, 'hazirlanıyor', false, false, true, true, true, '', '2025-09-12T12:32:28.894Z', '2025-11-26T11:39:55.578Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-24T21:00:00.000Z', 'Melisa', 'FO25013', 'DIS-180-1GAT', 2000, 200, 'beklemede', true, true, true, true, true, 'kaynak sırasında', '2025-09-25T12:11:13.803Z', '2025-12-30T08:59:59.208Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-24T21:00:00.000Z', 'Melisa', 'FO25013', 'DIS-371-2GAT', 1500, 0, 'beklemede', true, true, true, true, false, '1500 adet üretimde', '2025-09-25T12:11:34.555Z', '2025-11-18T14:33:11.163Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-09-24T21:00:00.000Z', 'Melisa', 'FO25013', 'FQG-B335A (GRİ)', 1500, 449, 'beklemede', true, true, true, true, false, '', '2025-09-25T12:12:06.787Z', '2025-12-30T08:59:22.329Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-10-01T21:00:00.000Z', 'Esat', 'X', 'FQG-B335A (GRİ) (ÖNCEDEN KALAN)', 111, 111, 'beklemede', true, true, true, true, true, '', '2025-10-02T12:17:28.172Z', '2025-11-26T11:41:24.827Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-18T21:00:00.000Z', 'Esat', 'FO25014', 'FQG-B335A (GRİ)', 1500, 0, 'beklemede', false, false, false, true, false, '', '2025-11-19T07:49:57.015Z', '2026-01-02T06:03:43.577Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'CMY-Y102SS-TR', 1750, 0, 'beklemede', false, false, true, true, false, 'kalan? toplam adet 1750 miydi?', '2025-11-24T02:41:45.396Z', '2025-11-27T12:28:06.345Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'FQ01A/AA-ISL', 1500, 0, 'beklemede', false, false, false, false, false, '', '2025-11-24T02:42:21.092Z', '2025-11-24T03:21:40.994Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'FQ01B/AA-ISL', 1500, 0, 'beklemede', false, false, false, false, false, '', '2025-11-24T02:42:41.796Z', '2025-11-24T03:21:33.315Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'FO25015', 'FQ02/AA-ISL', 1500, 0, 'beklemede', true, true, false, false, false, '', '2025-11-24T02:43:06.092Z', '2025-11-24T03:21:20.947Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'x', 'MXJ-YA1509M', 21600, 0, 'beklemede', false, false, false, true, true, '', '2025-11-24T16:10:16.687Z', '2026-01-02T06:03:43.580Z');
-INSERT INTO siparis_hazirlik (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, olusturma_tarihi, son_guncelleme) VALUES ('2025-11-23T21:00:00.000Z', 'Melisa', 'x', 'MXJ-YA2512M', 21500, 0, 'beklemede', false, false, false, true, true, '', '2025-11-24T16:10:40.591Z', '2026-01-02T06:03:43.580Z');
-
--- ========================================
--- SIPARIS_HESAPLAMA_KAYITLARI (7 rows)
--- ========================================
-INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('1', 10, 'Test User', '2025-12-31T19:34:21.750Z', [object Object], false, NULL, NULL, [object Object], NULL);
-INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('1', 50, 'Test User', '2025-12-31T19:35:38.347Z', [object Object], true, '2025-12-31T19:35:50.765Z', 'Test User', [object Object], NULL);
-INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('MXJ-YA2512M/R3', 1000, 'Esat', '2025-12-31T19:50:46.381Z', [object Object], false, NULL, NULL, [object Object], NULL);
-INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('MXJ-YA2512M/R', 100, 'Esat', '2025-12-31T20:37:00.491Z', [object Object], true, '2025-12-31T20:40:09.799Z', 'Esat', [object Object], NULL);
-INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('MXJ-YA2512M/R', 100, '1', '2026-01-02T03:04:56.568Z', [object Object], false, NULL, NULL, [object Object], NULL);
-INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('DIS-180-1GAT', 50, 'esat', '2026-01-02T08:31:50.138Z', [object Object], false, NULL, NULL, [object Object], NULL);
-INSERT INTO siparis_hesaplama_kayitlari (urun_kodu, siparis_adet, hesaplayan, hesaplama_tarihi, hesaplama_sonucu, stok_dusumleri_yapildi, stok_dusum_tarihi, stok_dusumleri_yapan, eslestirme_sonuclari, notlar) VALUES ('DIS-180-1GAT', 1500, 'esat', '2026-01-02T19:48:13.291Z', [object Object], false, NULL, NULL, [object Object], NULL);
-
--- ========================================
--- SUREC_HAREKET_LOG (23 rows)
--- ========================================
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 1, NULL, 'esat', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 1, NULL, 'esat', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (12, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 1, NULL, 'esat', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 2, NULL, 'esat', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', 2, NULL, 'esat', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', 2, NULL, 'esat', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 2, NULL, 'esat', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 2, NULL, 'esat', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (12, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 13, NULL, 'esat', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 10, NULL, 'e', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 10, NULL, 'e', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', 10, NULL, 'e', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', 8, NULL, 'e', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 9, NULL, 'e', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 8, NULL, 'e', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 2, NULL, 'e', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 3, NULL, 'e', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', 2, NULL, 'e', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', 3, NULL, 'e', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 2, NULL, 'e', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 2, NULL, 'e', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 1, NULL, 'e', NULL);
-INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 1, NULL, 'e', NULL);
-
--- ========================================
--- SUREC_SEVK_EDILEN (3 rows)
--- ========================================
-INSERT INTO surec_sevk_edilen (tip, urun_kodu_base, tarih, adet, gonderildigi_yer, irsaliye_numarasi, notlar, created_by) VALUES ('Joint', 'CMY-Y102SS-TR (A)', '2026-01-01T21:00:00.000Z', 3, NULL, NULL, NULL, 'e');
-INSERT INTO surec_sevk_edilen (tip, urun_kodu_base, tarih, adet, gonderildigi_yer, irsaliye_numarasi, notlar, created_by) VALUES ('Joint', 'CMY-Y102SS-TR', '2026-01-01T21:00:00.000Z', 2, NULL, NULL, NULL, 'e');
-INSERT INTO surec_sevk_edilen (tip, urun_kodu_base, tarih, adet, gonderildigi_yer, irsaliye_numarasi, notlar, created_by) VALUES ('Joint', 'CMY-Y102SS-TR', '2026-01-02T21:00:00.000Z', 1, NULL, NULL, NULL, 'e');
-
--- ========================================
--- SUREC_SEVKE_HAZIR (4 rows)
--- ========================================
-INSERT INTO surec_sevke_hazir (urun_kodu_base, adet, koli_sayisi, updated_by) VALUES ('FQG-335A (B)', 14, 0, 'esat');
-INSERT INTO surec_sevke_hazir (urun_kodu_base, adet, koli_sayisi, updated_by) VALUES ('CMY-Y102SS-TR (A)', 8, 0, 'e');
-INSERT INTO surec_sevke_hazir (urun_kodu_base, adet, koli_sayisi, updated_by) VALUES ('CMY-Y102SS-TR (B)', 10, 0, 'e');
-INSERT INTO surec_sevke_hazir (urun_kodu_base, adet, koli_sayisi, updated_by) VALUES ('CMY-Y102SS-TR', 0, 0, 'e');
-
--- ========================================
--- SUREC_TEMIZLEMEDE_OLAN (4 rows)
--- ========================================
-INSERT INTO surec_temizlemede_olan (urun_id, adet, updated_by) VALUES (25, 14, 'Excel Import');
-INSERT INTO surec_temizlemede_olan (urun_id, adet, updated_by) VALUES (26, 70, 'Excel Import');
-INSERT INTO surec_temizlemede_olan (urun_id, adet, updated_by) VALUES (23, 0, 'e');
-INSERT INTO surec_temizlemede_olan (urun_id, adet, updated_by) VALUES (24, 2, 'e');
-
--- ========================================
--- SUREC_TEMIZLEMEDEN_GELEN (7 rows)
--- ========================================
-INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (2, '0.00', 322, 'Excel Import');
-INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (10, '0.00', 20, 'Excel Import');
-INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (12, '0.00', 0, 'esat');
-INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (14, '0.00', 15, 'Excel Import');
-INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (20, '0.00', 123, 'Excel Import');
-INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (23, '0.00', 0, 'e');
-INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (24, '0.00', 0, 'e');
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'MXJ-YA2512M/R (A)', 'MXJ-YA2512M/R (A)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'MXJ-YA2512M/R (B)', 'MXJ-YA2512M/R (B)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'DIS-371-2GAT (A)', 'DIS-371-2GAT (A)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'DIS-371-2GAT (B)', 'DIS-371-2GAT (B)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'DIS-180-2GAT (A)', 'DIS-180-2GAT (A)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'DIS-180-2GAT (B)', 'DIS-180-2GAT (B)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'DIS-22-1GAT (A)', 'DIS-22-1GAT (A)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'DIS-22-1GAT (B)', 'DIS-22-1GAT (B)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'KHRQ22M20T (A)', 'KHRQ22M20T (A)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'KHRQ22M20T (B)', 'KHRQ22M20T (B)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-335A (A)', 'FQG-335A (A)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-335A (B)', 'FQG-335A (B)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-335A-Y (A)', 'FQG-335A-Y (A)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-335A-Y (B)', 'FQG-335A-Y (B)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-B506A-Y (A)', 'FQG-B506A-Y (A)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-B506A-Y (B)', 'FQG-B506A-Y (B)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-B730A-Y (A)', 'FQG-B730A-Y (A)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-B730A-Y (B)', 'FQG-B730A-Y (B)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'MXJ-YA1509M-R1 (A)', 'MXJ-YA1509M-R1 (A)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'MXJ-YA1509M-R1 (B)', 'MXJ-YA1509M-R1 (B)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'MXJ-YA2815M/R (A)', 'MXJ-YA2815M/R (A)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'MXJ-YA2815M/R (B)', 'MXJ-YA2815M/R (B)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'CMY-Y102SS-TR (A)', 'CMY-Y102SS-TR (A)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'CMY-Y102SS-TR (B)', 'CMY-Y102SS-TR (B)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-B1350A (A)', 'FQG-B1350A (A)', true);
+INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-B506 (A)', 'FQG-B506 (A)', true);
 
 -- ========================================
 -- SUREC_TEMIZLEMEYE_GIDECEK (25 rows)
@@ -788,34 +832,76 @@ INSERT INTO surec_temizlemeye_gidecek (urun_id, adet, updated_by) VALUES (24, 3,
 INSERT INTO surec_temizlemeye_gidecek (urun_id, adet, updated_by) VALUES (25, 14, 'Excel Import');
 
 -- ========================================
--- SUREC_URUNLER (26 rows)
+-- SUREC_TEMIZLEMEDE_OLAN (4 rows)
 -- ========================================
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'MXJ-YA2512M/R (A)', 'MXJ-YA2512M/R (A)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'MXJ-YA2512M/R (B)', 'MXJ-YA2512M/R (B)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'DIS-371-2GAT (A)', 'DIS-371-2GAT (A)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'DIS-371-2GAT (B)', 'DIS-371-2GAT (B)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'DIS-180-2GAT (A)', 'DIS-180-2GAT (A)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'DIS-180-2GAT (B)', 'DIS-180-2GAT (B)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'DIS-22-1GAT (A)', 'DIS-22-1GAT (A)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'DIS-22-1GAT (B)', 'DIS-22-1GAT (B)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'KHRQ22M20T (A)', 'KHRQ22M20T (A)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'KHRQ22M20T (B)', 'KHRQ22M20T (B)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-335A (A)', 'FQG-335A (A)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-335A (B)', 'FQG-335A (B)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-335A-Y (A)', 'FQG-335A-Y (A)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-335A-Y (B)', 'FQG-335A-Y (B)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-B506A-Y (A)', 'FQG-B506A-Y (A)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-B506A-Y (B)', 'FQG-B506A-Y (B)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-B730A-Y (A)', 'FQG-B730A-Y (A)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-B730A-Y (B)', 'FQG-B730A-Y (B)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'MXJ-YA1509M-R1 (A)', 'MXJ-YA1509M-R1 (A)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'MXJ-YA1509M-R1 (B)', 'MXJ-YA1509M-R1 (B)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'MXJ-YA2815M/R (A)', 'MXJ-YA2815M/R (A)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'MXJ-YA2815M/R (B)', 'MXJ-YA2815M/R (B)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'CMY-Y102SS-TR (A)', 'CMY-Y102SS-TR (A)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'CMY-Y102SS-TR (B)', 'CMY-Y102SS-TR (B)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-B1350A (A)', 'FQG-B1350A (A)', true);
-INSERT INTO surec_urunler (tip, urun_kodu, urun_kodu_base, aktif) VALUES ('A', 'FQG-B506 (A)', 'FQG-B506 (A)', true);
+INSERT INTO surec_temizlemede_olan (urun_id, adet, updated_by) VALUES (25, 14, 'Excel Import');
+INSERT INTO surec_temizlemede_olan (urun_id, adet, updated_by) VALUES (26, 70, 'Excel Import');
+INSERT INTO surec_temizlemede_olan (urun_id, adet, updated_by) VALUES (23, 0, 'e');
+INSERT INTO surec_temizlemede_olan (urun_id, adet, updated_by) VALUES (24, 2, 'e');
+
+-- ========================================
+-- SUREC_TEMIZLEMEDEN_GELEN (7 rows)
+-- ========================================
+INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (2, '0.00', 322, 'Excel Import');
+INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (10, '0.00', 20, 'Excel Import');
+INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (12, '0.00', 0, 'esat');
+INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (14, '0.00', 15, 'Excel Import');
+INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (20, '0.00', 123, 'Excel Import');
+INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (23, '0.00', 0, 'e');
+INSERT INTO surec_temizlemeden_gelen (urun_id, kg, adet, updated_by) VALUES (24, '0.00', 0, 'e');
+
+-- ========================================
+-- SUREC_SEVKE_HAZIR (4 rows)
+-- ========================================
+INSERT INTO surec_sevke_hazir (urun_kodu_base, adet, koli_sayisi, updated_by) VALUES ('FQG-335A (B)', 14, 0, 'esat');
+INSERT INTO surec_sevke_hazir (urun_kodu_base, adet, koli_sayisi, updated_by) VALUES ('CMY-Y102SS-TR (A)', 8, 0, 'e');
+INSERT INTO surec_sevke_hazir (urun_kodu_base, adet, koli_sayisi, updated_by) VALUES ('CMY-Y102SS-TR (B)', 10, 0, 'e');
+INSERT INTO surec_sevke_hazir (urun_kodu_base, adet, koli_sayisi, updated_by) VALUES ('CMY-Y102SS-TR', 0, 0, 'e');
+
+-- ========================================
+-- SUREC_SEVK_EDILEN (3 rows)
+-- ========================================
+INSERT INTO surec_sevk_edilen (tip, urun_kodu_base, tarih, adet, gonderildigi_yer, irsaliye_numarasi, notlar, created_by) VALUES ('Joint', 'CMY-Y102SS-TR (A)', '2026-01-01T21:00:00.000Z', 3, NULL, NULL, NULL, 'e');
+INSERT INTO surec_sevk_edilen (tip, urun_kodu_base, tarih, adet, gonderildigi_yer, irsaliye_numarasi, notlar, created_by) VALUES ('Joint', 'CMY-Y102SS-TR', '2026-01-01T21:00:00.000Z', 2, NULL, NULL, NULL, 'e');
+INSERT INTO surec_sevk_edilen (tip, urun_kodu_base, tarih, adet, gonderildigi_yer, irsaliye_numarasi, notlar, created_by) VALUES ('Joint', 'CMY-Y102SS-TR', '2026-01-02T21:00:00.000Z', 1, NULL, NULL, NULL, 'e');
+
+-- ========================================
+-- SUREC_HAREKET_LOG (23 rows)
+-- ========================================
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 1, NULL, 'esat', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 1, NULL, 'esat', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (12, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 1, NULL, 'esat', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 2, NULL, 'esat', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', 2, NULL, 'esat', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', 2, NULL, 'esat', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 2, NULL, 'esat', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 2, NULL, 'esat', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (12, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 13, NULL, 'esat', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 10, NULL, 'e', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 10, NULL, 'e', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', 10, NULL, 'e', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', 8, NULL, 'e', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 9, NULL, 'e', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 8, NULL, 'e', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 2, NULL, 'e', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', 3, NULL, 'e', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', 2, NULL, 'e', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', 3, NULL, 'e', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 2, NULL, 'e', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 2, NULL, 'e', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (23, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 1, NULL, 'e', NULL);
+INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar) VALUES (24, 'sevke_hazirla', 'temizlemeden_gelen', 'sevke_hazir', 1, NULL, 'e', NULL);
+
+-- ========================================
+-- TEKNIK_RESIMLER_KATEGORILER (7 rows)
+-- ========================================
+INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('Panasonic Teknik Resimleri');
+INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('Mitsubishi Teknik Resimleri');
+INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('TLC Teknik Resimleri');
+INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('Teknosa Teknik Resimleri');
+INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('Daikin Teknik Resimleri');
+INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('Samsung Teknik Resimleri');
+INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('Diğer Teknik Resimler');
 
 -- ========================================
 -- TEKNIK_RESIMLER_DOSYALAR (22 rows)
@@ -844,17 +930,6 @@ INSERT INTO teknik_resimler_dosyalar (kategori_id, dosya_adi, dosya_yolu, dosya_
 INSERT INTO teknik_resimler_dosyalar (kategori_id, dosya_adi, dosya_yolu, dosya_boyutu, yukleyen) VALUES (7, 'HZG-30B(1).pdf', 'C:\Users\ESAT\kkp-platform\backend\uploads\teknik-resimler\genel\1767376458925-HZG-30B(1).pdf', 97860, 'esatakg');
 
 -- ========================================
--- TEKNIK_RESIMLER_KATEGORILER (7 rows)
--- ========================================
-INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('Panasonic Teknik Resimleri');
-INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('Mitsubishi Teknik Resimleri');
-INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('TLC Teknik Resimleri');
-INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('Teknosa Teknik Resimleri');
-INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('Daikin Teknik Resimleri');
-INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('Samsung Teknik Resimleri');
-INSERT INTO teknik_resimler_kategoriler (kategori_adi) VALUES ('Diğer Teknik Resimler');
-
--- ========================================
 -- TEKNIK_RESIMLER_LOGIN_LOG (5 rows)
 -- ========================================
 INSERT INTO teknik_resimler_login_log (kullanici_adi, basarili, ip_adresi) VALUES ('esatakg', true, '::1');
@@ -862,30 +937,6 @@ INSERT INTO teknik_resimler_login_log (kullanici_adi, basarili, ip_adresi) VALUE
 INSERT INTO teknik_resimler_login_log (kullanici_adi, basarili, ip_adresi) VALUES ('esatakg', true, '::1');
 INSERT INTO teknik_resimler_login_log (kullanici_adi, basarili, ip_adresi) VALUES ('esatakg', true, '::1');
 INSERT INTO teknik_resimler_login_log (kullanici_adi, basarili, ip_adresi) VALUES ('esatakg', true, '::1');
-
--- ========================================
--- URUN_AGIRLIKLARI_FITTINGLAR (11 rows)
--- ========================================
-INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('Dirsek', '54mm', '0.312');
-INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('Dirsek', '42mm', '0.181');
-INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('Dirsek', '35mm', '0.105');
-INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('Dirsek', '28mm', '0.063');
-INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('Dirsek', '22mm', '0.039');
-INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('Dirsek 45 Derece', '28mm', '0.055');
-INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('TEE', '35mm', '0.176');
-INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('TEE', '22mm', '0.067');
-INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('TEE', '19mm', '0.049');
-INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('TEE', '15.88mm', '0.035');
-INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('TEE', '12.7mm', '0.022');
-
--- ========================================
--- URUN_AGIRLIKLARI_HESAPLAMALAR (5 rows)
--- ========================================
-INSERT INTO urun_agirliklari_hesaplamalar (hesaplama_tipi, urun_kodu, kalite, adet, birim_agirlik, toplam_agirlik, batch_id, batch_detay, yapan) VALUES ('A+B Toplam', 'DIS180', 'A', 150, '0.525', '78.750', NULL, NULL, 'esat');
-INSERT INTO urun_agirliklari_hesaplamalar (hesaplama_tipi, urun_kodu, kalite, adet, birim_agirlik, toplam_agirlik, batch_id, batch_detay, yapan) VALUES ('A+B Toplam', 'DIS180', 'B', 150, '0.212', '31.800', NULL, NULL, 'esat');
-INSERT INTO urun_agirliklari_hesaplamalar (hesaplama_tipi, urun_kodu, kalite, adet, birim_agirlik, toplam_agirlik, batch_id, batch_detay, yapan) VALUES ('Fitting', 'Dirsek 28mm', NULL, 35, '0.063', '2.205', NULL, NULL, 'esat');
-INSERT INTO urun_agirliklari_hesaplamalar (hesaplama_tipi, urun_kodu, kalite, adet, birim_agirlik, toplam_agirlik, batch_id, batch_detay, yapan) VALUES ('A+B Toplam', 'FQG-B506 GRİ', 'A', 155, '0.387', '59.985', NULL, NULL, '123');
-INSERT INTO urun_agirliklari_hesaplamalar (hesaplama_tipi, urun_kodu, kalite, adet, birim_agirlik, toplam_agirlik, batch_id, batch_detay, yapan) VALUES ('A+B Toplam', 'FQG-B506 GRİ', 'B', 155, '0.085', '13.175', NULL, NULL, '123');
 
 -- ========================================
 -- URUN_AGIRLIKLARI_MASTER (19 rows)
@@ -911,77 +962,26 @@ INSERT INTO urun_agirliklari_master (urun_kodu, agirlik_a, agirlik_b, agirlik_c,
 INSERT INTO urun_agirliklari_master (urun_kodu, agirlik_a, agirlik_b, agirlik_c, agirlik_d) VALUES ('FQ01B/A', '0.319', '0.122', '0.000', '0.000');
 
 -- ========================================
--- URUN_RECETESI (12 rows)
+-- URUN_AGIRLIKLARI_FITTINGLAR (11 rows)
 -- ========================================
-INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('MXJ-YA2512M/R', 'MXJ-YA2512M/R', '', 'B2 - 56.5*34.4*38.2', 10, '2025-12-31T20:33:45.602Z', '2025-12-31T20:33:45.602Z', 'K7 - 55.5*16.5*7.2');
-INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('DIS-22-1GAT', 'DIS-22-1GAT', '', 'B1 - 70*46*28', 35, '2026-01-02T06:21:31.049Z', '2026-01-02T06:21:31.049Z', 'K1 - 45*13.5*3.5');
-INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('DIS-180-1GAT', 'DIS-180-1GAT', '', 'B2 - 56.5*34.4*38.2', 20, '2026-01-02T06:25:43.192Z', '2026-01-02T06:25:43.192Z', 'K3 - 55.5*16.5*3.5');
-INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('FQG-B730A-Y', 'FQG-B730A-Y', '', 'B2 - 56.5*34.4*38.2', 10, '2026-01-02T06:29:20.970Z', '2026-01-02T06:29:20.970Z', 'K7 - 55.5*16.5*7.2');
-INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('KHRQ22M20T', 'KHRQ22M20T', '', 'B2 - 56.5*34.4*38.2', 10, '2026-01-02T08:00:33.873Z', '2026-01-02T08:00:33.873Z', 'K7 - 55.5*16.5*7.2');
-INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('FQG-335A', 'FQG-335A', '', 'B3 - 68.5*45.5*32', 20, '2026-01-02T08:04:37.683Z', '2026-01-02T08:04:37.683Z', 'K4 - 45*17*6');
-INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('FQG-335A-Y', 'FQG-335A-Y', '', 'B3 - 68.5*45.5*32', 20, '2026-01-02T08:07:37.461Z', '2026-01-02T08:07:37.461Z', 'K4 - 45*17*6');
-INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('FQG-B506A-Y', 'FQG-B506A-Y', '', 'B3 - 68.5*45.5*32', 20, '2026-01-02T08:10:03.197Z', '2026-01-02T08:10:03.197Z', 'K4 - 45*17*6');
-INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('DIS-371-2GAT', 'DIS-371-2GAT', '', '📦 B8 - 65.5*38*41', 16, '2026-01-02T08:20:36.342Z', '2026-01-02T08:20:36.342Z', 'K10 - 63.5*17.5*4.5');
-INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('MXJ-YA2815M/R', 'MXJ-YA2815M/R', '', '📦 B8 - 65.5*38*41', 10, '2026-01-02T08:23:00.713Z', '2026-01-02T08:23:00.713Z', 'K9 - 63.5 × 17.5 × 7');
-INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('CMY-Y102SS-TR', 'CMY-Y102SS-TR', '', 'B9 - 72*36*38 CMY-Y102SS', 42, '2026-01-02T08:25:13.007Z', '2026-01-02T08:25:13.007Z', 'K11 - 35*11.5*5');
-INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, olusturma_tarihi, guncelleme_tarihi, kutu_tipi) VALUES ('MXJ-YA1509M-R1', 'MXJ-YA1509M-R1', '', 'B3 - 68.5*45.5*32', 20, '2026-01-02T08:30:02.368Z', '2026-01-02T08:30:02.368Z', 'K4 - 45*17*6');
+INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('Dirsek', '54mm', '0.312');
+INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('Dirsek', '42mm', '0.181');
+INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('Dirsek', '35mm', '0.105');
+INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('Dirsek', '28mm', '0.063');
+INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('Dirsek', '22mm', '0.039');
+INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('Dirsek 45 Derece', '28mm', '0.055');
+INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('TEE', '35mm', '0.176');
+INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('TEE', '22mm', '0.067');
+INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('TEE', '19mm', '0.049');
+INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('TEE', '15.88mm', '0.035');
+INSERT INTO urun_agirliklari_fittinglar (tip, boyut, agirlik) VALUES ('TEE', '12.7mm', '0.022');
 
 -- ========================================
--- URUN_SIPARIS_DEGISIKLIK_LOG (6 rows)
+-- URUN_AGIRLIKLARI_HESAPLAMALAR (5 rows)
 -- ========================================
-INSERT INTO urun_siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (23, '1', 'Durum', 'Beklemede', 'Geldi', 'Durum değiştirildi: "Beklemede" → "Geldi"', '2025-12-31T06:34:41.795Z');
-INSERT INTO urun_siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (23, '1', 'Gelen Adet', '-', '1', 'Gelen Adet değiştirildi: "-" → "1"', '2025-12-31T06:34:41.798Z');
-INSERT INTO urun_siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (23, '1', 'Gelen Notlar', '-', '1', 'Gelen Notlar değiştirildi: "-" → "1"', '2025-12-31T06:34:41.800Z');
-INSERT INTO urun_siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (24, '1', 'Durum', 'Beklemede', 'Geldi', 'Durum değiştirildi: "Beklemede" → "Geldi"', '2025-12-31T11:46:52.551Z');
-INSERT INTO urun_siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (24, '1', 'Gelen Adet', '-', '1', 'Gelen Adet değiştirildi: "-" → "1"', '2025-12-31T11:46:52.553Z');
-INSERT INTO urun_siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama, tarih) VALUES (24, '1', 'Gelen Notlar', '-', 'sdasdsadsdf', 'Gelen Notlar değiştirildi: "-" → "sdasdsadsdf"', '2025-12-31T11:46:52.555Z');
-
--- ========================================
--- URUN_SIPARISLER (45 rows)
--- ========================================
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Etiket', '20 Rulo', '1000x1000', 'Melisa', 'Elimizde son bir tane kaldı.', 'geldi', '20 Rulo', '', '2025-10-01T14:43:39.170Z', '2025-11-14T13:01:01.436Z');
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Ribon', '20 Rulo', 'x', 'Melisa', 'Son 4 adet kaldı.', 'geldi', '20 Rulo', '', '2025-10-01T14:46:06.770Z', '2025-11-14T13:00:56.288Z');
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Para bandı', '30', 'x', 'Melisa', '6 adet kaldı 2000 tane sette ortalama 5 bant gidiyor.', 'bekleniyor', '', '', '2025-10-01T14:48:08.642Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Etiket', '10 rulo', '1000x500', 'Melisa', '6 adet kaldı şuanlık yetiyor ama yeni siparişlere az kalıyor.', 'geldi', '10 rulo', '', '2025-10-01T14:48:58.610Z', '2025-11-14T13:00:49.524Z');
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kumanda pili', '30', 'x', 'Melisa', 'El fenerine takılan pil şuan elimizde hiç kalmadı.', 'bekleniyor', '', '', '2025-10-01T14:49:24.138Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kilitli torba', '5 kutu', '13x16', 'Melisa', '1 kutu kaldı sadece en son gelen siparişlere yetmiyor.', 'bekleniyor', '', '', '2025-10-01T14:54:58.418Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Tapa', '20000', '22', 'Melisa', '22,23,38,57,45,28 numaralı tapalar sayıları çok az kaldı.(28 numaralı tapa dıs371 için yeni gelecek )', 'bekleniyor', '', '', '2025-10-14T13:38:51.706Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('335a gri (A) izalasyon', '2005', '335L大', 'Melisa', '', 'bekleniyor', '', '', '2025-11-19T03:42:28.387Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('335a gri (B) izalasyon', '1874', '102SN小', 'Melisa', '', 'bekleniyor', '', '', '2025-11-19T03:44:00.166Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('K-4 kutu', '27500', '45*17*6', 'Melisa', '', 'bekleniyor', '', '', '2025-11-19T03:45:13.894Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kutu k-11', '1866', '35*11.5*5', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T03:20:27.690Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('koli B-9', '45', '72*36*38', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T03:21:00.994Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('CMY-Y102SS-TR (A) izalasyon', '186', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T12:41:16.414Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('CMY-Y102SS-TR (B) izalasyon', '186', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T12:41:40.422Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kutu k-7', '19819', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:06:00.887Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('koli b-3', '1024', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:06:31.023Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('koli b-2', '1933', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:06:50.187Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('1509 (A) izalasyon', '17012', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:07:21.695Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('1509 (B) izalasyon', '18293', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:07:45.399Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('2512 (B) izalasyon', '20863', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:08:21.503Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('2512 (A) izalasyon', '20916', 'x', 'Melisa', '', 'bekleniyor', '1', 'deneme', '2025-11-24T16:08:42.207Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('deneme', '1', '1', '1', '1', 'Geldi', '1', '1', '2025-12-31T04:45:59.608Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('deneme', '1', '1', '1', 'deneme', 'Geldi', '1', '1', '2025-12-31T06:34:25.712Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('1', '2', '1', '1', '1', 'Geldi', '1', 'sdasdsadsdf', '2025-12-31T11:46:29.271Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Etiket', '20 Rulo', '1000x1000', 'Melisa', 'Elimizde son bir tane kaldı.', 'geldi', '20 Rulo', '', '2025-10-01T14:43:39.170Z', '2025-11-14T13:01:01.436Z');
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Ribon', '20 Rulo', 'x', 'Melisa', 'Son 4 adet kaldı.', 'geldi', '20 Rulo', '', '2025-10-01T14:46:06.770Z', '2025-11-14T13:00:56.288Z');
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Para bandı', '30', 'x', 'Melisa', '6 adet kaldı 2000 tane sette ortalama 5 bant gidiyor.', 'bekleniyor', '', '', '2025-10-01T14:48:08.642Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Etiket', '10 rulo', '1000x500', 'Melisa', '6 adet kaldı şuanlık yetiyor ama yeni siparişlere az kalıyor.', 'geldi', '10 rulo', '', '2025-10-01T14:48:58.610Z', '2025-11-14T13:00:49.524Z');
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kumanda pili', '30', 'x', 'Melisa', 'El fenerine takılan pil şuan elimizde hiç kalmadı.', 'bekleniyor', '', '', '2025-10-01T14:49:24.138Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kilitli torba', '5 kutu', '13x16', 'Melisa', '1 kutu kaldı sadece en son gelen siparişlere yetmiyor.', 'bekleniyor', '', '', '2025-10-01T14:54:58.418Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Tapa', '20000', '22', 'Melisa', '22,23,38,57,45,28 numaralı tapalar sayıları çok az kaldı.(28 numaralı tapa dıs371 için yeni gelecek )', 'bekleniyor', '', '', '2025-10-14T13:38:51.706Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('335a gri (A) izalasyon', '2005', '335L大', 'Melisa', '', 'bekleniyor', '', '', '2025-11-19T03:42:28.387Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('335a gri (B) izalasyon', '1874', '102SN小', 'Melisa', '', 'bekleniyor', '', '', '2025-11-19T03:44:00.166Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('K-4 kutu', '27500', '45*17*6', 'Melisa', '', 'bekleniyor', '', '', '2025-11-19T03:45:13.894Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kutu k-11', '1866', '35*11.5*5', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T03:20:27.690Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('koli B-9', '45', '72*36*38', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T03:21:00.994Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('CMY-Y102SS-TR (A) izalasyon', '186', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T12:41:16.414Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('CMY-Y102SS-TR (B) izalasyon', '186', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T12:41:40.422Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('Kutu k-7', '19819', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:06:00.887Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('koli b-3', '1024', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:06:31.023Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('koli b-2', '1933', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:06:50.187Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('1509 (A) izalasyon', '17012', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:07:21.695Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('1509 (B) izalasyon', '18293', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:07:45.399Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('2512 (B) izalasyon', '20863', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:08:21.503Z', NULL);
-INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, olusturma_tarihi, gelis_tarihi) VALUES ('2512 (A) izalasyon', '20916', 'x', 'Melisa', '', 'bekleniyor', '', '', '2025-11-24T16:08:42.207Z', NULL);
+INSERT INTO urun_agirliklari_hesaplamalar (hesaplama_tipi, urun_kodu, kalite, adet, birim_agirlik, toplam_agirlik, batch_id, batch_detay, yapan) VALUES ('A+B Toplam', 'DIS180', 'A', 150, '0.525', '78.750', NULL, NULL, 'esat');
+INSERT INTO urun_agirliklari_hesaplamalar (hesaplama_tipi, urun_kodu, kalite, adet, birim_agirlik, toplam_agirlik, batch_id, batch_detay, yapan) VALUES ('A+B Toplam', 'DIS180', 'B', 150, '0.212', '31.800', NULL, NULL, 'esat');
+INSERT INTO urun_agirliklari_hesaplamalar (hesaplama_tipi, urun_kodu, kalite, adet, birim_agirlik, toplam_agirlik, batch_id, batch_detay, yapan) VALUES ('Fitting', 'Dirsek 28mm', NULL, 35, '0.063', '2.205', NULL, NULL, 'esat');
+INSERT INTO urun_agirliklari_hesaplamalar (hesaplama_tipi, urun_kodu, kalite, adet, birim_agirlik, toplam_agirlik, batch_id, batch_detay, yapan) VALUES ('A+B Toplam', 'FQG-B506 GRİ', 'A', 155, '0.387', '59.985', NULL, NULL, '123');
+INSERT INTO urun_agirliklari_hesaplamalar (hesaplama_tipi, urun_kodu, kalite, adet, birim_agirlik, toplam_agirlik, batch_id, batch_detay, yapan) VALUES ('A+B Toplam', 'FQG-B506 GRİ', 'B', 155, '0.085', '13.175', NULL, NULL, '123');
 

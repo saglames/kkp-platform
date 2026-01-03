@@ -306,12 +306,12 @@ router.post('/siparis-hazirlik/:id/gonderim', async (req, res) => {
 
     // Değişiklik loguna kaydet
     await pool.query(
-      `INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, alan_adi, eski_deger, yeni_deger, aciklama)
+      `INSERT INTO siparis_degisiklik_log (siparis_id, degistiren, degisiklik_turu, eski_deger, yeni_deger, aciklama)
        VALUES ($1, $2, $3, $4, $5, $6)`,
       [
         id,
         gonderen,
-        'gonderilen_adet',
+        'gonderim_eklendi',
         eskiGonderilenAdet.toString(),
         yeniGonderilenAdet.toString(),
         notlar ? `Gönderim eklendi: ${gonderilen_adet} adet (${notlar})` : `Gönderim eklendi: ${gonderilen_adet} adet`

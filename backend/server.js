@@ -97,6 +97,53 @@ app.get('/api/check-data', async (req, res) => {
   }
 });
 
+// Schema migration endpoint
+app.post('/api/migrate-schema', async (req, res) => {
+  const pool = require('./db');
+  const fs = require('fs').promises;
+  const path = require('path');
+
+  try {
+    const sqlFile = path.join(__dirname, 'schema_migration.sql');
+    console.log('Reading migration SQL from:', sqlFile);
+
+    const sql = await fs.readFile(sqlFile, 'utf8');
+    console.log('Migration SQL size:', sql.length, 'bytes');
+
+    // Remove comments
+    const lines = sql.split('\n');
+    const sqlWithoutComments = lines
+      .filter(line => !line.trim().startsWith('--'))
+      .join('\n');
+
+    // Split by semicolon
+    const statements = sqlWithoutComments
+      .split(';')
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
+
+    console.log(`Executing ${statements.length} migration statements`);
+
+    for (let i = 0; i < statements.length; i++) {
+      const statement = statements[i];
+      console.log(`[${i + 1}/${statements.length}] Executing...`);
+      await pool.query(statement);
+    }
+
+    res.json({
+      success: true,
+      message: `Schema migration complete! Executed ${statements.length} statements.`
+    });
+  } catch (error) {
+    console.error('Migration error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      details: error.stack
+    });
+  }
+});
+
 // Database setup endpoint (one-time use for deployment)
 app.post('/api/setup-database', async (req, res) => {
   const pool = require('./db');

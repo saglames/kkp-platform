@@ -7,7 +7,12 @@ const BATCH_SIZE = 50; // Import 50 statements at a time
 
 async function importBatch(statements) {
   return new Promise((resolve, reject) => {
-    const data = JSON.stringify({ statements });
+    // Clean statements to ensure they're JSON-safe
+    const cleanStatements = statements.map(stmt =>
+      stmt.replace(/\r?\n/g, ' ').trim()
+    );
+
+    const data = JSON.stringify({ statements: cleanStatements });
 
     const options = {
       hostname: RENDER_URL,
@@ -80,21 +85,20 @@ async function main() {
 
       try {
         const result = await importBatch(batch);
-        if (result.success) {
-          console.log(`  ✓ Success: ${result.successCount}/${batch.length}`);
+        if (result.successCount !== undefined) {
+          console.log(`  Success: ${result.successCount}/${batch.length}, Errors: ${result.errorCount}`);
           totalSuccess += result.successCount;
           totalErrors += result.errorCount;
 
-          if (result.errorCount > 0) {
-            console.log(`  ✗ Errors: ${result.errorCount}`);
-            if (result.errors && result.errors.length > 0) {
-              result.errors.slice(0, 3).forEach(err => {
-                console.log(`    - ${err.table}: ${err.error}`);
-              });
-            }
+          if (result.errorCount > 0 && result.errors && result.errors.length > 0) {
+            console.log(`  Error details:`);
+            result.errors.slice(0, 5).forEach(err => {
+              console.log(`    [${err.table}] ${err.error}`);
+            });
           }
         } else {
           console.log(`  ✗ Batch failed: ${result.error || result.message}`);
+          console.log(`  Raw response:`, JSON.stringify(result).substring(0, 300));
           totalErrors += batch.length;
         }
       } catch (error) {

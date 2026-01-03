@@ -208,22 +208,37 @@ app.post('/api/import-data', async (req, res) => {
 
     console.log(`Found ${statements.length} statements to execute`);
 
-    // Execute each statement
+    // Execute each statement with detailed error tracking
+    let successCount = 0;
+    let errorCount = 0;
+    const errors = [];
+
     for (let i = 0; i < statements.length; i++) {
       const statement = statements[i];
       try {
         console.log(`[${i + 1}/${statements.length}] Executing statement (${statement.substring(0, 50)}...)`);
         await pool.query(statement);
         console.log(`[${i + 1}/${statements.length}] Success`);
+        successCount++;
       } catch (error) {
         console.error(`[${i + 1}/${statements.length}] Error:`, error.message);
-        // Continue with other statements
+        errorCount++;
+        errors.push({
+          statementIndex: i + 1,
+          preview: statement.substring(0, 100),
+          table: statement.match(/INSERT INTO (\w+)/)?.[1] || 'unknown',
+          error: error.message
+        });
       }
     }
 
     res.json({
-      success: true,
-      message: `Data import complete! Processed ${statements.length} statements.`
+      success: errorCount === 0,
+      message: `Data import complete! Success: ${successCount}, Errors: ${errorCount}`,
+      totalStatements: statements.length,
+      successCount,
+      errorCount,
+      errors: errors.slice(0, 20) // Return first 20 errors for debugging
     });
   } catch (error) {
     console.error('Data import error:', error);

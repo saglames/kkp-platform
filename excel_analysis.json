@@ -1,0 +1,1174 @@
+{
+  "dosya_adi": "son surec.xlsm",
+  "sayfalar": [
+    {
+      "isim": "Grafik3",
+      "tip": "chartsheet"
+    },
+    {
+      "isim": "Anasayfa",
+      "satir_sayisi": 55,
+      "sutun_sayisi": 9,
+      "ilk_satirlar": [
+        {
+          "row": 1,
+          "data": [
+            {
+              "col": 1,
+              "value": "TİP"
+            },
+            {
+              "col": 2,
+              "value": "ÜRÜN KODU"
+            },
+            {
+              "col": 3,
+              "value": "Temizlemeye Gidecek"
+            },
+            {
+              "col": 4,
+              "value": "Temizlemede Olan"
+            },
+            {
+              "col": 5,
+              "value": "Temizlemeden Gelen"
+            },
+            {
+              "col": 6,
+              "value": "Sevke Hazır"
+            },
+            {
+              "col": 7,
+              "value": "Kalan"
+            },
+            {
+              "col": 8,
+              "value": "Sevk Edilen"
+            },
+            {
+              "col": 9,
+              "value": "Temizleme Problem"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "data": [
+            {
+              "col": 1,
+              "value": "A"
+            },
+            {
+              "col": 2,
+              "value": "MXJ-YA2512M/R (A)"
+            },
+            {
+              "col": 3,
+              "value": "='Temizlemeye Gidecek'!C2"
+            },
+            {
+              "col": 4,
+              "value": "='Temizlemede Olan'!C2"
+            },
+            {
+              "col": 5,
+              "value": "='Temizlemeden Gelen'!D2"
+            },
+            {
+              "col": 6,
+              "value": "=IFERROR(VLOOKUP(\"MXJ-YA2512M/R\",'Sevke Hazır'!$A:$B,2,0),0)"
+            },
+            {
+              "col": 7,
+              "value": "=Kalan!C2"
+            },
+            {
+              "col": 8,
+              "value": "=IFERROR(SUMIF('Sevk Edilen'!$B:$B,\"MXJ-YA2512M/R\",'Sevk Edilen'!$D:$D),0)"
+            },
+            {
+              "col": 9,
+              "value": "=IFERROR(VLOOKUP(TRIM(B2),'Problemli Çıkan Ürünler'!$B:$C,2,0),0)"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "data": [
+            {
+              "col": 1,
+              "value": "B"
+            },
+            {
+              "col": 2,
+              "value": "MXJ-YA2512M/R (B)"
+            },
+            {
+              "col": 3,
+              "value": "='Temizlemeye Gidecek'!C3"
+            },
+            {
+              "col": 4,
+              "value": "='Temizlemede Olan'!C3"
+            },
+            {
+              "col": 5,
+              "value": "='Temizlemeden Gelen'!D3"
+            },
+            {
+              "col": 6,
+              "value": "=IFERROR(VLOOKUP(\"MXJ-YA2512M/R\",'Sevke Hazır'!$A:$B,2,0),0)"
+            },
+            {
+              "col": 7,
+              "value": "=Kalan!C3"
+            },
+            {
+              "col": 8,
+              "value": "=IFERROR(SUMIF('Sevk Edilen'!$B:$B,\"MXJ-YA2512M/R\",'Sevk Edilen'!$D:$D),0)"
+            },
+            {
+              "col": 9,
+              "value": "=IFERROR(VLOOKUP(TRIM(B3),'Problemli Çıkan Ürünler'!$B:$C,2,0),0)"
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "data": [
+            {
+              "col": 1,
+              "value": "A"
+            },
+            {
+              "col": 2,
+              "value": "DIS-371-2GAT (A)"
+            },
+            {
+              "col": 3,
+              "value": "='Temizlemeye Gidecek'!C4"
+            },
+            {
+              "col": 4,
+              "value": "='Temizlemede Olan'!C4"
+            },
+            {
+              "col": 5,
+              "value": "='Temizlemeden Gelen'!D4"
+            },
+            {
+              "col": 6,
+              "value": "=IFERROR(VLOOKUP(\"DIS-371-2GAT\",'Sevke Hazır'!$A:$B,2,0),0)"
+            },
+            {
+              "col": 7,
+              "value": "=Kalan!C4"
+            },
+            {
+              "col": 8,
+              "value": "=IFERROR(SUMIF('Sevk Edilen'!$B:$B,\"DIS-371-2GAT\",'Sevk Edilen'!$D:$D),0)"
+            },
+            {
+              "col": 9,
+              "value": "=IFERROR(VLOOKUP(TRIM(B4),'Problemli Çıkan Ürünler'!$B:$C,2,0),0)"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "data": [
+            {
+              "col": 1,
+              "value": "B"
+            },
+            {
+              "col": 2,
+              "value": "DIS-371-2GAT (B)"
+            },
+            {
+              "col": 3,
+              "value": "='Temizlemeye Gidecek'!C5"
+            },
+            {
+              "col": 4,
+              "value": "='Temizlemede Olan'!C5"
+            },
+            {
+              "col": 5,
+              "value": "='Temizlemeden Gelen'!D5"
+            },
+            {
+              "col": 6,
+              "value": "=IFERROR(VLOOKUP(\"DIS-371-2GAT\",'Sevke Hazır'!$A:$B,2,0),0)"
+            },
+            {
+              "col": 7,
+              "value": "=Kalan!C5"
+            },
+            {
+              "col": 8,
+              "value": "=IFERROR(SUMIF('Sevk Edilen'!$B:$B,\"DIS-371-2GAT\",'Sevk Edilen'!$D:$D),0)"
+            },
+            {
+              "col": 9,
+              "value": "=IFERROR(VLOOKUP(TRIM(B5),'Problemli Çıkan Ürünler'!$B:$C,2,0),0)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "isim": "Temizlemeye Gidecek",
+      "satir_sayisi": 59,
+      "sutun_sayisi": 5,
+      "ilk_satirlar": [
+        {
+          "row": 1,
+          "data": [
+            {
+              "col": 1,
+              "value": "TİP"
+            },
+            {
+              "col": 2,
+              "value": "ÜRÜN KODU"
+            },
+            {
+              "col": 3,
+              "value": "Temizlemeye Gidecek Adet"
+            },
+            {
+              "col": 4,
+              "value": "+ GİRİŞ"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "data": [
+            {
+              "col": 1,
+              "value": "A"
+            },
+            {
+              "col": 2,
+              "value": "MXJ-YA2512M/R (A)"
+            },
+            {
+              "col": 3,
+              "value": "2712"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "data": [
+            {
+              "col": 1,
+              "value": "B"
+            },
+            {
+              "col": 2,
+              "value": "MXJ-YA2512M/R (B)"
+            },
+            {
+              "col": 3,
+              "value": "2630"
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "data": [
+            {
+              "col": 1,
+              "value": "A"
+            },
+            {
+              "col": 2,
+              "value": "DIS-371-2GAT (A)"
+            },
+            {
+              "col": 3,
+              "value": "1932"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "data": [
+            {
+              "col": 1,
+              "value": "B"
+            },
+            {
+              "col": 2,
+              "value": "DIS-371-2GAT (B)"
+            },
+            {
+              "col": 3,
+              "value": "379"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "isim": "Temizlemede Olan",
+      "satir_sayisi": 55,
+      "sutun_sayisi": 4,
+      "ilk_satirlar": [
+        {
+          "row": 1,
+          "data": [
+            {
+              "col": 1,
+              "value": "TİP"
+            },
+            {
+              "col": 2,
+              "value": "ÜRÜN KODU"
+            },
+            {
+              "col": 3,
+              "value": "Temizlemede Olan Adet"
+            },
+            {
+              "col": 4,
+              "value": "+ GİRİŞ"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "data": [
+            {
+              "col": 1,
+              "value": "A"
+            },
+            {
+              "col": 2,
+              "value": "MXJ-YA2512M/R (A)"
+            },
+            {
+              "col": 3,
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "data": [
+            {
+              "col": 1,
+              "value": "B"
+            },
+            {
+              "col": 2,
+              "value": "MXJ-YA2512M/R (B)"
+            },
+            {
+              "col": 3,
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "data": [
+            {
+              "col": 1,
+              "value": "A"
+            },
+            {
+              "col": 2,
+              "value": "DIS-371-2GAT (A)"
+            },
+            {
+              "col": 3,
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "data": [
+            {
+              "col": 1,
+              "value": "B"
+            },
+            {
+              "col": 2,
+              "value": "DIS-371-2GAT (B)"
+            },
+            {
+              "col": 3,
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "isim": "Temizlemeden Gelen",
+      "satir_sayisi": 42,
+      "sutun_sayisi": 6,
+      "ilk_satirlar": [
+        {
+          "row": 1,
+          "data": [
+            {
+              "col": 1,
+              "value": "TİP"
+            },
+            {
+              "col": 2,
+              "value": "ÜRÜN KODU"
+            },
+            {
+              "col": 3,
+              "value": "KG"
+            },
+            {
+              "col": 4,
+              "value": "TEMİZLEMEDEN GELEN ADET"
+            },
+            {
+              "col": 5,
+              "value": "+ A"
+            },
+            {
+              "col": 6,
+              "value": "+ B"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "data": [
+            {
+              "col": 1,
+              "value": "A"
+            },
+            {
+              "col": 2,
+              "value": "MXJ-YA2512M/R (A)"
+            },
+            {
+              "col": 3,
+              "value": "0"
+            },
+            {
+              "col": 4,
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "data": [
+            {
+              "col": 1,
+              "value": "B"
+            },
+            {
+              "col": 2,
+              "value": "MXJ-YA2512M/R (B)"
+            },
+            {
+              "col": 3,
+              "value": "322.66"
+            },
+            {
+              "col": 4,
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "data": [
+            {
+              "col": 1,
+              "value": "A"
+            },
+            {
+              "col": 2,
+              "value": "DIS-371-2GAT (A)"
+            },
+            {
+              "col": 4,
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "data": [
+            {
+              "col": 1,
+              "value": "B"
+            },
+            {
+              "col": 2,
+              "value": "DIS-371-2GAT (B)"
+            },
+            {
+              "col": 4,
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "isim": "Sevke Hazır",
+      "satir_sayisi": 20,
+      "sutun_sayisi": 4,
+      "ilk_satirlar": [
+        {
+          "row": 1,
+          "data": [
+            {
+              "col": 1,
+              "value": "ÜRÜN KODU"
+            },
+            {
+              "col": 2,
+              "value": "SEVKE HAZIR ÜRÜN ADETİ"
+            },
+            {
+              "col": 3,
+              "value": "+ SEVK EDİLEN"
+            },
+            {
+              "col": 4,
+              "value": "KOLİ"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "data": [
+            {
+              "col": 1,
+              "value": "MXJ-YA2512M/R"
+            },
+            {
+              "col": 2,
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "data": [
+            {
+              "col": 1,
+              "value": "DIS-371-2GAT"
+            },
+            {
+              "col": 2,
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "data": [
+            {
+              "col": 1,
+              "value": "DIS-180-1GAT"
+            },
+            {
+              "col": 2,
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "data": [
+            {
+              "col": 1,
+              "value": "DIS-22-1GAT"
+            },
+            {
+              "col": 2,
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "isim": "Kalan",
+      "satir_sayisi": 42,
+      "sutun_sayisi": 5,
+      "ilk_satirlar": [
+        {
+          "row": 1,
+          "data": [
+            {
+              "col": 1,
+              "value": "TİP"
+            },
+            {
+              "col": 2,
+              "value": "ÜRÜN KODU"
+            },
+            {
+              "col": 3,
+              "value": "TEMİZLEMEDEN GELEN ADET"
+            },
+            {
+              "col": 4,
+              "value": "NOTLAR"
+            },
+            {
+              "col": 5,
+              "value": "Tapalı Bekleyen (Ortalama)"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "data": [
+            {
+              "col": 1,
+              "value": "A"
+            },
+            {
+              "col": 2,
+              "value": "MXJ-YA2512M/R (A)"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "data": [
+            {
+              "col": 1,
+              "value": "B"
+            },
+            {
+              "col": 2,
+              "value": "MXJ-YA2512M/R (B)"
+            },
+            {
+              "col": 5,
+              "value": "115Ad. Tapalı bekliyor."
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "data": [
+            {
+              "col": 1,
+              "value": "A"
+            },
+            {
+              "col": 2,
+              "value": "DIS-371-2GAT (A)"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "data": [
+            {
+              "col": 1,
+              "value": "B"
+            },
+            {
+              "col": 2,
+              "value": "DIS-371-2GAT (B)"
+            },
+            {
+              "col": 5,
+              "value": "1391Ad. Tapalı bekliyor."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "isim": "Sevk Edilen",
+      "satir_sayisi": 73,
+      "sutun_sayisi": 6,
+      "ilk_satirlar": [
+        {
+          "row": 1,
+          "data": [
+            {
+              "col": 1,
+              "value": "Tip"
+            },
+            {
+              "col": 2,
+              "value": "Ürün Kodu"
+            },
+            {
+              "col": 3,
+              "value": "Tarih"
+            },
+            {
+              "col": 4,
+              "value": "Adet"
+            },
+            {
+              "col": 5,
+              "value": "Gönderildiği Yer"
+            },
+            {
+              "col": 6,
+              "value": "İrsaliye Numarası"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "data": [
+            {
+              "col": 1,
+              "value": "Joint"
+            },
+            {
+              "col": 2,
+              "value": "MXJ-YA2512M/R"
+            },
+            {
+              "col": 3,
+              "value": "45954"
+            },
+            {
+              "col": 4,
+              "value": "200"
+            },
+            {
+              "col": 5,
+              "value": "Fabrika Kamyonet"
+            },
+            {
+              "col": 6,
+              "value": "IRS2025000001077"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "data": [
+            {
+              "col": 1,
+              "value": "Joint"
+            },
+            {
+              "col": 2,
+              "value": "DIS-22-1GAT"
+            },
+            {
+              "col": 3,
+              "value": "07.11.2025"
+            },
+            {
+              "col": 4,
+              "value": "3115"
+            },
+            {
+              "col": 5,
+              "value": "Fabrika Kamyonet"
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "data": [
+            {
+              "col": 1,
+              "value": "Joint"
+            },
+            {
+              "col": 2,
+              "value": "DIS-371-2GAT"
+            },
+            {
+              "col": 3,
+              "value": "07.11.2025"
+            },
+            {
+              "col": 4,
+              "value": "32"
+            },
+            {
+              "col": 5,
+              "value": "Fabrika Kamyonet"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "data": [
+            {
+              "col": 1,
+              "value": "Joint"
+            },
+            {
+              "col": 2,
+              "value": "DIS-180-2GAT"
+            },
+            {
+              "col": 3,
+              "value": "13.11.2025"
+            },
+            {
+              "col": 4,
+              "value": "260"
+            },
+            {
+              "col": 5,
+              "value": "Fabrika Kamyonet"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "isim": "Problemli Çıkan Ürünler",
+      "satir_sayisi": 42,
+      "sutun_sayisi": 20,
+      "ilk_satirlar": [
+        {
+          "row": 1,
+          "data": [
+            {
+              "col": 1,
+              "value": "TİP"
+            },
+            {
+              "col": 2,
+              "value": "ÜRÜN KODU"
+            },
+            {
+              "col": 3,
+              "value": "Temizleme Problem"
+            },
+            {
+              "col": 4,
+              "value": "+ Ekle"
+            },
+            {
+              "col": 5,
+              "value": "- Çıkar"
+            },
+            {
+              "col": 6,
+              "value": "Vuruk Problem Adeti"
+            },
+            {
+              "col": 7,
+              "value": "+ Ekle"
+            },
+            {
+              "col": 8,
+              "value": "- Çıkar"
+            },
+            {
+              "col": 9,
+              "value": "Çapağı Alınmayan "
+            },
+            {
+              "col": 10,
+              "value": "+ Ekle"
+            },
+            {
+              "col": 11,
+              "value": "- Çıkar"
+            },
+            {
+              "col": 12,
+              "value": "Polisaj"
+            },
+            {
+              "col": 13,
+              "value": "Kaynak az"
+            },
+            {
+              "col": 14,
+              "value": "Kaynak akıntısı"
+            },
+            {
+              "col": 15,
+              "value": "İçi çapaklı"
+            },
+            {
+              "col": 16,
+              "value": "Pim Girmeyen"
+            },
+            {
+              "col": 17,
+              "value": "Boncuklu"
+            },
+            {
+              "col": 18,
+              "value": "Yamuk"
+            },
+            {
+              "col": 19,
+              "value": "Gramajı Düşük"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "data": [
+            {
+              "col": 1,
+              "value": "A"
+            },
+            {
+              "col": 2,
+              "value": "MXJ-YA2512M/R (A)"
+            },
+            {
+              "col": 3,
+              "value": "0"
+            },
+            {
+              "col": 6,
+              "value": "0"
+            },
+            {
+              "col": 9,
+              "value": "0"
+            },
+            {
+              "col": 12,
+              "value": "0"
+            },
+            {
+              "col": 13,
+              "value": "0"
+            },
+            {
+              "col": 14,
+              "value": "0"
+            },
+            {
+              "col": 15,
+              "value": "0"
+            },
+            {
+              "col": 16,
+              "value": "0"
+            },
+            {
+              "col": 17,
+              "value": "0"
+            },
+            {
+              "col": 18,
+              "value": "0"
+            },
+            {
+              "col": 19,
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "data": [
+            {
+              "col": 1,
+              "value": "B"
+            },
+            {
+              "col": 2,
+              "value": "MXJ-YA2512M/R (B)"
+            },
+            {
+              "col": 3,
+              "value": "0"
+            },
+            {
+              "col": 6,
+              "value": "0"
+            },
+            {
+              "col": 9,
+              "value": "0"
+            },
+            {
+              "col": 12,
+              "value": "0"
+            },
+            {
+              "col": 13,
+              "value": "0"
+            },
+            {
+              "col": 14,
+              "value": "0"
+            },
+            {
+              "col": 15,
+              "value": "0"
+            },
+            {
+              "col": 16,
+              "value": "0"
+            },
+            {
+              "col": 17,
+              "value": "0"
+            },
+            {
+              "col": 18,
+              "value": "0"
+            },
+            {
+              "col": 19,
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "data": [
+            {
+              "col": 1,
+              "value": "A"
+            },
+            {
+              "col": 2,
+              "value": "DIS-371-2GAT (A)"
+            },
+            {
+              "col": 3,
+              "value": "0"
+            },
+            {
+              "col": 6,
+              "value": "0"
+            },
+            {
+              "col": 9,
+              "value": "0"
+            },
+            {
+              "col": 12,
+              "value": "0"
+            },
+            {
+              "col": 13,
+              "value": "0"
+            },
+            {
+              "col": 14,
+              "value": "0"
+            },
+            {
+              "col": 15,
+              "value": "0"
+            },
+            {
+              "col": 16,
+              "value": "0"
+            },
+            {
+              "col": 17,
+              "value": "0"
+            },
+            {
+              "col": 18,
+              "value": "0"
+            },
+            {
+              "col": 19,
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "data": [
+            {
+              "col": 1,
+              "value": "B"
+            },
+            {
+              "col": 2,
+              "value": "DIS-371-2GAT (B)"
+            },
+            {
+              "col": 3,
+              "value": "0"
+            },
+            {
+              "col": 6,
+              "value": "0"
+            },
+            {
+              "col": 9,
+              "value": "0"
+            },
+            {
+              "col": 12,
+              "value": "0"
+            },
+            {
+              "col": 13,
+              "value": "0"
+            },
+            {
+              "col": 14,
+              "value": "0"
+            },
+            {
+              "col": 15,
+              "value": "0"
+            },
+            {
+              "col": 16,
+              "value": "0"
+            },
+            {
+              "col": 17,
+              "value": "0"
+            },
+            {
+              "col": 18,
+              "value": "0"
+            },
+            {
+              "col": 19,
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "makrolar": {
+    "mevcut": true,
+    "dosya": "xl/vbaProject.bin",
+    "boyut": 81920,
+    "icerdigi": "Moduller ve Sub prosedurler"
+  },
+  "ozetler": {
+    "toplam_sayfa": 9,
+    "makro_var_mi": true,
+    "sayfa_isimleri": [
+      "Grafik3",
+      "Anasayfa",
+      "Temizlemeye Gidecek",
+      "Temizlemede Olan",
+      "Temizlemeden Gelen",
+      "Sevke Hazır",
+      "Kalan",
+      "Sevk Edilen",
+      "Problemli Çıkan Ürünler"
+    ]
+  }
+}

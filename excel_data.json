@@ -1,0 +1,166 @@
+{
+  "jointler": [
+    {
+      "Ürün Cinsi": 2512,
+      "Birim Ağırlık A": 0.676,
+      "Birim Ağırlık B": 0.181,
+      "Birim Ağırlık C": "-",
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": 2815,
+      "Birim Ağırlık A": 1.12,
+      "Birim Ağırlık B": 0.318,
+      "Birim Ağırlık C": "-",
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": "730A YEŞİL",
+      "Birim Ağırlık A": 0.484,
+      "Birim Ağırlık B": 0.392,
+      "Birim Ağırlık C": "-",
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": 1509,
+      "Birim Ağırlık A": 0.379,
+      "Birim Ağırlık B": 0.153,
+      "Birim Ağırlık C": "-",
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": "335A GRİ",
+      "Birim Ağırlık A": 0.387,
+      "Birim Ağırlık B": 0.085,
+      "Birim Ağırlık C": "-",
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": "335A YEŞİL",
+      "Birim Ağırlık A": 0.427,
+      "Birim Ağırlık B": 0.087,
+      "Birim Ağırlık C": "-",
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": "KHRO22M",
+      "Birim Ağırlık A": 0.41,
+      "Birim Ağırlık B": 0.09,
+      "Birim Ağırlık C": "-",
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": "1350A",
+      "Birim Ağırlık A": 1.054,
+      "Birim Ağırlık B": 0.0,
+      "Birim Ağırlık C": "-",
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": "FQ04NA",
+      "Birim Ağırlık A": 0.0,
+      "Birim Ağırlık B": 0.0,
+      "Birim Ağırlık C": 0.149,
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": "HZG20B",
+      "Birim Ağırlık A": 0.893,
+      "Birim Ağırlık B": 0.0,
+      "Birim Ağırlık C": "-",
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": "DIS180",
+      "Birim Ağırlık A": 0.525,
+      "Birim Ağırlık B": 0.212,
+      "Birim Ağırlık C": "-",
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": "DIS 22",
+      "Birim Ağırlık A": 0.319,
+      "Birim Ağırlık B": 0.122,
+      "Birim Ağırlık C": "-",
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": "DIS371",
+      "Birim Ağırlık A": 0.973,
+      "Birim Ağırlık B": 0.29,
+      "Birim Ağırlık C": "-",
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": "506A YEŞİL",
+      "Birim Ağırlık A": 0.484,
+      "Birim Ağırlık B": 0.101,
+      "Birim Ağırlık C": "-",
+      "Birim Ağırlık D": "-"
+    },
+    {
+      "Ürün Cinsi": "CMY-Y102SS-G2 TR",
+      "Birim Ağırlık A": 0.155,
+      "Birim Ağırlık B": 0.029,
+      "Birim Ağırlık C": 0.035,
+      "Birim Ağırlık D": 0.011
+    }
+  ],
+  "fittingsler": [
+    {
+      "Parça Tipi": "Dirsek",
+      "Ölçü (mm)": 54.0,
+      "Birim Ağırlık (kg/adet)": 0.312
+    },
+    {
+      "Parça Tipi": "Dirsek",
+      "Ölçü (mm)": 42.0,
+      "Birim Ağırlık (kg/adet)": 0.181
+    },
+    {
+      "Parça Tipi": "Dirsek",
+      "Ölçü (mm)": 35.0,
+      "Birim Ağırlık (kg/adet)": 0.105
+    },
+    {
+      "Parça Tipi": "Dirsek",
+      "Ölçü (mm)": 28.0,
+      "Birim Ağırlık (kg/adet)": 0.063
+    },
+    {
+      "Parça Tipi": "Dirsek",
+      "Ölçü (mm)": 22.0,
+      "Birim Ağırlık (kg/adet)": 0.039
+    },
+    {
+      "Parça Tipi": "Dirsek 45 Derece",
+      "Ölçü (mm)": 28.0,
+      "Birim Ağırlık (kg/adet)": 0.055
+    },
+    {
+      "Parça Tipi": "TEE",
+      "Ölçü (mm)": 35.0,
+      "Birim Ağırlık (kg/adet)": 0.176
+    },
+    {
+      "Parça Tipi": "TEE",
+      "Ölçü (mm)": 22.0,
+      "Birim Ağırlık (kg/adet)": 0.067
+    },
+    {
+      "Parça Tipi": "TEE",
+      "Ölçü (mm)": 19.0,
+      "Birim Ağırlık (kg/adet)": 0.049
+    },
+    {
+      "Parça Tipi": "TEE",
+      "Ölçü (mm)": 15.88,
+      "Birim Ağırlık (kg/adet)": 0.035
+    },
+    {
+      "Parça Tipi": "TEE",
+      "Ölçü (mm)": 12.7,
+      "Birim Ağırlık (kg/adet)": 0.0218
+    }
+  ]
+}

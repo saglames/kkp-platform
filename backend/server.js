@@ -86,14 +86,19 @@ app.post('/api/setup-database', async (req, res) => {
     const sql = await fs.readFile(sqlFile, 'utf8');
     console.log('SQL file size:', sql.length, 'bytes');
 
+    // Remove all comment lines first
+    const lines = sql.split('\n');
+    const sqlWithoutComments = lines
+      .filter(line => !line.trim().startsWith('--'))
+      .join('\n');
+
     // Split by semicolon and filter empty statements
-    const statements = sql
+    const statements = sqlWithoutComments
       .split(';')
       .map(s => s.trim())
       .filter(s => {
-        // Skip empty lines, comments, and CREATE DATABASE statements
+        // Skip empty lines and CREATE DATABASE statements
         if (!s || s.length === 0) return false;
-        if (s.startsWith('--')) return false;
         if (s.toUpperCase().includes('CREATE DATABASE')) return false;
         return true;
       });

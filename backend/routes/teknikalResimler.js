@@ -1,42 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
 const pool = require('../db');
+const streamifier = require('streamifier');
 
-// Uploads klasörünü oluştur
-const uploadsDir = path.join(__dirname, '../uploads/teknik-resimler');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
-
-// Multer configuration for PDF uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    const kategoriId = req.body.kategori_id || 'genel';
-    const categoryDir = path.join(uploadsDir, kategoriId.toString());
-
-    if (!fs.existsSync(categoryDir)) {
-      fs.mkdirSync(categoryDir, { recursive: true });
-    }
-
-    cb(null, categoryDir);
-  },
-  filename: function (req, file, cb) {
-    // Türkçe karakterleri değiştir
-    const safeName = file.originalname
-      .replace(/ğ/g, 'g').replace(/Ğ/g, 'G')
-      .replace(/ü/g, 'u').replace(/Ü/g, 'U')
-      .replace(/ş/g, 's').replace(/Ş/g, 'S')
-      .replace(/ı/g, 'i').replace(/İ/g, 'I')
-      .replace(/ö/g, 'o').replace(/Ö/g, 'O')
-      .replace(/ç/g, 'c').replace(/Ç/g, 'C');
-
-    const timestamp = Date.now();
-    cb(null, `${timestamp}-${safeName}`);
-  }
+// Cloudinary configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
+
+// Multer memory storage (upload to memory first, then to Cloudinary)
+const storage = multer.memoryStorage();
 
 const upload = multer({
   storage: storage,
@@ -51,6 +28,42 @@ const upload = multer({
     fileSize: 50 * 1024 * 1024 // 50MB limit
   }
 });
+
+// Helper function to upload to Cloudinary
+const uploadToCloudinary = (buffer, filename, kategoriId) => {
+  return new Promise((resolve, reject) => {
+    // Türkçe karakterleri değiştir
+    const safeName = filename
+      .replace(/ğ/g, 'g').replace(/Ğ/g, 'G')
+      .replace(/ü/g, 'u').replace(/Ü/g, 'U')
+      .replace(/ş/g, 's').replace(/Ş/g, 'S')
+      .replace(/ı/g, 'i').replace(/İ/g, 'I')
+      .replace(/ö/g, 'o').replace(/Ö/g, 'O')
+      .replace(/ç/g, 'c').replace(/Ç/g, 'C')
+      .replace(/\s+/g, '-')
+      .replace('.pdf', '');
+
+    const timestamp = Date.now();
+    const publicId = `teknik-resimler/${kategoriId}/${timestamp}-${safeName}`;
+
+    const uploadStream = cloudinary.uploader.upload_stream(
+      {
+        resource_type: 'raw',
+        public_id: publicId,
+        folder: `teknik-resimler/${kategoriId}`
+      },
+      (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      }
+    );
+
+    streamifier.createReadStream(buffer).pipe(uploadStream);
+  });
+};
 
 // Login endpoint
 router.post('/login', async (req, res) => {
@@ -143,6 +156,13 @@ router.post('/upload', upload.single('pdf'), async (req, res) => {
     const { kategori_id } = req.body;
     const yukleyen = req.body.yukleyen || 'esatakg';
 
+    // Upload to Cloudinary
+    const cloudinaryResult = await uploadToCloudinary(
+      req.file.buffer,
+      req.file.originalname,
+      kategori_id || 'genel'
+    );
+
     const result = await pool.query(
       `INSERT INTO teknik_resimler_dosyalar
        (kategori_id, dosya_adi, dosya_yolu, dosya_boyutu, yukleyen)
@@ -151,8 +171,8 @@ router.post('/upload', upload.single('pdf'), async (req, res) => {
       [
         kategori_id,
         req.file.originalname,
-        req.file.path,
-        req.file.size,
+        cloudinaryResult.secure_url, // Cloudinary URL
+        cloudinaryResult.bytes,
         yukleyen
       ]
     );
@@ -164,11 +184,7 @@ router.post('/upload', upload.single('pdf'), async (req, res) => {
     });
   } catch (error) {
     console.error('Upload error:', error);
-    // Hata durumunda dosyayı sil
-    if (req.file && fs.existsSync(req.file.path)) {
-      fs.unlinkSync(req.file.path);
-    }
-    res.status(500).json({ error: 'Dosya yüklenemedi' });
+    res.status(500).json({ error: 'Dosya yüklenemedi: ' + error.message });
   }
 });
 
@@ -187,17 +203,10 @@ router.get('/view/:fileId', async (req, res) => {
     }
 
     const file = result.rows[0];
-    const filePath = file.dosya_yolu;
+    const cloudinaryUrl = file.dosya_yolu;
 
-    if (!fs.existsSync(filePath)) {
-      return res.status(404).json({ error: 'Dosya sistemde bulunamadı' });
-    }
-
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `inline; filename="${file.dosya_adi}"`);
-
-    const fileStream = fs.createReadStream(filePath);
-    fileStream.pipe(res);
+    // Redirect to Cloudinary URL
+    res.redirect(cloudinaryUrl);
   } catch (error) {
     console.error('View file error:', error);
     res.status(500).json({ error: 'Dosya açılamadı' });
@@ -221,9 +230,20 @@ router.delete('/dosyalar/:fileId', async (req, res) => {
 
     const file = result.rows[0];
 
-    // Fiziksel dosyayı sil
-    if (fs.existsSync(file.dosya_yolu)) {
-      fs.unlinkSync(file.dosya_yolu);
+    // Cloudinary'den dosyayı sil
+    // URL'den public_id'yi çıkar
+    try {
+      // URL format: https://res.cloudinary.com/{cloud_name}/raw/upload/v{version}/{public_id}.pdf
+      const urlParts = file.dosya_yolu.split('/upload/');
+      if (urlParts.length > 1) {
+        const pathAfterUpload = urlParts[1].split('/').slice(1).join('/'); // Skip version number
+        const publicId = pathAfterUpload.replace('.pdf', '');
+
+        await cloudinary.uploader.destroy(publicId, { resource_type: 'raw' });
+      }
+    } catch (cloudinaryError) {
+      console.error('Error deleting from Cloudinary:', cloudinaryError);
+      // Cloudinary'den silinmese bile DB'den sil
     }
 
     // Veritabanından sil

@@ -105,9 +105,9 @@ const FileManager = ({ user }) => {
     }
   };
 
-  const handleViewPDF = (fileId) => {
-    const url = teknikResimlerAPI.getViewURL(fileId);
-    setPdfViewerURL(url);
+  const handleViewPDF = (dosya) => {
+    // Cloudinary URL'ini direkt kullan
+    setPdfViewerURL(dosya.dosya_yolu);
   };
 
   const formatFileSize = (bytes) => {
@@ -237,14 +237,16 @@ const FileManager = ({ user }) => {
                       <td className="px-6 py-4 text-center">
                         <div className="flex gap-2 justify-center">
                           <button
-                            onClick={() => handleViewPDF(dosya.id)}
+                            onClick={() => handleViewPDF(dosya)}
                             className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
                           >
                             Görüntüle
                           </button>
                           <a
-                            href={teknikResimlerAPI.getViewURL(dosya.id)}
-                            download
+                            href={dosya.dosya_yolu}
+                            download={dosya.dosya_adi}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors"
                           >
                             İndir

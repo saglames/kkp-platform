@@ -106,9 +106,9 @@ const FileManager = ({ user }) => {
   };
 
   const handleViewPDF = (dosya) => {
-    // Google Docs Viewer ile PDF'i görüntüle
-    const googleDocsUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(dosya.dosya_yolu)}&embedded=true`;
-    setPdfViewerURL(googleDocsUrl);
+    // Mozilla PDF.js viewer kullan
+    const pdfJsUrl = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(dosya.dosya_yolu)}`;
+    setPdfViewerURL(pdfJsUrl);
   };
 
   const formatFileSize = (bytes) => {

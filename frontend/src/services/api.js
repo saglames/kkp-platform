@@ -317,4 +317,25 @@ export const temizlemeTakipAPI = {
   odemeKaydet: async (id, data) => (await api.post(`/temizleme-takip/partiler/${id}/odeme-kaydet`, data)).data,
 };
 
+// SEVKİYAT TAKİP API (Yeni Sistem - Kg Bazlı)
+export const sevkiyatTakipAPI = {
+  // Sevkiyat Yönetimi
+  getSevkiyatlar: async () => (await api.get('/sevkiyat-takip/sevkiyatlar')).data,
+  getSevkiyat: async (id) => (await api.get(`/sevkiyat-takip/sevkiyat/${id}`)).data,
+  createSevkiyat: async (data) => (await api.post('/sevkiyat-takip/sevkiyat', data)).data,
+  updateSevkiyat: async (id, data) => (await api.put(`/sevkiyat-takip/sevkiyat/${id}`, data)).data,
+
+  // Ürün İşlemleri
+  updateUrun: async (id, data) => (await api.put(`/sevkiyat-takip/urun/${id}`, data)).data,
+  addUrun: async (sevkiyatId, data) => (await api.post(`/sevkiyat-takip/sevkiyat/${sevkiyatId}/urun`, data)).data,
+
+  // Kalite Kontrol
+  kaliteKontrol: async (data) => (await api.post('/sevkiyat-takip/kalite-kontrol', data)).data,
+  getPisUrunler: async (sevkiyatId) => (await api.get(`/sevkiyat-takip/sevkiyat/${sevkiyatId}/pis-urunler`)).data,
+
+  // Raporlar
+  getOdemeRaporu: async (sevkiyatId) => (await api.get(`/sevkiyat-takip/odeme-raporu/${sevkiyatId}`)).data,
+  getIstatistikler: async () => (await api.get('/sevkiyat-takip/istatistikler')).data,
+};
+
 export default api;

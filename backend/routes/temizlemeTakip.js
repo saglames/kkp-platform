@@ -161,7 +161,62 @@ async function kaliteKontrolYap(partiId, kaliteData, kullanici) {
     `, [partiId, karar, kullanici, kontrol_edilen_adet,
         hata_adet, hataOrani, aciklama, JSON.stringify(problem_kategorileri || [])]);
 
-    // 2. Parti durumunu güncelle
+    // 2. Ödeme hesaplama - hata detaylarına göre ödenecek/ödenmeyecek ayır
+    if (hata_detay) {
+      for (const [urun_kodu, hatalar] of Object.entries(hata_detay)) {
+        // Toplam hatalı adet hesapla
+        const toplamHata = Object.values(hatalar).reduce((sum, val) => sum + (val || 0), 0);
+
+        // Ürünü bul
+        const urun = await client.query(`
+          SELECT pu.*, u.birim_agirlik
+          FROM temizleme_parti_urunler pu
+          JOIN surec_urunler u ON pu.urun_id = u.id
+          WHERE pu.parti_id = $1 AND u.urun_kodu = $2
+        `, [partiId, urun_kodu]);
+
+        if (urun.rows.length > 0) {
+          const urunData = urun.rows[0];
+
+          // Ödenecek = dönüş - hatalı
+          const odenecekAdet = (urunData.donus_adet || 0) - toplamHata;
+          const odenmeyecekAdet = toplamHata;
+
+          // KG hesaplama (birim ağırlık varsa)
+          let odenecekKg = urunData.donus_kg || 0;
+          let odenmeyecekKg = 0;
+
+          if (urunData.birim_agirlik && urunData.birim_agirlik > 0) {
+            odenmeyecekKg = (toplamHata * urunData.birim_agirlik) / 1000; // gram to kg
+            odenecekKg = (urunData.donus_kg || 0) - odenmeyecekKg;
+          }
+
+          // Güncelle
+          await client.query(`
+            UPDATE temizleme_parti_urunler
+            SET odenecek_adet = $1,
+                odenecek_kg = $2,
+                odenmeyecek_adet = $3,
+                odenmeyecek_kg = $4,
+                hata_adet = $5
+            WHERE id = $6
+          `, [odenecekAdet, odenecekKg, odenmeyecekAdet, odenmeyecekKg, toplamHata, urunData.id]);
+        }
+      }
+    } else {
+      // Hata yoksa tüm dönüş miktarı ödenecek
+      await client.query(`
+        UPDATE temizleme_parti_urunler
+        SET odenecek_adet = donus_adet,
+            odenecek_kg = donus_kg,
+            odenmeyecek_adet = 0,
+            odenmeyecek_kg = 0,
+            hata_adet = 0
+        WHERE parti_id = $1
+      `, [partiId]);
+    }
+
+    // 3. Parti durumunu güncelle
     let yeniDurum = karar;
     await client.query(`
       UPDATE temizleme_partiler
@@ -175,7 +230,7 @@ async function kaliteKontrolYap(partiId, kaliteData, kullanici) {
       WHERE id = $5
     `, [karar, yeniDurum, kullanici, aciklama, partiId]);
 
-    // 3. Kabul edilirse sevke hazıra taşı
+    // 4. Kabul edilirse sevke hazıra taşı
     if (karar === 'kabul') {
       const partiUrunler = await client.query(`
         SELECT pu.*, u.urun_kodu_base, u.urun_kodu
@@ -674,6 +729,379 @@ router.get('/raporlar/urun-bazli', async (req, res) => {
   } catch (error) {
     console.error('Ürün bazlı rapor hatası:', error);
     res.status(500).json({ error: error.message });
+  }
+});
+
+// FİYATLANDIRMA
+
+/**
+ * GET /api/temizleme-takip/fiyatlandirma
+ * Aktif fiyatlandırmayı getir
+ */
+router.get('/fiyatlandirma', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT * FROM temizleme_fiyatlandirma
+      WHERE aktif = true
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+
+    if (result.rows.length === 0) {
+      return res.json({
+        birim_fiyat_kg: 0.75,
+        birim_fiyat_adet: 5.50
+      });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Fiyatlandırma hatası:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * POST /api/temizleme-takip/fiyatlandirma
+ * Yeni fiyatlandırma kaydet
+ */
+router.post('/fiyatlandirma', async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const { birim_fiyat_kg, birim_fiyat_adet, urun_tipi, notlar, yapan } = req.body;
+
+    if (!birim_fiyat_kg || !birim_fiyat_adet) {
+      return res.status(400).json({ error: 'Birim fiyatlar gerekli!' });
+    }
+
+    await client.query('BEGIN');
+
+    // Mevcut fiyatlandırmayı pasifleştir
+    await client.query(`
+      UPDATE temizleme_fiyatlandirma
+      SET aktif = false, gecerli_tarih_bitis = CURRENT_DATE
+      WHERE aktif = true AND urun_tipi = $1
+    `, [urun_tipi || 'genel']);
+
+    // Yeni fiyatlandırma ekle
+    const result = await client.query(`
+      INSERT INTO temizleme_fiyatlandirma (
+        urun_tipi, birim_fiyat_kg, birim_fiyat_adet,
+        gecerli_tarih_baslangic, aktif, notlar, created_by
+      ) VALUES ($1, $2, $3, CURRENT_DATE, true, $4, $5)
+      RETURNING *
+    `, [urun_tipi || 'genel', birim_fiyat_kg, birim_fiyat_adet, notlar, yapan || 'Sistem']);
+
+    await client.query('COMMIT');
+
+    res.json({ success: true, fiyatlandirma: result.rows[0] });
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error('Fiyatlandırma kayıt hatası:', error);
+    res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
+  }
+});
+
+// ÖDEME HESAPLAMA VE RAPORLAMA
+
+/**
+ * POST /api/temizleme-takip/partiler/:id/odeme-hesapla
+ * Parti için ödeme hesapla
+ */
+router.post('/partiler/:id/odeme-hesapla', async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const { id } = req.params;
+
+    // Parti bilgisini getir
+    const parti = await client.query(`
+      SELECT * FROM temizleme_partiler WHERE id = $1
+    `, [id]);
+
+    if (parti.rows.length === 0) {
+      return res.status(404).json({ error: 'Parti bulunamadı!' });
+    }
+
+    const partiData = parti.rows[0];
+
+    // Kalite kontrol yapıldı mı kontrol et
+    if (partiData.durum !== 'kabul') {
+      return res.status(400).json({ error: 'Ödeme hesabı için kalite kontrol kabul edilmelidir!' });
+    }
+
+    // Aktif fiyatlandırmayı getir
+    let fiyat = await client.query(`
+      SELECT * FROM temizleme_fiyatlandirma
+      WHERE aktif = true
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+
+    if (fiyat.rows.length === 0) {
+      fiyat = { birim_fiyat_kg: 0.75, birim_fiyat_adet: 5.50 };
+    } else {
+      fiyat = fiyat.rows[0];
+    }
+
+    // Parti ürünlerini getir
+    const urunler = await client.query(`
+      SELECT
+        pu.*,
+        u.urun_kodu,
+        u.tip
+      FROM temizleme_parti_urunler pu
+      JOIN surec_urunler u ON pu.urun_id = u.id
+      WHERE pu.parti_id = $1
+    `, [id]);
+
+    // Her ürün için ödenecek miktarı hesapla
+    let toplamOdenecek = 0;
+    const urunDetaylari = [];
+
+    for (const urun of urunler.rows) {
+      // Ödenecek miktar = dönüş miktarı - hatalı miktar
+      const odenecekAdet = urun.odenecek_adet !== null ? urun.odenecek_adet : urun.donus_adet;
+      const odenecekKg = urun.odenecek_kg !== null ? urun.odenecek_kg : urun.donus_kg;
+
+      const urunTutari = (odenecekAdet * fiyat.birim_fiyat_adet) + (odenecekKg * fiyat.birim_fiyat_kg);
+      toplamOdenecek += urunTutari;
+
+      urunDetaylari.push({
+        urun_kodu: urun.urun_kodu,
+        tip: urun.tip,
+        gidis_adet: urun.gidis_adet,
+        gidis_kg: urun.gidis_kg,
+        donus_adet: urun.donus_adet,
+        donus_kg: urun.donus_kg,
+        odenecek_adet: odenecekAdet,
+        odenecek_kg: odenecekKg,
+        odenmeyecek_adet: urun.odenmeyecek_adet || 0,
+        odenmeyecek_kg: urun.odenmeyecek_kg || 0,
+        hata_adet: urun.hata_adet || 0,
+        tutar: urunTutari.toFixed(2)
+      });
+    }
+
+    // Parti tablosunu güncelle
+    await client.query(`
+      UPDATE temizleme_partiler
+      SET
+        birim_fiyat_kg = $1,
+        birim_fiyat_adet = $2,
+        odenecek_tutar = $3,
+        odeme_durumu = 'odenecek'
+      WHERE id = $4
+    `, [fiyat.birim_fiyat_kg, fiyat.birim_fiyat_adet, toplamOdenecek.toFixed(2), id]);
+
+    res.json({
+      success: true,
+      parti_no: partiData.parti_no,
+      toplam_odenecek: toplamOdenecek.toFixed(2),
+      birim_fiyat_kg: fiyat.birim_fiyat_kg,
+      birim_fiyat_adet: fiyat.birim_fiyat_adet,
+      urun_detaylari: urunDetaylari
+    });
+  } catch (error) {
+    console.error('Ödeme hesaplama hatası:', error);
+    res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
+  }
+});
+
+/**
+ * GET /api/temizleme-takip/raporlar/odeme-raporu
+ * Ödeme raporu - tüm partilerin ödeme durumu
+ */
+router.get('/raporlar/odeme-raporu', async (req, res) => {
+  try {
+    const { durum } = req.query;
+
+    let whereClause = "WHERE p.durum = 'kabul'";
+    if (durum) {
+      whereClause += ` AND p.odeme_durumu = '${durum}'`;
+    }
+
+    const result = await pool.query(`
+      SELECT
+        p.id,
+        p.parti_no,
+        p.irsaliye_no,
+        p.gidis_tarihi,
+        p.donus_tarihi,
+        p.gidis_adet,
+        p.gidis_kg,
+        p.donus_adet,
+        p.donus_kg,
+        p.birim_fiyat_kg,
+        p.birim_fiyat_adet,
+        p.odenecek_tutar,
+        p.odenen_tutar,
+        p.odeme_durumu,
+        p.odeme_tarihi,
+        p.odeme_notlari,
+        (
+          SELECT SUM(pu.odenecek_adet)
+          FROM temizleme_parti_urunler pu
+          WHERE pu.parti_id = p.id
+        ) as toplam_odenecek_adet,
+        (
+          SELECT SUM(pu.odenecek_kg)
+          FROM temizleme_parti_urunler pu
+          WHERE pu.parti_id = p.id
+        ) as toplam_odenecek_kg,
+        (
+          SELECT SUM(pu.odenmeyecek_adet)
+          FROM temizleme_parti_urunler pu
+          WHERE pu.parti_id = p.id
+        ) as toplam_odenmeyecek_adet,
+        (
+          SELECT SUM(pu.odenmeyecek_kg)
+          FROM temizleme_parti_urunler pu
+          WHERE pu.parti_id = p.id
+        ) as toplam_odenmeyecek_kg
+      FROM temizleme_partiler p
+      ${whereClause}
+      ORDER BY p.gidis_tarihi DESC
+    `);
+
+    // Toplam özet hesapla
+    const toplam = {
+      toplam_parti: result.rows.length,
+      toplam_odenecek_tutar: result.rows.reduce((sum, p) => sum + parseFloat(p.odenecek_tutar || 0), 0),
+      toplam_odenen_tutar: result.rows.reduce((sum, p) => sum + parseFloat(p.odenen_tutar || 0), 0),
+      kalan_borc: 0
+    };
+    toplam.kalan_borc = toplam.toplam_odenecek_tutar - toplam.toplam_odenen_tutar;
+
+    res.json({
+      partiler: result.rows,
+      ozet: toplam
+    });
+  } catch (error) {
+    console.error('Ödeme raporu hatası:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * GET /api/temizleme-takip/partiler/:id/odeme-detay
+ * Parti için detaylı ödeme bilgisi
+ */
+router.get('/partiler/:id/odeme-detay', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Parti bilgisi
+    const parti = await pool.query(`
+      SELECT * FROM temizleme_partiler WHERE id = $1
+    `, [id]);
+
+    if (parti.rows.length === 0) {
+      return res.status(404).json({ error: 'Parti bulunamadı!' });
+    }
+
+    // Ürün detayları
+    const urunler = await pool.query(`
+      SELECT
+        pu.*,
+        u.urun_kodu,
+        u.tip
+      FROM temizleme_parti_urunler pu
+      JOIN surec_urunler u ON pu.urun_id = u.id
+      WHERE pu.parti_id = $1
+    `, [id]);
+
+    // Ödeme geçmişi
+    const odemeGecmisi = await pool.query(`
+      SELECT * FROM temizleme_odeme_log
+      WHERE parti_id = $1
+      ORDER BY odeme_tarihi DESC
+    `, [id]);
+
+    res.json({
+      parti: parti.rows[0],
+      urunler: urunler.rows,
+      odeme_gecmisi: odemeGecmisi.rows
+    });
+  } catch (error) {
+    console.error('Ödeme detay hatası:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * POST /api/temizleme-takip/partiler/:id/odeme-kaydet
+ * Ödeme kaydı yap
+ */
+router.post('/partiler/:id/odeme-kaydet', async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const { id } = req.params;
+    const { odeme_tutari, odeme_tarihi, odeme_yontemi, aciklama, yapan } = req.body;
+
+    if (!odeme_tutari || !odeme_tarihi) {
+      return res.status(400).json({ error: 'Ödeme tutarı ve tarihi gerekli!' });
+    }
+
+    await client.query('BEGIN');
+
+    // Parti bilgisini getir
+    const parti = await client.query(`
+      SELECT * FROM temizleme_partiler WHERE id = $1
+    `, [id]);
+
+    if (parti.rows.length === 0) {
+      throw new Error('Parti bulunamadı!');
+    }
+
+    const partiData = parti.rows[0];
+    const yeniOdenenTutar = parseFloat(partiData.odenen_tutar || 0) + parseFloat(odeme_tutari);
+    const odenecekTutar = parseFloat(partiData.odenecek_tutar || 0);
+
+    let yeniOdemeDurumu = 'kismen_odendi';
+    let odemeTipi = 'kismen';
+
+    if (yeniOdenenTutar >= odenecekTutar) {
+      yeniOdemeDurumu = 'odendi';
+      odemeTipi = 'tam';
+    }
+
+    // Ödeme log'u ekle
+    await client.query(`
+      INSERT INTO temizleme_odeme_log (
+        parti_id, odeme_tipi, odeme_tutari, odeme_tarihi,
+        odeme_yontemi, aciklama, created_by
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7)
+    `, [id, odemeTipi, odeme_tutari, odeme_tarihi, odeme_yontemi, aciklama, yapan || 'Sistem']);
+
+    // Parti durumunu güncelle
+    await client.query(`
+      UPDATE temizleme_partiler
+      SET
+        odenen_tutar = $1,
+        odeme_durumu = $2,
+        odeme_tarihi = $3
+      WHERE id = $4
+    `, [yeniOdenenTutar, yeniOdemeDurumu, odeme_tarihi, id]);
+
+    await client.query('COMMIT');
+
+    res.json({
+      success: true,
+      message: 'Ödeme kaydedildi',
+      odenen_tutar: yeniOdenenTutar,
+      kalan_borc: (odenecekTutar - yeniOdenenTutar).toFixed(2),
+      odeme_durumu: yeniOdemeDurumu
+    });
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error('Ödeme kayıt hatası:', error);
+    res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
   }
 });
 

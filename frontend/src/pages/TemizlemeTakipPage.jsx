@@ -3,6 +3,7 @@ import { Box, Tabs, Tab, Typography, Paper } from '@mui/material';
 import PartiListesi from '../components/TemizlemeTakip/PartiListesi';
 import KaliteKontrolTab from '../components/TemizlemeTakip/KaliteKontrolTab';
 import RaporlarTab from '../components/TemizlemeTakip/RaporlarTab';
+import OdemeRaporuTab from '../components/TemizlemeTakip/OdemeRaporuTab';
 
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -44,6 +45,7 @@ function TemizlemeTakipPage() {
         >
           <Tab label="📋 Parti Listesi" />
           <Tab label="✅ Kalite Kontrol" />
+          <Tab label="💰 Ödeme Raporu" />
           <Tab label="📊 Raporlar" />
         </Tabs>
 
@@ -56,6 +58,10 @@ function TemizlemeTakipPage() {
         </TabPanel>
 
         <TabPanel value={currentTab} index={2}>
+          <OdemeRaporuTab />
+        </TabPanel>
+
+        <TabPanel value={currentTab} index={3}>
           <RaporlarTab />
         </TabPanel>
       </Paper>

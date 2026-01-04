@@ -308,6 +308,12 @@ export const temizlemeTakipAPI = {
   // Raporlar
   getRaporOzet: async () => (await api.get('/temizleme-takip/raporlar/ozet')).data,
   getRaporUrunBazli: async () => (await api.get('/temizleme-takip/raporlar/urun-bazli')).data,
+
+  // Ödeme Raporları
+  getOdemeRaporu: async (params) => (await api.get('/temizleme-takip/raporlar/odeme-raporu', { params })).data,
+  getOdemeDetay: async (id) => (await api.get(`/temizleme-takip/partiler/${id}/odeme-detay`)).data,
+  odemeHesapla: async (id) => (await api.post(`/temizleme-takip/partiler/${id}/odeme-hesapla`)).data,
+  odemeKaydet: async (id, data) => (await api.post(`/temizleme-takip/partiler/${id}/odeme-kaydet`, data)).data,
 };
 
 export default api;

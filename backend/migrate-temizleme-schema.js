@@ -75,11 +75,19 @@ async function migrateTemizlemeSchema() {
         kalite_durum character varying(50),
         kalite_kontrol_tarihi timestamp without time zone,
         kalite_kontrol_yapan character varying(100),
+        kalite_notlar text,
         tekrar_temizlik_sayisi integer DEFAULT 0,
         ana_parti_id integer,
         odeme_durumu character varying(50) DEFAULT 'odenecek',
         odenen_tutar numeric(10,2) DEFAULT 0,
         kalan_borc numeric(10,2) DEFAULT 0,
+        birim_fiyat_kg numeric(10,2),
+        birim_fiyat_adet numeric(10,2),
+        odenecek_tutar numeric(10,2),
+        odeme_tarihi timestamp without time zone,
+        odeme_notlari text,
+        created_by character varying(100),
+        updated_by character varying(100),
         yapan character varying(100),
         created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
         updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
@@ -103,6 +111,10 @@ async function migrateTemizlemeSchema() {
         kg_farki numeric(10,2) GENERATED ALWAYS AS (donus_kg - gidis_kg) STORED,
         hata_adet integer DEFAULT 0,
         hata_detay jsonb,
+        odenecek_adet integer,
+        odenecek_kg numeric(10,2),
+        odenmeyecek_adet integer,
+        odenmeyecek_kg numeric(10,2),
         created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
       );
     `);
@@ -155,10 +167,14 @@ async function migrateTemizlemeSchema() {
       CREATE TABLE IF NOT EXISTS temizleme_odeme_log (
         id integer DEFAULT nextval('temizleme_odeme_log_id_seq') NOT NULL PRIMARY KEY,
         parti_id integer NOT NULL,
+        odeme_tipi character varying(50),
         odeme_tutari numeric(10,2) NOT NULL,
         odeme_tarihi timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+        odeme_yontemi character varying(100),
+        aciklama text,
         odeme_yapan character varying(100),
         odeme_notu text,
+        created_by character varying(100),
         created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
       );
     `);
@@ -229,10 +245,28 @@ async function migrateTemizlemeSchema() {
     `);
     console.log('   OK: Foreign key constraintler eklendi\n');
 
-    // 4. İndeksleri oluştur
-    console.log('4.  İndeksler oluşturuluyor...');
+    // 4. Unique constraintler ekle
+    console.log('4.  Unique constraintler ekleniyor...');
 
     await client.query(`
+      DO $$
+      BEGIN
+        -- hatali_urunler için unique constraint (parti_no, urun_kodu kombinasyonu)
+        IF NOT EXISTS (
+          SELECT 1 FROM pg_constraint WHERE conname = 'uq_hatali_urunler_parti_urun'
+        ) THEN
+          ALTER TABLE hatali_urunler
+          ADD CONSTRAINT uq_hatali_urunler_parti_urun UNIQUE (parti_no, urun_kodu);
+        END IF;
+      END $$;
+    `);
+    console.log('   OK: Unique constraintler eklendi\n');
+
+    // 5. İndeksleri oluştur
+    console.log('5.  İndeksler oluşturuluyor...');
+
+    await client.query(`
+      -- Temel indeksler
       CREATE INDEX IF NOT EXISTS idx_temizleme_partiler_parti_no ON temizleme_partiler(parti_no);
       CREATE INDEX IF NOT EXISTS idx_temizleme_partiler_durum ON temizleme_partiler(durum);
       CREATE INDEX IF NOT EXISTS idx_temizleme_partiler_gidis_tarihi ON temizleme_partiler(gidis_tarihi);
@@ -242,6 +276,14 @@ async function migrateTemizlemeSchema() {
       CREATE INDEX IF NOT EXISTS idx_hatali_urunler_temizleme_parti_id ON hatali_urunler(temizleme_parti_id);
       CREATE INDEX IF NOT EXISTS idx_surec_temizlemede_olan_parti_id ON surec_temizlemede_olan(parti_id);
       CREATE INDEX IF NOT EXISTS idx_surec_temizlemeden_gelen_parti_id ON surec_temizlemeden_gelen(parti_id);
+
+      -- Performans optimizasyonu için composite indeksler
+      CREATE INDEX IF NOT EXISTS idx_temizleme_partiler_durum_tarihi
+        ON temizleme_partiler(durum, gidis_tarihi);
+      CREATE INDEX IF NOT EXISTS idx_temizleme_partiler_odeme_durum
+        ON temizleme_partiler(odeme_durumu);
+      CREATE INDEX IF NOT EXISTS idx_temizleme_kalite_karar
+        ON temizleme_kalite_kontrol_log(karar);
     `);
     console.log('   OK: İndeksler oluşturuldu\n');
 

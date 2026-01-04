@@ -60,7 +60,10 @@ const IzolasyonTab = () => {
   };
 
   const filteredItems = items.filter(item =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (item.cin_adi && item.cin_adi.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (item.turk_adi && item.turk_adi.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (item.renk && item.renk.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   if (loading) return <LoadingSpinner />;
@@ -94,6 +97,9 @@ const IzolasyonTab = () => {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ürün Adı</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Çin Adı</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Türk Adı</th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Renk</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kullanılan Ürünler</th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Stok</th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
@@ -103,6 +109,26 @@ const IzolasyonTab = () => {
             {filteredItems.map((item) => (
               <tr key={item.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                  {item.cin_adi || <span className="text-gray-400">-</span>}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">
+                  {item.turk_adi || <span className="text-gray-400">-</span>}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-center">
+                  {item.renk ? (
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
+                      item.renk === 'GRİ' ? 'bg-gray-200 text-gray-800' :
+                      item.renk === 'MAVİ' ? 'bg-blue-100 text-blue-800' :
+                      item.renk === 'YEŞİL' ? 'bg-green-100 text-green-800' :
+                      'bg-gray-100 text-gray-800'
+                    }`}>
+                      {item.renk}
+                    </span>
+                  ) : (
+                    <span className="text-gray-400">-</span>
+                  )}
+                </td>
                 <td className="px-6 py-4 text-sm text-gray-600">
                   {item.kullanilan_urunler && item.kullanilan_urunler.length > 0 ? (
                     <div className="flex flex-wrap gap-1">

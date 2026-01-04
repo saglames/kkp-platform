@@ -4,6 +4,9 @@ import Modal from '../Shared/Modal';
 const AddIzolasyonModal = ({ isOpen, onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
     name: '',
+    cin_adi: '',
+    turk_adi: '',
+    renk: '',
     kullanilan_urunler: '',
     stock: 0
   });
@@ -24,6 +27,9 @@ const AddIzolasyonModal = ({ isOpen, onClose, onSubmit }) => {
 
     onSubmit({
       name: formData.name.trim(),
+      cin_adi: formData.cin_adi.trim(),
+      turk_adi: formData.turk_adi.trim(),
+      renk: formData.renk.trim(),
       kullanilan_urunler: kullanilanUrunlerArray.length > 0 ? kullanilanUrunlerArray : [formData.name.trim()],
       stock: parseInt(formData.stock) || 0
     });
@@ -31,6 +37,9 @@ const AddIzolasyonModal = ({ isOpen, onClose, onSubmit }) => {
     // Formu sıfırla
     setFormData({
       name: '',
+      cin_adi: '',
+      turk_adi: '',
+      renk: '',
       kullanilan_urunler: '',
       stock: 0
     });
@@ -60,6 +69,53 @@ const AddIzolasyonModal = ({ isOpen, onClose, onSubmit }) => {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
           />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Çin Adı
+            </label>
+            <input
+              type="text"
+              name="cin_adi"
+              value={formData.cin_adi}
+              onChange={handleChange}
+              placeholder="Örn: 335L大"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Türk Adı
+            </label>
+            <input
+              type="text"
+              name="turk_adi"
+              value={formData.turk_adi}
+              onChange={handleChange}
+              placeholder="Örn: G35B"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Renk
+          </label>
+          <select
+            name="renk"
+            value={formData.renk}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="">Renk Seçin</option>
+            <option value="GRİ">GRİ</option>
+            <option value="MAVİ">MAVİ</option>
+            <option value="YEŞİL">YEŞİL</option>
+          </select>
         </div>
 
         <div className="mb-4">

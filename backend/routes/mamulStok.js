@@ -6,7 +6,11 @@ const pool = require('../db');
 // Tüm izolasyonları getir
 router.get('/izolasyon', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM mamul_izolasyon ORDER BY name ASC');
+    const result = await pool.query(`
+      SELECT id, name, cin_adi, turk_adi, renk, kullanilan_urunler, stock, created_at, updated_at
+      FROM mamul_izolasyon
+      ORDER BY name ASC
+    `);
     res.json(result.rows);
   } catch (error) {
     console.error('İzolasyon getirme hatası:', error);
@@ -16,11 +20,11 @@ router.get('/izolasyon', async (req, res) => {
 
 // İzolasyon ekle
 router.post('/izolasyon', async (req, res) => {
-  const { name, kullanilan_urunler, stock } = req.body;
+  const { name, cin_adi, turk_adi, renk, kullanilan_urunler, stock } = req.body;
   try {
     const result = await pool.query(
-      'INSERT INTO mamul_izolasyon (name, kullanilan_urunler, stock) VALUES ($1, $2, $3) RETURNING *',
-      [name, kullanilan_urunler || [], stock || 0]
+      'INSERT INTO mamul_izolasyon (name, cin_adi, turk_adi, renk, kullanilan_urunler, stock) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [name, cin_adi, turk_adi, renk, kullanilan_urunler || [], stock || 0]
     );
     res.json(result.rows[0]);
   } catch (error) {
@@ -32,11 +36,11 @@ router.post('/izolasyon', async (req, res) => {
 // İzolasyon güncelle
 router.put('/izolasyon/:id', async (req, res) => {
   const { id } = req.params;
-  const { name, kullanilan_urunler, stock } = req.body;
+  const { name, cin_adi, turk_adi, renk, kullanilan_urunler, stock } = req.body;
   try {
     const result = await pool.query(
-      'UPDATE mamul_izolasyon SET name = $1, kullanilan_urunler = $2, stock = $3 WHERE id = $4 RETURNING *',
-      [name, kullanilan_urunler, stock, id]
+      'UPDATE mamul_izolasyon SET name = $1, cin_adi = $2, turk_adi = $3, renk = $4, kullanilan_urunler = $5, stock = $6, updated_at = CURRENT_TIMESTAMP WHERE id = $7 RETURNING *',
+      [name, cin_adi, turk_adi, renk, kullanilan_urunler, stock, id]
     );
     res.json(result.rows[0]);
   } catch (error) {

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { tumSurecAPI } from '../../services/api';
 
 const TemizlemeyeGidecek = () => {
+  const navigate = useNavigate();
   const [urunler, setUrunler] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showTransferModal, setShowTransferModal] = useState(false);
@@ -11,6 +13,7 @@ const TemizlemeyeGidecek = () => {
   const [transferAdet, setTransferAdet] = useState('');
   const [editAdet, setEditAdet] = useState('');
   const [yapan, setYapan] = useState('');
+  const [selectedItems, setSelectedItems] = useState([]); // Multi-select için
   const [formData, setFormData] = useState({
     tip: 'Joint',
     urun_kodu: '',
@@ -151,6 +154,36 @@ const TemizlemeyeGidecek = () => {
     }
   };
 
+  const handleSelectItem = (urun) => {
+    const isSelected = selectedItems.some(item => item.id === urun.id);
+    if (isSelected) {
+      setSelectedItems(selectedItems.filter(item => item.id !== urun.id));
+    } else {
+      setSelectedItems([...selectedItems, urun]);
+    }
+  };
+
+  const handlePartiOlustur = () => {
+    if (selectedItems.length === 0) {
+      alert('Lütfen en az bir ürün seçin!');
+      return;
+    }
+
+    // Seçili ürünleri localStorage'a kaydet
+    localStorage.setItem('parti_urunler', JSON.stringify(selectedItems));
+
+    // Temizleme Takip sayfasına git
+    navigate('/temizleme-takip');
+  };
+
+  const handleSelectAll = () => {
+    if (selectedItems.length === urunler.length) {
+      setSelectedItems([]);
+    } else {
+      setSelectedItems([...urunler]);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
@@ -162,8 +195,23 @@ const TemizlemeyeGidecek = () => {
   return (
     <div>
       <div className="mb-6 flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Temizlemeye Gidecek Ürünler</h2>
+        <h2 className="text-2xl font-bold text-gray-800">
+          Temizlemeye Gidecek Ürünler
+          {selectedItems.length > 0 && (
+            <span className="ml-3 text-base bg-blue-500 text-white px-3 py-1 rounded-full">
+              {selectedItems.length} ürün seçili
+            </span>
+          )}
+        </h2>
         <div className="flex gap-3">
+          {selectedItems.length > 0 && (
+            <button
+              onClick={handlePartiOlustur}
+              className="px-6 py-3 bg-purple-600 text-white text-lg font-medium rounded-lg hover:bg-purple-700 transition-colors shadow-lg"
+            >
+              🧼 Parti Oluştur ({selectedItems.length})
+            </button>
+          )}
           <button
             onClick={handleAdd}
             className="px-6 py-3 bg-green-600 text-white text-lg font-medium rounded-lg hover:bg-green-700 transition-colors"
@@ -183,6 +231,15 @@ const TemizlemeyeGidecek = () => {
         <table className="min-w-full bg-white border border-gray-300">
           <thead className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
             <tr>
+              <th className="px-4 py-4 text-center text-lg font-semibold border-b">
+                <input
+                  type="checkbox"
+                  checked={selectedItems.length === urunler.length && urunler.length > 0}
+                  onChange={handleSelectAll}
+                  className="w-5 h-5 cursor-pointer"
+                  title="Tümünü Seç/Kaldır"
+                />
+              </th>
               <th className="px-4 py-4 text-left text-lg font-semibold border-b">Tip</th>
               <th className="px-4 py-4 text-left text-lg font-semibold border-b">Ürün Kodu</th>
               <th className="px-4 py-4 text-center text-lg font-semibold border-b">Adet</th>
@@ -194,13 +251,23 @@ const TemizlemeyeGidecek = () => {
           <tbody>
             {urunler.length === 0 ? (
               <tr>
-                <td colSpan="6" className="px-4 py-8 text-center text-gray-500 text-lg">
+                <td colSpan="7" className="px-4 py-8 text-center text-gray-500 text-lg">
                   Temizlemeye gidecek ürün yok
                 </td>
               </tr>
             ) : (
-              urunler.map((urun) => (
-                <tr key={urun.id} className="border-b hover:bg-gray-50 transition-colors">
+              urunler.map((urun) => {
+                const isSelected = selectedItems.some(item => item.id === urun.id);
+                return (
+                  <tr key={urun.id} className={`border-b hover:bg-gray-50 transition-colors ${isSelected ? 'bg-blue-50' : ''}`}>
+                  <td className="px-4 py-4 text-center border-r">
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => handleSelectItem(urun)}
+                      className="w-5 h-5 cursor-pointer"
+                    />
+                  </td>
                   <td className="px-4 py-4 text-center border-r">
                     <span className={`inline-block px-3 py-1 rounded-full text-lg font-bold ${
                       urun.tip === 'A' ? 'bg-green-500 text-white' : 'bg-orange-500 text-white'
@@ -247,8 +314,9 @@ const TemizlemeyeGidecek = () => {
                       </button>
                     </div>
                   </td>
-                </tr>
-              ))
+                  </tr>
+                );
+              })
             )}
           </tbody>
         </table>

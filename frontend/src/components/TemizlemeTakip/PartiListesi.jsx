@@ -23,6 +23,12 @@ function PartiListesi() {
 
   useEffect(() => {
     fetchPartiler();
+
+    // Eğer localStorage'da ön seçili ürünler varsa modal'ı otomatik aç
+    const savedItems = localStorage.getItem('parti_urunler');
+    if (savedItems) {
+      setOlusturModalOpen(true);
+    }
   }, [filters]);
 
   const fetchPartiler = async () => {

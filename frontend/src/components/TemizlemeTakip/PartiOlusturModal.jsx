@@ -23,6 +23,7 @@ function PartiOlusturModal({ open, onClose, onSuccess }) {
   useEffect(() => {
     if (open) {
       fetchUrunler();
+      loadPreSelectedItems();
     }
   }, [open]);
 
@@ -33,6 +34,31 @@ function PartiOlusturModal({ open, onClose, onSuccess }) {
     } catch (err) {
       console.error('Ürün listesi yüklenirken hata:', err);
       setError('Ürün listesi yüklenemedi!');
+    }
+  };
+
+  const loadPreSelectedItems = () => {
+    try {
+      const savedItems = localStorage.getItem('parti_urunler');
+      if (savedItems) {
+        const items = JSON.parse(savedItems);
+
+        // localStorage'daki ürünleri parti formatına çevir
+        const formattedUrunler = items.map(item => ({
+          urun_id: item.id,
+          urun_kodu: item.urun_kodu,
+          tip: item.tip,
+          gidis_adet: item.adet || 0,
+          gidis_kg: 0 // KG kullanıcı tarafından girilecek
+        }));
+
+        setUrunler(formattedUrunler);
+
+        // localStorage'ı temizle
+        localStorage.removeItem('parti_urunler');
+      }
+    } catch (err) {
+      console.error('Ön seçili ürünler yüklenirken hata:', err);
     }
   };
 

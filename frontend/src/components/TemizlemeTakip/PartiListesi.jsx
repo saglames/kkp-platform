@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+  Box, Button, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Paper, Chip, TextField, MenuItem, Select, FormControl, InputLabel,
-  IconButton, Tooltip, CircularProgress, Alert, Typography
+  IconButton, Tooltip, CircularProgress, Alert, Typography, Table
 } from '@mui/material';
 import { Add as AddIcon, Visibility as ViewIcon, Delete as DeleteIcon, Refresh as RefreshIcon } from '@mui/icons-material';
 import { temizlemeTakipAPI } from '../../services/api';
 import PartiOlusturModal from './PartiOlusturModal';
 import PartiDetayModal from './PartiDetayModal';
+import ManuelPartiModal from './ManuelPartiModal';
 
 function PartiListesi() {
   const [partiler, setPartiler] = useState([]);
@@ -18,18 +19,21 @@ function PartiListesi() {
     parti_no: ''
   });
   const [olusturModalOpen, setOlusturModalOpen] = useState(false);
+  const [manuelModalOpen, setManuelModalOpen] = useState(false);
   const [detayModalOpen, setDetayModalOpen] = useState(false);
   const [selectedParti, setSelectedParti] = useState(null);
 
   useEffect(() => {
     fetchPartiler();
+  }, [filters.durum, filters.parti_no]);
 
+  useEffect(() => {
     // Eğer localStorage'da ön seçili ürünler varsa modal'ı otomatik aç
     const savedItems = localStorage.getItem('parti_urunler');
     if (savedItems) {
       setOlusturModalOpen(true);
     }
-  }, [filters]);
+  }, []);
 
   const fetchPartiler = async () => {
     setLoading(true);
@@ -109,6 +113,16 @@ function PartiListesi() {
           sx={{ fontWeight: 'bold' }}
         >
           Yeni Parti Oluştur
+        </Button>
+
+        <Button
+          variant="contained"
+          color="success"
+          startIcon={<AddIcon />}
+          onClick={() => setManuelModalOpen(true)}
+          sx={{ fontWeight: 'bold' }}
+        >
+          Manuel Giriş
         </Button>
 
         <FormControl sx={{ minWidth: 200 }}>
@@ -233,6 +247,15 @@ function PartiListesi() {
         onClose={() => setOlusturModalOpen(false)}
         onSuccess={() => {
           setOlusturModalOpen(false);
+          fetchPartiler();
+        }}
+      />
+
+      <ManuelPartiModal
+        open={manuelModalOpen}
+        onClose={() => setManuelModalOpen(false)}
+        onSuccess={() => {
+          setManuelModalOpen(false);
           fetchPartiler();
         }}
       />

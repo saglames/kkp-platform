@@ -18,7 +18,6 @@ router.get('/', async (req, res) => {
     `);
     res.json(result.rows);
   } catch (error) {
-    console.error('Ürün reçeteleri getirme hatası:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -117,19 +116,14 @@ router.get('/by-code/:urun_kodu', async (req, res) => {
 router.post('/', async (req, res) => {
   const { urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, kutu_tipi } = req.body;
 
-  console.log('POST request body:', req.body);
-  console.log('POST kutu_tipi value:', kutu_tipi);
-
   try {
     const result = await pool.query(
       `INSERT INTO urun_recetesi (urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, kutu_tipi)
        VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
       [urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi || 1, kutu_tipi]
     );
-    console.log('POST result:', result.rows[0]);
     res.json(result.rows[0]);
   } catch (error) {
-    console.error('Ürün reçetesi ekleme hatası:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -139,12 +133,8 @@ router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, kutu_tipi } = req.body;
 
-  console.log('UPDATE request body:', req.body);
-  console.log('kutu_tipi value:', kutu_tipi);
-
   try {
     const params = [urun_kodu, urun_adi, aciklama, koli_tipi, koli_kapasitesi, kutu_tipi, id];
-    console.log('Query params:', params);
 
     const result = await pool.query(
       `UPDATE urun_recetesi
@@ -154,10 +144,8 @@ router.put('/:id', async (req, res) => {
        WHERE id = $7 RETURNING *`,
       params
     );
-    console.log('Updated result:', result.rows[0]);
     res.json(result.rows[0]);
   } catch (error) {
-    console.error('Ürün reçetesi güncelleme hatası:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -256,8 +244,10 @@ router.post('/hesapla', async (req, res) => {
     // Kutu hesaplama (her ürün = 1 kutu)
     const kutu_adedi = siparis_adet;
 
-    // Koli hesaplama
-    const koli_adedi = Math.ceil(siparis_adet / urun.koli_kapasitesi);
+    // Koli hesaplama (division by zero kontrolü)
+    const koli_adedi = urun.koli_kapasitesi > 0
+      ? Math.ceil(siparis_adet / urun.koli_kapasitesi)
+      : 0;
 
     // Paketleme malzemeleri (sadece kutu ve koli otomatik hesaplanır)
     const paketlemeMalzemeleri = [];
@@ -345,8 +335,10 @@ router.post('/hesapla-ve-kaydet', async (req, res) => {
     // Kutu hesaplama (her ürün = 1 kutu)
     const kutu_adedi = siparis_adet;
 
-    // Koli hesaplama
-    const koli_adedi = Math.ceil(siparis_adet / urun.koli_kapasitesi);
+    // Koli hesaplama (division by zero kontrolü)
+    const koli_adedi = urun.koli_kapasitesi > 0
+      ? Math.ceil(siparis_adet / urun.koli_kapasitesi)
+      : 0;
 
     // Paketleme malzemeleri (sadece kutu ve koli otomatik hesaplanır)
     const paketlemeMalzemeleri = [];

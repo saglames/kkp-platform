@@ -5,7 +5,7 @@ CREATE TABLE gorev_notlar (id integer DEFAULT nextval('gorev_notlar_id_seq'::reg
 
 CREATE TABLE gorevler (id integer DEFAULT nextval('gorevler_id_seq'::regclass) NOT NULL, baslik character varying(255) NOT NULL, aciklama text, aciliyet character varying(20) DEFAULT 'normal'::character varying, atanan character varying(100), tamamlandi boolean DEFAULT false, sira integer, olusturma_tarihi timestamp without time zone DEFAULT CURRENT_TIMESTAMP, updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP, baslama_tarihi date, bitis_tarihi date);
 
-CREATE TABLE hatali_urunler (id integer DEFAULT nextval('hatali_urunler_id_seq'::regclass) NOT NULL, parti_no character varying(100) NOT NULL, urun_kodu character varying(100) NOT NULL, temizleme_problemi integer DEFAULT 0, vuruk_problem integer DEFAULT 0, capagi_alinmayan integer DEFAULT 0, polisaj integer DEFAULT 0, kaynak_az integer DEFAULT 0, kaynak_akintisi integer DEFAULT 0, ici_capakli integer DEFAULT 0, pim_girmeyen integer DEFAULT 0, boncuklu integer DEFAULT 0, yamuk integer DEFAULT 0, gramaji_dusuk integer DEFAULT 0, hurda integer DEFAULT 0, guncelleme_tarihi timestamp without time zone DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE hatali_urunler (id integer DEFAULT nextval('hatali_urunler_id_seq'::regclass) NOT NULL, parti_no character varying(100) NOT NULL, urun_kodu character varying(100) NOT NULL, temizleme_problemi integer DEFAULT 0, vuruk_problem integer DEFAULT 0, capagi_alinmayan integer DEFAULT 0, polisaj integer DEFAULT 0, kaynak_az integer DEFAULT 0, kaynak_akintisi integer DEFAULT 0, ici_capakli integer DEFAULT 0, pim_girmeyen integer DEFAULT 0, boncuklu integer DEFAULT 0, yamuk integer DEFAULT 0, gramaji_dusuk integer DEFAULT 0, hurda integer DEFAULT 0, guncelleme_tarihi timestamp without time zone DEFAULT CURRENT_TIMESTAMP, temizleme_parti_id integer, kaynak character varying(50) DEFAULT 'kalite_kontrol'::character varying);
 
 CREATE TABLE hatali_urunler_log (id integer DEFAULT nextval('hatali_urunler_log_id_seq'::regclass) NOT NULL, parti_no character varying(100) NOT NULL, kayit_tarihi timestamp without time zone DEFAULT CURRENT_TIMESTAMP, kayit_yapan character varying(100), veriler jsonb NOT NULL, toplam_hata integer DEFAULT 0, notlar text);
 
@@ -41,7 +41,7 @@ CREATE TABLE siparis_hazirlik (id integer DEFAULT nextval('siparis_hazirlik_id_s
 
 CREATE TABLE siparis_hesaplama_kayitlari (id integer DEFAULT nextval('siparis_hesaplama_kayitlari_id_seq'::regclass) NOT NULL, urun_kodu character varying(100) NOT NULL, siparis_adet integer NOT NULL, hesaplayan character varying(100) NOT NULL, hesaplama_tarihi timestamp without time zone DEFAULT CURRENT_TIMESTAMP, hesaplama_sonucu jsonb NOT NULL, stok_dusumleri_yapildi boolean DEFAULT false, stok_dusum_tarihi timestamp without time zone, stok_dusumleri_yapan character varying(100), eslestirme_sonuclari jsonb, notlar text);
 
-CREATE TABLE surec_hareket_log (id integer DEFAULT nextval('surec_hareket_log_id_seq'::regclass) NOT NULL, urun_id integer, islem_tipi character varying(50) NOT NULL, kaynak character varying(50), hedef character varying(50), adet integer NOT NULL, kg numeric, yapan character varying(100), notlar text, created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE surec_hareket_log (id integer DEFAULT nextval('surec_hareket_log_id_seq'::regclass) NOT NULL, urun_id integer, islem_tipi character varying(50) NOT NULL, kaynak character varying(50), hedef character varying(50), adet integer NOT NULL, kg numeric, yapan character varying(100), notlar text, created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP, parti_id integer, parti_no character varying(100), gidis_kg numeric(10,2), donus_kg numeric(10,2));
 
 CREATE TABLE surec_kalan (id integer DEFAULT nextval('surec_kalan_id_seq'::regclass) NOT NULL, urun_id integer, adet integer DEFAULT 0, notlar text, tapali_bekleyen_notlar text, updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP, updated_by character varying(100));
 
@@ -49,9 +49,9 @@ CREATE TABLE surec_sevk_edilen (id integer DEFAULT nextval('surec_sevk_edilen_id
 
 CREATE TABLE surec_sevke_hazir (id integer DEFAULT nextval('surec_sevke_hazir_id_seq'::regclass) NOT NULL, urun_kodu_base character varying(255) NOT NULL, adet integer DEFAULT 0, koli_sayisi integer DEFAULT 0, updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP, updated_by character varying(100));
 
-CREATE TABLE surec_temizlemede_olan (id integer DEFAULT nextval('surec_temizlemede_olan_id_seq'::regclass) NOT NULL, urun_id integer, adet integer DEFAULT 0, updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP, updated_by character varying(100));
+CREATE TABLE surec_temizlemede_olan (id integer DEFAULT nextval('surec_temizlemede_olan_id_seq'::regclass) NOT NULL, urun_id integer, adet integer DEFAULT 0, updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP, updated_by character varying(100), parti_id integer, gidis_kg numeric(10,2));
 
-CREATE TABLE surec_temizlemeden_gelen (id integer DEFAULT nextval('surec_temizlemeden_gelen_id_seq'::regclass) NOT NULL, urun_id integer, kg numeric DEFAULT 0, adet integer DEFAULT 0, updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP, updated_by character varying(100));
+CREATE TABLE surec_temizlemeden_gelen (id integer DEFAULT nextval('surec_temizlemeden_gelen_id_seq'::regclass) NOT NULL, urun_id integer, kg numeric DEFAULT 0, adet integer DEFAULT 0, updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP, updated_by character varying(100), parti_id integer, kalite_kontrol_durum character varying(50) DEFAULT 'beklemede'::character varying);
 
 CREATE TABLE surec_temizlemeye_gidecek (id integer DEFAULT nextval('surec_temizlemeye_gidecek_id_seq'::regclass) NOT NULL, urun_id integer, adet integer DEFAULT 0, updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP, updated_by character varying(100));
 
@@ -78,4 +78,100 @@ CREATE TABLE urun_siparisler (id integer DEFAULT nextval('urun_siparisler_id_seq
 CREATE TABLE urun_tanimlari (id integer DEFAULT nextval('urun_tanimlari_id_seq'::regclass) NOT NULL, urun_kodu character varying(255) NOT NULL, urun_adi character varying(255) NOT NULL, kategori character varying(50), kutu_kodu character varying(50), koli_kodu character varying(50), izolasyon_kodu character varying(255), tapa_boyutu character varying(50), izolasyonsuz boolean DEFAULT false, aciklama text, created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP);
 
 CREATE TABLE users (id integer DEFAULT nextval('users_id_seq'::regclass) NOT NULL, name character varying(100) NOT NULL, created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP);
+
+-- Temizleme Takip Sistem Tabloları
+CREATE SEQUENCE temizleme_partiler_id_seq;
+CREATE TABLE temizleme_partiler (
+    id integer DEFAULT nextval('temizleme_partiler_id_seq'::regclass) NOT NULL PRIMARY KEY,
+    parti_no character varying(100) UNIQUE NOT NULL,
+    irsaliye_no character varying(100),
+    gidis_tarihi date NOT NULL,
+    gidis_kg numeric(10,2) DEFAULT 0,
+    gidis_adet integer DEFAULT 0,
+    gidis_notlar text,
+    donus_tarihi date,
+    donus_kg numeric(10,2) DEFAULT 0,
+    donus_adet integer DEFAULT 0,
+    donus_notlar text,
+    kg_farki numeric(10,2) GENERATED ALWAYS AS (donus_kg - gidis_kg) STORED,
+    adet_farki integer GENERATED ALWAYS AS (donus_adet - gidis_adet) STORED,
+    durum character varying(50) DEFAULT 'gonderildi'::character varying,
+    kalite_durum character varying(50),
+    kalite_kontrol_tarihi timestamp without time zone,
+    kalite_kontrol_yapan character varying(100),
+    tekrar_temizlik_sayisi integer DEFAULT 0,
+    ana_parti_id integer REFERENCES temizleme_partiler(id),
+    odeme_durumu character varying(50) DEFAULT 'odenecek'::character varying,
+    odenen_tutar numeric(10,2) DEFAULT 0,
+    kalan_borc numeric(10,2) DEFAULT 0,
+    yapan character varying(100),
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE SEQUENCE temizleme_parti_urunler_id_seq;
+CREATE TABLE temizleme_parti_urunler (
+    id integer DEFAULT nextval('temizleme_parti_urunler_id_seq'::regclass) NOT NULL PRIMARY KEY,
+    parti_id integer NOT NULL REFERENCES temizleme_partiler(id) ON DELETE CASCADE,
+    urun_id integer NOT NULL REFERENCES surec_urunler(id),
+    gidis_adet integer DEFAULT 0,
+    gidis_kg numeric(10,2) DEFAULT 0,
+    donus_adet integer DEFAULT 0,
+    donus_kg numeric(10,2) DEFAULT 0,
+    adet_farki integer GENERATED ALWAYS AS (donus_adet - gidis_adet) STORED,
+    kg_farki numeric(10,2) GENERATED ALWAYS AS (donus_kg - gidis_kg) STORED,
+    hata_adet integer DEFAULT 0,
+    hata_detay jsonb,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE SEQUENCE temizleme_kalite_kontrol_log_id_seq;
+CREATE TABLE temizleme_kalite_kontrol_log (
+    id integer DEFAULT nextval('temizleme_kalite_kontrol_log_id_seq'::regclass) NOT NULL PRIMARY KEY,
+    parti_id integer NOT NULL REFERENCES temizleme_partiler(id),
+    karar character varying(50) NOT NULL,
+    karar_veren character varying(100),
+    karar_tarihi timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    kontrol_edilen_adet integer DEFAULT 0,
+    hata_tespit_edilen_adet integer DEFAULT 0,
+    hata_orani numeric(5,2) DEFAULT 0,
+    aciklama text,
+    problem_kategorileri jsonb,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE SEQUENCE temizleme_fiyatlandirma_id_seq;
+CREATE TABLE temizleme_fiyatlandirma (
+    id integer DEFAULT nextval('temizleme_fiyatlandirma_id_seq'::regclass) NOT NULL PRIMARY KEY,
+    urun_id integer NOT NULL REFERENCES surec_urunler(id),
+    kg_birim_fiyat numeric(10,2) DEFAULT 0,
+    adet_birim_fiyat numeric(10,2) DEFAULT 0,
+    fiyat_tipi character varying(50) DEFAULT 'kg'::character varying,
+    aktif boolean DEFAULT true,
+    gecerlilik_baslangic date DEFAULT CURRENT_DATE,
+    gecerlilik_bitis date,
+    olusturan character varying(100),
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE SEQUENCE temizleme_odeme_log_id_seq;
+CREATE TABLE temizleme_odeme_log (
+    id integer DEFAULT nextval('temizleme_odeme_log_id_seq'::regclass) NOT NULL PRIMARY KEY,
+    parti_id integer NOT NULL REFERENCES temizleme_partiler(id),
+    odeme_tutari numeric(10,2) NOT NULL,
+    odeme_tarihi timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    odeme_yapan character varying(100),
+    odeme_notu text,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+-- İndeksler
+CREATE INDEX idx_temizleme_partiler_parti_no ON temizleme_partiler(parti_no);
+CREATE INDEX idx_temizleme_partiler_durum ON temizleme_partiler(durum);
+CREATE INDEX idx_temizleme_partiler_gidis_tarihi ON temizleme_partiler(gidis_tarihi);
+CREATE INDEX idx_temizleme_parti_urunler_parti_id ON temizleme_parti_urunler(parti_id);
+CREATE INDEX idx_temizleme_parti_urunler_urun_id ON temizleme_parti_urunler(urun_id);
+CREATE INDEX idx_temizleme_kalite_kontrol_parti_id ON temizleme_kalite_kontrol_log(parti_id);
+CREATE INDEX idx_hatali_urunler_temizleme_parti_id ON hatali_urunler(temizleme_parti_id);
 

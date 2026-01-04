@@ -295,6 +295,7 @@ export const temizlemeTakipAPI = {
   getPartiler: async (params) => (await api.get('/temizleme-takip/partiler', { params })).data,
   getParti: async (id) => (await api.get(`/temizleme-takip/partiler/${id}`)).data,
   createParti: async (data) => (await api.post('/temizleme-takip/partiler', data)).data,
+  createManuelParti: async (data) => (await api.post('/temizleme-takip/partiler/manuel', data)).data,
   updateParti: async (id, data) => (await api.put(`/temizleme-takip/partiler/${id}`, data)).data,
   deleteParti: async (id) => (await api.delete(`/temizleme-takip/partiler/${id}`)).data,
 

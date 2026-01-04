@@ -147,10 +147,10 @@ async function kaliteKontrolYap(partiId, kaliteData, kullanici) {
 
     const { karar, kontrol_edilen_adet, hata_adet, hata_detay, aciklama, problem_kategorileri } = kaliteData;
 
-    // Hata oranı hesapla
+    // Hata oranı hesapla (division by zero kontrolü)
     const hataOrani = kontrol_edilen_adet > 0
       ? ((hata_adet / kontrol_edilen_adet) * 100).toFixed(2)
-      : 0;
+      : '0.00';
 
     // 1. Kalite kontrol log kaydı
     await client.query(`
@@ -391,8 +391,87 @@ router.post('/partiler', async (req, res) => {
 
     res.json({ success: true, parti });
   } catch (error) {
-    console.error('Parti oluşturma hatası:', error);
     res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * POST /api/temizleme-takip/partiler/manuel
+ * Manuel parti oluştur (kullanıcı ürün kodu text olarak girer)
+ */
+router.post('/partiler/manuel', async (req, res) => {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    const { parti_no, irsaliye_no, gidis_tarihi, urun_kodu, gidis_adet, gidis_kg, gidis_notlar, yapan } = req.body;
+
+    if (!parti_no || !gidis_tarihi || !urun_kodu || !gidis_adet) {
+      return res.status(400).json({ error: 'Parti no, gidiş tarihi, ürün kodu ve gidiş adet gerekli!' });
+    }
+
+    // 1. Ürünü surec_urunler'de bul veya oluştur
+    let urun = await client.query('SELECT * FROM surec_urunler WHERE urun_kodu = $1', [urun_kodu.trim()]);
+
+    let urun_id;
+    if (urun.rows.length === 0) {
+      // Ürün yoksa yeni oluştur
+      const yeniUrun = await client.query(
+        `INSERT INTO surec_urunler (urun_kodu, urun_kodu_base, tip)
+         VALUES ($1, $2, 'Manuel Giriş')
+         RETURNING *`,
+        [urun_kodu.trim(), urun_kodu.trim()]
+      );
+      urun_id = yeniUrun.rows[0].id;
+    } else {
+      urun_id = urun.rows[0].id;
+    }
+
+    // 2. Parti kaydı oluştur
+    const parti = await client.query(`
+      INSERT INTO temizleme_partiler
+        (parti_no, irsaliye_no, gidis_tarihi, gidis_kg, gidis_adet,
+         gidis_notlar, durum, created_by)
+      VALUES ($1, $2, $3, $4, $5, $6, 'gonderildi', $7)
+      RETURNING *
+    `, [parti_no, irsaliye_no, gidis_tarihi, gidis_kg || 0, gidis_adet, gidis_notlar, yapan || 'Sistem']);
+
+    const partiId = parti.rows[0].id;
+
+    // 3. Parti ürün kaydı
+    await client.query(`
+      INSERT INTO temizleme_parti_urunler
+        (parti_id, urun_id, gidis_adet, gidis_kg)
+      VALUES ($1, $2, $3, $4)
+    `, [partiId, urun_id, gidis_adet, gidis_kg || 0]);
+
+    // 4. surec_temizlemede_olan tablosunu güncelle
+    await client.query(`
+      INSERT INTO surec_temizlemede_olan (urun_id, adet, parti_id, gidis_kg, updated_by)
+      VALUES ($1, $2, $3, $4, $5)
+      ON CONFLICT (urun_id)
+      DO UPDATE SET
+        adet = surec_temizlemede_olan.adet + EXCLUDED.adet,
+        gidis_kg = COALESCE(surec_temizlemede_olan.gidis_kg, 0) + EXCLUDED.gidis_kg,
+        updated_by = EXCLUDED.updated_by,
+        updated_at = CURRENT_TIMESTAMP
+    `, [urun_id, gidis_adet, partiId, gidis_kg || 0, yapan || 'Sistem']);
+
+    // 5. Log kaydı
+    await client.query(`
+      INSERT INTO surec_hareket_log
+        (parti_id, parti_no, islem_tipi, kaynak, hedef, adet, gidis_kg, yapan)
+      VALUES ($1, $2, 'parti_gonderildi_manuel', 'sistem', 'temizlemede_olan', $3, $4, $5)
+    `, [partiId, parti_no, gidis_adet, gidis_kg || 0, yapan || 'Sistem']);
+
+    await client.query('COMMIT');
+
+    res.json({ success: true, parti: parti.rows[0] });
+  } catch (error) {
+    await client.query('ROLLBACK');
+    res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
   }
 });
 
@@ -672,10 +751,11 @@ router.get('/raporlar/ozet', async (req, res) => {
       GROUP BY karar
     `);
 
-    // Ortalama kalite oranı (100 - ortalama hata oranı)
-    const ortalamaHataOrani = kaliteKontrol.rows
-      .reduce((acc, row) => acc + (parseFloat(row.ortalama_hata_orani) || 0), 0) /
-      (kaliteKontrol.rows.length || 1);
+    // Ortalama kalite oranı (100 - ortalama hata oranı) - division by zero kontrolü
+    const rowCount = kaliteKontrol.rows.length;
+    const ortalamaHataOrani = rowCount > 0
+      ? kaliteKontrol.rows.reduce((acc, row) => acc + (parseFloat(row.ortalama_hata_orani) || 0), 0) / rowCount
+      : 0;
     const ortalamaKaliteOrani = 100 - ortalamaHataOrani;
 
     // Toplam kayıplar
@@ -920,8 +1000,13 @@ router.get('/raporlar/odeme-raporu', async (req, res) => {
     const { durum } = req.query;
 
     let whereClause = "WHERE p.durum = 'kabul'";
+    let params = [];
+    let paramCount = 1;
+
     if (durum) {
-      whereClause += ` AND p.odeme_durumu = '${durum}'`;
+      whereClause += ` AND p.odeme_durumu = $${paramCount}`;
+      params.push(durum);
+      paramCount++;
     }
 
     const result = await pool.query(`
@@ -965,7 +1050,7 @@ router.get('/raporlar/odeme-raporu', async (req, res) => {
       FROM temizleme_partiler p
       ${whereClause}
       ORDER BY p.gidis_tarihi DESC
-    `);
+    `, params);
 
     // Toplam özet hesapla
     const toplam = {

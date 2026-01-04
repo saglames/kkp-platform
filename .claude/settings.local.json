@@ -64,7 +64,13 @@
       "Bash(node check-siparis-gonderimler.js:*)",
       "Bash(node check-enum-render.js:*)",
       "Bash(node check-anasayfa-view.js:*)",
-      "Bash(git commit -m \"$\\(cat <<''EOF''\nUpdate database.sql with complete local schema export\n\n- Export actual table structures from local PostgreSQL database\n- Replace old schema with current production-ready structure\n- Include all tables: surec, recete, kesim, agirliklar, mamul, etc.\n- Align with Render database structure\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nUpdate database.sql with complete local schema export\n\n- Export actual table structures from local PostgreSQL database\n- Replace old schema with current production-ready structure\n- Include all tables: surec, recete, kesim, agirliklar, mamul, etc.\n- Align with Render database structure\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd Claude Code infrastructure with hooks, skills, and agents\n\nHooks:\n- skill-activation-prompt: Auto-suggest relevant skills based on user prompt\n- post-tool-use-tracker: Track file changes and detect project structure\n- error-handling-reminder: Show error handling best practices\n\nSkills:\n- backend-dev-guidelines: Node.js/Express/TypeScript backend patterns\n- frontend-dev-guidelines: React/TypeScript/MUI v7 frontend patterns \\(block enforcement\\)\n- route-tester: Authenticated API route testing patterns\n- error-tracking: Sentry error tracking and monitoring\n- database-migration-guide: Render PostgreSQL migration patterns\n- render-deployment-guide: Render.com deployment guide\n- skill-developer: Meta-skill for creating and managing skills\n\nAgents:\n- auth-route-debugger: Debug authentication issues\n- auth-route-tester: Test routes after implementation\n- code-architecture-reviewer: Review code for best practices\n- code-refactor-master: Comprehensive refactoring\n- documentation-architect: Create and update documentation\n- plan-reviewer: Review development plans\n- refactor-planner: Analyze and plan refactoring\n- web-research-specialist: Research solutions online\n- auto-error-resolver: Automatically fix TypeScript errors\n- frontend-error-fixer: Fix frontend build and runtime errors\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(if exist backendnul del backendnul)",
+      "Bash(python3:*)",
+      "Bash(unzip:*)",
+      "Bash(node migrate-temizleme-takip.js:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }

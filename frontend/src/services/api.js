@@ -289,4 +289,25 @@ export const kesimOlculeriAPI = {
   search: async (query) => (await api.get('/kesim-olculeri/search', { params: { q: query } })).data,
 };
 
+// TEMİZLEME TAKİP API
+export const temizlemeTakipAPI = {
+  // Parti Yönetimi
+  getPartiler: async (params) => (await api.get('/temizleme-takip/partiler', { params })).data,
+  getParti: async (id) => (await api.get(`/temizleme-takip/partiler/${id}`)).data,
+  createParti: async (data) => (await api.post('/temizleme-takip/partiler', data)).data,
+  updateParti: async (id, data) => (await api.put(`/temizleme-takip/partiler/${id}`, data)).data,
+  deleteParti: async (id) => (await api.delete(`/temizleme-takip/partiler/${id}`)).data,
+
+  // Parti Durum Değişiklikleri
+  partiDonus: async (id, data) => (await api.post(`/temizleme-takip/partiler/${id}/donus`, data)).data,
+  kaliteKontrol: async (id, data) => (await api.post(`/temizleme-takip/partiler/${id}/kalite-kontrol`, data)).data,
+
+  // Kalite Geçmişi
+  getKaliteGecmis: async (id) => (await api.get(`/temizleme-takip/partiler/${id}/kalite-gecmis`)).data,
+
+  // Raporlar
+  getRaporOzet: async () => (await api.get('/temizleme-takip/raporlar/ozet')).data,
+  getRaporUrunBazli: async () => (await api.get('/temizleme-takip/raporlar/urun-bazli')).data,
+};
+
 export default api;

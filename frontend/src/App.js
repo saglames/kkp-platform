@@ -11,6 +11,7 @@ import TumSurecPage from './pages/TumSurecPage';
 import UrunAgirliklariPage from './pages/UrunAgirliklariPage';
 import TeknikResimlerPage from './pages/TeknikResimlerPage';
 import KesimOlculeriPage from './pages/KesimOlculeriPage';
+import TemizlemeTakipPage from './pages/TemizlemeTakipPage';
 import './App.css';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path="/urun-agirliklari" element={<UrunAgirliklariPage />} />
             <Route path="/teknik-resimler" element={<TeknikResimlerPage />} />
             <Route path="/kesim-olculeri" element={<KesimOlculeriPage />} />
+            <Route path="/temizleme-takip" element={<TemizlemeTakipPage />} />
           </Routes>
         </main>
         <footer className="bg-white border-t border-gray-200 py-4 mt-12">

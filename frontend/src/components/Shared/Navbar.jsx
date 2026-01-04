@@ -10,6 +10,7 @@ const Navbar = () => {
     { path: '/kalite-kontrol', label: 'Kalite Kontrol', icon: '✅' },
     { path: '/hatali-urunler', label: 'Hatalı Ürünler', icon: '⚠️' },
     { path: '/tum-surec', label: 'Tüm Süreç', icon: '🔄' },
+    { path: '/temizleme-takip', label: 'Temizleme Takip', icon: '🧼' },
     { path: '/urun-recetesi', label: 'Ürün Siparişi İhtiyaç Hesaplama', icon: '📊' },
     { path: '/urun-agirliklari', label: 'Joint & Fittings Ağırlıkları', icon: '⚖️' },
     { path: '/teknik-resimler', label: 'Teknik Resimler', icon: '📁' },

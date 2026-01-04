@@ -37,6 +37,7 @@ const tumSurecRoutes = require('./routes/tumSurec');
 const urunAgirliklariRoutes = require('./routes/urunAgirliklari');
 const teknikResimlerRoutes = require('./routes/teknikalResimler');
 const kesimOlculeriRoutes = require('./routes/kesimOlculeri');
+const temizlemeTakipRoutes = require('./routes/temizlemeTakip');
 
 app.use('/api/mamul-stok', mamulStokRoutes);
 app.use('/api/kalite-kontrol', kaliteKontrolRoutes);
@@ -48,6 +49,7 @@ app.use('/api/tum-surec', tumSurecRoutes);
 app.use('/api/urun-agirliklari', urunAgirliklariRoutes);
 app.use('/api/teknik-resimler', teknikResimlerRoutes);
 app.use('/api/kesim-olculeri', kesimOlculeriRoutes);
+app.use('/api/temizleme-takip', temizlemeTakipRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

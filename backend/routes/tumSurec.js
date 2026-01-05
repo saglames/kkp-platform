@@ -325,6 +325,30 @@ router.post('/temizlemeden-getir', async (req, res) => {
       DO UPDATE SET adet = $2, kg = $3, updated_by = $4, updated_at = CURRENT_TIMESTAMP
     `, [urun_id, yeniGelenAdet, yeniKg, yapan]);
 
+    // Sevkiyat takip sistemini güncelle (en son gönderilen ürünü bul ve gelen bilgilerini güncelle)
+    const sevkiyatUrunResult = await client.query(`
+      SELECT id FROM sevkiyat_urunler
+      WHERE urun_kodu = $1
+        AND parca_tipi = $2
+        AND gelen_adet IS NULL
+      ORDER BY gonderim_tarihi DESC
+      LIMIT 1
+    `, [urun_kodu, parca_tipi]);
+
+    if (sevkiyatUrunResult.rows.length > 0) {
+      const sevkiyat_urun_id = sevkiyatUrunResult.rows[0].id;
+
+      await client.query(`
+        UPDATE sevkiyat_urunler
+        SET gelen_adet = $1, gelen_kg = $2, gelis_tarihi = CURRENT_TIMESTAMP
+        WHERE id = $3
+      `, [adet, calculated_kg || 0, sevkiyat_urun_id]);
+
+      console.log(`✅ Sevkiyat güncellendi: ${urun_kodu} - ${adet} adet, ${calculated_kg || 0} kg`);
+    } else {
+      console.log(`⚠️ Sevkiyat kaydı bulunamadı: ${urun_kodu} (${parca_tipi})`);
+    }
+
     // Log
     await client.query(`
       INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, donus_kg)

@@ -5,6 +5,8 @@ const TemizlemePartiTakip = () => {
   const [partiler, setPartiler] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedParti, setSelectedParti] = useState(null);
+  const [showDetailModal, setShowDetailModal] = useState(false);
 
   useEffect(() => {
     console.log('Component yüklendi');
@@ -27,6 +29,19 @@ const TemizlemePartiTakip = () => {
     } finally {
       console.log('Loading false yapılıyor');
       setLoading(false);
+    }
+  };
+
+  const handleShowDetail = async (parti) => {
+    try {
+      console.log('Parti detayı getiriliyor:', parti.parti_no);
+      const detay = await partiTakipAPI.getPartiDetay(parti.parti_no);
+      console.log('Parti detayı:', detay);
+      setSelectedParti(detay);
+      setShowDetailModal(true);
+    } catch (err) {
+      console.error('Parti detay hatası:', err);
+      alert('Parti detayı yüklenirken hata oluştu: ' + err.message);
     }
   };
 
@@ -96,6 +111,7 @@ const TemizlemePartiTakip = () => {
                   <th className="px-6 py-4 text-right text-sm font-semibold text-white">Toplam Adet</th>
                   <th className="px-6 py-4 text-right text-sm font-semibold text-white">Toplam Kg</th>
                   <th className="px-6 py-4 text-center text-sm font-semibold text-white">Durum</th>
+                  <th className="px-6 py-4 text-center text-sm font-semibold text-white">İşlem</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -126,6 +142,14 @@ const TemizlemePartiTakip = () => {
                          parti.durum === 'geldi' ? 'Geldi' : parti.durum}
                       </span>
                     </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                      <button
+                        onClick={() => handleShowDetail(parti)}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium"
+                      >
+                        Detay
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -133,6 +157,119 @@ const TemizlemePartiTakip = () => {
           </div>
         )}
       </div>
+
+      {/* Detay Modal */}
+      {showDetailModal && selectedParti && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-4 flex justify-between items-center">
+              <div>
+                <h3 className="text-2xl font-bold">Parti Detayı</h3>
+                <p className="text-blue-100 text-sm">Parti No: {selectedParti.parti_no}</p>
+              </div>
+              <button
+                onClick={() => setShowDetailModal(false)}
+                className="text-white hover:text-gray-200 text-2xl font-bold"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="p-6">
+              {/* Parti Genel Bilgileri */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <p className="text-sm text-gray-600 mb-1">İrsaliye No</p>
+                  <p className="text-lg font-bold text-gray-900">{selectedParti.irsaliye_no || '-'}</p>
+                </div>
+                <div className="bg-green-50 p-4 rounded-lg">
+                  <p className="text-sm text-gray-600 mb-1">Gönderim Tarihi</p>
+                  <p className="text-lg font-bold text-gray-900">
+                    {new Date(selectedParti.gonderim_tarihi).toLocaleDateString('tr-TR')}
+                  </p>
+                </div>
+                <div className="bg-purple-50 p-4 rounded-lg">
+                  <p className="text-sm text-gray-600 mb-1">Toplam Adet</p>
+                  <p className="text-lg font-bold text-gray-900">{selectedParti.toplam_adet}</p>
+                </div>
+                <div className="bg-orange-50 p-4 rounded-lg">
+                  <p className="text-sm text-gray-600 mb-1">Toplam Kg</p>
+                  <p className="text-lg font-bold text-gray-900">
+                    {parseFloat(selectedParti.toplam_kg || 0).toFixed(2)} kg
+                  </p>
+                </div>
+              </div>
+
+              {/* Ürünler Tablosu */}
+              <h4 className="text-lg font-bold text-gray-800 mb-4">Partide Bulunan Ürünler</h4>
+              {selectedParti.urunler && selectedParti.urunler.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200 border border-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">Ürün Kodu</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">Parça Tipi</th>
+                        <th className="px-4 py-3 text-right text-xs font-semibold text-gray-700">Giden Adet</th>
+                        <th className="px-4 py-3 text-right text-xs font-semibold text-gray-700">Giden Kg</th>
+                        <th className="px-4 py-3 text-right text-xs font-semibold text-gray-700">Gelen Adet</th>
+                        <th className="px-4 py-3 text-right text-xs font-semibold text-gray-700">Gelen Kg</th>
+                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700">Durum</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {selectedParti.urunler.map((urun, index) => (
+                        <tr key={index} className="hover:bg-gray-50">
+                          <td className="px-4 py-3 text-sm font-medium text-gray-900">{urun.urun_kodu}</td>
+                          <td className="px-4 py-3 text-sm text-gray-600">{urun.parca_tipi}</td>
+                          <td className="px-4 py-3 text-sm text-right text-gray-900">{urun.giden_adet}</td>
+                          <td className="px-4 py-3 text-sm text-right text-gray-900">
+                            {parseFloat(urun.giden_kg || 0).toFixed(2)} kg
+                          </td>
+                          <td className="px-4 py-3 text-sm text-right text-gray-900">
+                            {urun.gelen_adet || '-'}
+                          </td>
+                          <td className="px-4 py-3 text-sm text-right text-gray-900">
+                            {urun.gelen_kg ? `${parseFloat(urun.gelen_kg).toFixed(2)} kg` : '-'}
+                          </td>
+                          <td className="px-4 py-3 text-center">
+                            {urun.is_mukerrer ? (
+                              <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                                Mükerrer
+                              </span>
+                            ) : urun.gelen_adet ? (
+                              <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                Geldi
+                              </span>
+                            ) : (
+                              <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                Bekliyor
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="text-center py-8 text-gray-500">
+                  Bu partide henüz ürün bulunmuyor.
+                </div>
+              )}
+
+              {/* Kapama Butonu */}
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={() => setShowDetailModal(false)}
+                  className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+                >
+                  Kapat
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

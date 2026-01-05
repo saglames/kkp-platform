@@ -12,6 +12,7 @@ import UrunAgirliklariPage from './pages/UrunAgirliklariPage';
 import TeknikResimlerPage from './pages/TeknikResimlerPage';
 import KesimOlculeriPage from './pages/KesimOlculeriPage';
 import TemizlemeTakipPage from './pages/TemizlemeTakipPage';
+import PartiTakipPage from './pages/PartiTakipPage';
 import './App.css';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="/kalite-kontrol" element={<KaliteKontrolPage />} />
             <Route path="/hatali-urunler" element={<HataliUrunlerPage />} />
             <Route path="/tum-surec" element={<TumSurecPage />} />
+            <Route path="/parti-takip" element={<PartiTakipPage />} />
             <Route path="/urun-agirliklari" element={<UrunAgirliklariPage />} />
             <Route path="/teknik-resimler" element={<TeknikResimlerPage />} />
             <Route path="/kesim-olculeri" element={<KesimOlculeriPage />} />

@@ -289,6 +289,14 @@ export const kesimOlculeriAPI = {
   search: async (query) => (await api.get('/kesim-olculeri/search', { params: { q: query } })).data,
 };
 
+// PARTİ TAKİP API (Yeni Sistem)
+export const partiTakipAPI = {
+  getPartiler: async () => (await api.get('/parti-takip/partiler')).data,
+  getPartiDetay: async (parti_no) => (await api.get(`/parti-takip/partiler/${parti_no}`)).data,
+  saveMukerrer: async (data) => (await api.post(`/parti-takip/partiler/${data.parti_no}/mukerrer`, data)).data,
+  getIstatistikler: async () => (await api.get('/parti-takip/istatistikler')).data,
+};
+
 // TEMİZLEME TAKİP API
 export const temizlemeTakipAPI = {
   // Parti Yönetimi

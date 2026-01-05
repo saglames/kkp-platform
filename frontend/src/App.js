@@ -36,7 +36,7 @@ function App() {
         </main>
         <footer className="bg-white border-t border-gray-200 py-4 mt-12">
           <div className="container mx-auto px-4 text-center text-sm text-gray-600">
-            <p>K.K.P. Platform v1.0.0 | Akgün Paketleme © 2025</p>
+            <p>AKG Kontrol Sistemi v1.0.0 | AKG Copper © 2026</p>
           </div>
         </footer>
       </div>

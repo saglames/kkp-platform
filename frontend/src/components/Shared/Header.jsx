@@ -12,14 +12,14 @@ const Header = () => {
               </svg>
             </div>
             <div>
-              <h1 className="text-2xl font-bold">K.K.P. Platform</h1>
-              <p className="text-sm text-blue-100">Kalite Kontrol ve Mamül Stok Yönetimi</p>
+              <h1 className="text-2xl font-bold">Esat Sağlam - AKG Kontrol Sistemi</h1>
+              <p className="text-sm text-blue-100">Kalite Kontrol, Paketleme, Mamül Stok ve Süreç Yönetimi</p>
             </div>
           </div>
           <div className="flex items-center space-x-4">
             <div className="text-right">
               <p className="text-sm font-medium">{new Date().toLocaleDateString('tr-TR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
-              <p className="text-xs text-blue-100">Akgün Paketleme</p>
+              <p className="text-xs text-blue-100">AKG Copper</p>
             </div>
           </div>
         </div>

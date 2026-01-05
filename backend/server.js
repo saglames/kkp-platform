@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const runMigrations = require('./db/runMigrations');
 require('dotenv').config();
 
 const app = express();
@@ -414,7 +415,10 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Sunucu hatası', message: err.message });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`🚀 K.K.P. Platform Backend ${PORT} portunda çalışıyor`);
   console.log(`📊 API URL: http://localhost:${PORT}/api`);
+
+  // Run database migrations on startup
+  await runMigrations();
 });

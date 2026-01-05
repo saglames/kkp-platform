@@ -40,13 +40,14 @@ const TemizlemeyeGidecek = () => {
 
   const [transferKg, setTransferKg] = useState('');
   const [irsaliyeNo, setIrsaliyeNo] = useState('');
-  const [currentSevkiyatId, setCurrentSevkiyatId] = useState(null);
+  const [partiNo, setPartiNo] = useState('');
 
   const handleTransferClick = (urun) => {
     setSelectedUrun(urun);
     setTransferAdet('');
     setTransferKg('');
     setIrsaliyeNo('');
+    setPartiNo('');
     setYapan('');
     setShowTransferModal(true);
   };
@@ -61,6 +62,11 @@ const TemizlemeyeGidecek = () => {
   const handleTransfer = async () => {
     if (!yapan) {
       alert('Lütfen işlemi yapan kişiyi girin!');
+      return;
+    }
+
+    if (!partiNo) {
+      alert('Lütfen parti numarası girin!');
       return;
     }
 
@@ -94,22 +100,18 @@ const TemizlemeyeGidecek = () => {
         kg: kg || null,
         yapan: yapan.trim(),
         irsaliye_no: irsaliyeNo.trim() || null,
-        sevkiyat_id: currentSevkiyatId
+        parti_no: partiNo.trim()
       });
 
-      // Sevkiyat ID'yi kaydet (başka ürünler eklenebilir)
-      if (response.sevkiyat_id) {
-        setCurrentSevkiyatId(response.sevkiyat_id);
-      }
-
       const message = response.calculated_kg
-        ? `Ürün temizlemeye gönderildi! (${response.calculated_kg.toFixed(2)} kg)`
-        : 'Ürün temizlemeye gönderildi!';
+        ? `Ürün temizlemeye gönderildi! Parti: ${partiNo} (${response.calculated_kg.toFixed(2)} kg)`
+        : `Ürün temizlemeye gönderildi! Parti: ${partiNo}`;
 
       alert(message);
       setShowTransferModal(false);
       setTransferAdet('');
       setTransferKg('');
+      // Parti no'yu temizleme, aynı partiye başka ürünler eklenebilir
       fetchData();
     } catch (error) {
       console.error('Transfer hatası:', error);
@@ -428,11 +430,20 @@ const TemizlemeyeGidecek = () => {
               <div className="text-lg text-gray-700">
                 <strong>Mevcut Adet:</strong> <span className="text-blue-600 font-bold">{selectedUrun.adet}</span>
               </div>
-              {currentSevkiyatId && (
-                <div className="mt-2 text-sm text-green-600 font-semibold">
-                  ✓ Aktif Sevkiyat Var (Aynı sevkiyata ekleniyor)
-                </div>
-              )}
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Parti Numarası *
+              </label>
+              <input
+                type="text"
+                value={partiNo}
+                onChange={(e) => setPartiNo(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                placeholder="Örn: 5"
+              />
+              <p className="text-xs text-gray-500 mt-1">Aynı partiye birden fazla ürün ekleyebilirsiniz</p>
             </div>
 
             <div className="grid grid-cols-2 gap-4 mb-4">
@@ -492,18 +503,15 @@ const TemizlemeyeGidecek = () => {
             </div>
 
             <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded text-sm text-gray-600">
-              <strong>Not:</strong> Kg girilmezse otomatik hesaplanacak. Sevkiyat numarası otomatik verilecek.
+              <strong>Not:</strong> Kg girilmezse otomatik hesaplanacak. Aynı parti numarasını kullanarak farklı ürünler ekleyebilirsiniz.
             </div>
 
             <div className="flex gap-3">
               <button
-                onClick={() => {
-                  setShowTransferModal(false);
-                  setCurrentSevkiyatId(null);
-                }}
+                onClick={() => setShowTransferModal(false)}
                 className="flex-1 px-6 py-3 bg-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-400 transition-colors"
               >
-                İptal ve Sevkiyatı Kapat
+                İptal
               </button>
               <button
                 onClick={handleTransfer}

@@ -10,8 +10,6 @@ const TemizlemedOlan = () => {
   const [selectedUrun, setSelectedUrun] = useState(null);
   const [transferAdet, setTransferAdet] = useState('');
   const [transferKg, setTransferKg] = useState('');
-  const [pisAdet, setPisAdet] = useState('');
-  const [pisKg, setPisKg] = useState('');
   const [editAdet, setEditAdet] = useState('');
   const [yapan, setYapan] = useState('');
   const [formData, setFormData] = useState({
@@ -42,8 +40,6 @@ const TemizlemedOlan = () => {
     setSelectedUrun(urun);
     setTransferAdet('');
     setTransferKg('');
-    setPisAdet('');
-    setPisKg('');
     setYapan('');
     setShowTransferModal(true);
   };
@@ -68,8 +64,6 @@ const TemizlemedOlan = () => {
 
     const adet = parseInt(transferAdet);
     const kg = parseFloat(transferKg);
-    const pis_adet = parseInt(pisAdet) || 0;
-    const pis_kg = parseFloat(pisKg) || 0;
 
     if (transferAdet && (isNaN(adet) || adet <= 0)) {
       alert('Geçerli bir adet girin!');
@@ -91,21 +85,12 @@ const TemizlemedOlan = () => {
         urun_id: selectedUrun.urun_id,
         adet: adet || null,
         kg: kg || null,
-        pis_adet: pis_adet || null,
-        pis_kg: pis_kg || null,
-        yapan: yapan.trim(),
-        sevkiyat_id: null // TODO: Sevkiyat ID'si gerekirse eklenecek
+        yapan: yapan.trim()
       });
 
       let message = 'Ürün temizlemeden getirildi!';
       if (response.calculated_kg) {
         message += ` (${response.calculated_kg.toFixed(2)} kg)`;
-      }
-      if (pis_adet > 0 || pis_kg > 0) {
-        message += `\nPis ürün kaydedildi: ${pis_adet || 0} adet`;
-        if (response.calculated_pis_kg) {
-          message += ` (${response.calculated_pis_kg.toFixed(2)} kg)`;
-        }
       }
 
       alert(message);
@@ -398,39 +383,6 @@ const TemizlemedOlan = () => {
               </div>
             </div>
 
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <h4 className="font-semibold text-lg mb-3 text-red-800">Kalite Kontrol - Pis Ürünler</h4>
-              <p className="text-sm text-gray-600 mb-3">Temizlemeye rağmen pis kalan ürünleri girin (mükerrer temizleme için)</p>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Pis Adet
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={pisAdet}
-                    onChange={(e) => setPisAdet(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
-                    placeholder="Pis adet"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Pis Kg (opsiyonel)
-                  </label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    value={pisKg}
-                    onChange={(e) => setPisKg(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
-                    placeholder="Pis kg"
-                  />
-                </div>
-              </div>
-            </div>
-
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 İşlemi Yapan *
@@ -445,7 +397,7 @@ const TemizlemedOlan = () => {
             </div>
 
             <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded text-sm text-gray-600">
-              <strong>Not:</strong> Kg girilmezse otomatik hesaplanacak. Eksik/fazla gelen ürünler otomatik log'lanacak.
+              <strong>Not:</strong> Kg girilmezse otomatik hesaplanacak.
             </div>
 
             <div className="flex gap-3">

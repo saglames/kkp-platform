@@ -88,7 +88,7 @@ router.post('/temizlemeye-gidecek/ekle', async (req, res) => {
 // TEMİZLEMEYE GÖNDER - Temizlemeye Gidecek'ten Temizlemede Olan'a transfer
 // VE Sevkiyat Takip sistemine kayıt
 router.post('/temizlemeye-gonder', async (req, res) => {
-  const { urun_id, adet, kg, yapan, irsaliye_no, sevkiyat_id } = req.body;
+  const { urun_id, adet, kg, yapan, irsaliye_no, parti_no } = req.body;
   const client = await pool.connect();
 
   try {
@@ -167,23 +167,30 @@ router.post('/temizlemeye-gonder', async (req, res) => {
     `, [urun_id, yeniOlanAdet, yapan]);
 
     // ===== SEVKIYAT TAKİP SİSTEMİNE KAYIT =====
-    let final_sevkiyat_id = sevkiyat_id;
+    // Parti numarası kullanıcı tarafından girilmeli
+    if (!parti_no) {
+      throw new Error('Parti numarası girilmedi!');
+    }
 
-    // Eğer sevkiyat_id verilmemişse yeni sevkiyat oluştur
-    if (!sevkiyat_id) {
-      // Yeni sevkiyat numarası al
-      const sevkiyatNoResult = await client.query(
-        "SELECT COALESCE(MAX(sevkiyat_no), 0) + 1 as next_no FROM temizleme_sevkiyat"
-      );
-      const sevkiyat_no = sevkiyatNoResult.rows[0].next_no;
+    // Aynı parti numarasına sahip sevkiyat var mı kontrol et
+    const existingSevkiyat = await client.query(
+      'SELECT id FROM temizleme_sevkiyat WHERE sevkiyat_no = $1',
+      [parti_no]
+    );
 
-      // Sevkiyat oluştur
+    let final_sevkiyat_id;
+
+    if (existingSevkiyat.rows.length > 0) {
+      // Mevcut partiye ekleme yap
+      final_sevkiyat_id = existingSevkiyat.rows[0].id;
+    } else {
+      // Yeni parti oluştur
       const sevkiyatResult = await client.query(
         `INSERT INTO temizleme_sevkiyat
          (sevkiyat_no, irsaliye_no, gonderim_tarihi, durum)
          VALUES ($1, $2, CURRENT_TIMESTAMP, 'gonderildi')
          RETURNING id`,
-        [sevkiyat_no, irsaliye_no]
+        [parti_no, irsaliye_no]
       );
 
       final_sevkiyat_id = sevkiyatResult.rows[0].id;
@@ -239,7 +246,7 @@ router.get('/temizlemede-olan', async (req, res) => {
 // TEMİZLEMEDEN GETİR - Temizlemede Olan'dan Temizlemeden Gelen'e transfer
 // VE Sevkiyat Takip sistemini güncelle
 router.post('/temizlemeden-getir', async (req, res) => {
-  const { urun_id, adet, kg, yapan, sevkiyat_id, pis_adet, pis_kg } = req.body;
+  const { urun_id, adet, kg, yapan } = req.body;
   const client = await pool.connect();
 
   try {
@@ -285,33 +292,6 @@ router.post('/temizlemeden-getir', async (req, res) => {
       }
     }
 
-    // Pis ürün kg hesaplama
-    let calculated_pis_kg = pis_kg;
-    if (!pis_kg && pis_adet) {
-      const base_urun_kodu = urun_kodu.replace(/\s*\([ABCD]\)\s*$/, '').trim();
-
-      const agirlikResult = await client.query(
-        `SELECT agirlik_a, agirlik_b, agirlik_c, agirlik_d
-         FROM urun_agirliklari_master
-         WHERE urun_kodu = $1`,
-        [base_urun_kodu]
-      );
-
-      if (agirlikResult.rows.length > 0) {
-        const agirlik = agirlikResult.rows[0];
-        const parca = parca_tipi?.toUpperCase();
-
-        if (parca === 'A' && agirlik.agirlik_a) {
-          calculated_pis_kg = pis_adet * parseFloat(agirlik.agirlik_a);
-        } else if (parca === 'B' && agirlik.agirlik_b) {
-          calculated_pis_kg = pis_adet * parseFloat(agirlik.agirlik_b);
-        } else if (parca === 'C' && agirlik.agirlik_c) {
-          calculated_pis_kg = pis_adet * parseFloat(agirlik.agirlik_c);
-        } else if (parca === 'D' && agirlik.agirlik_d) {
-          calculated_pis_kg = pis_adet * parseFloat(agirlik.agirlik_d);
-        }
-      }
-    }
 
     // Temizlemede Olan'dan düş
     const olan = await client.query(
@@ -345,54 +325,6 @@ router.post('/temizlemeden-getir', async (req, res) => {
       DO UPDATE SET adet = $2, kg = $3, updated_by = $4, updated_at = CURRENT_TIMESTAMP
     `, [urun_id, yeniGelenAdet, yeniKg, yapan]);
 
-    // ===== SEVKIYAT TAKİP SİSTEMİNİ GÜNCELLE =====
-    if (sevkiyat_id) {
-      // Sevkiyattaki ürünü bul ve güncelle
-      const sevkiyatUrunResult = await client.query(
-        `SELECT id, giden_adet FROM sevkiyat_urunler
-         WHERE sevkiyat_id = $1 AND urun_kodu = $2 AND parca_tipi = $3 AND is_mukerrer = false
-         ORDER BY id DESC LIMIT 1`,
-        [sevkiyat_id, urun_kodu, parca_tipi]
-      );
-
-      if (sevkiyatUrunResult.rows.length > 0) {
-        const sevkiyat_urun_id = sevkiyatUrunResult.rows[0].id;
-        const giden_adet = sevkiyatUrunResult.rows[0].giden_adet;
-
-        // Gelen bilgileri kaydet
-        await client.query(
-          `UPDATE sevkiyat_urunler
-           SET gelen_adet = $1, gelen_kg = $2, gelis_tarihi = CURRENT_TIMESTAMP,
-               pis_adet = $3, pis_kg = $4
-           WHERE id = $5`,
-          [adet, calculated_kg || 0, pis_adet || 0, calculated_pis_kg || 0, sevkiyat_urun_id]
-        );
-
-        // Eksik/Fazla kontrolü ve log
-        const fark_adet = giden_adet - adet;
-        if (fark_adet !== 0) {
-          const fark_mesaj = fark_adet > 0
-            ? `${fark_adet} adet eksik geldi`
-            : `${Math.abs(fark_adet)} adet fazla geldi`;
-
-          await client.query(
-            `INSERT INTO surec_hareket_log
-             (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar, gidis_kg, donus_kg)
-             VALUES ($1, 'temizlemeden_getir_fark', 'temizlemede_olan', 'temizlemeden_gelen', $2, $3, $4, $5, $6, $7)`,
-            [urun_id, fark_adet, 0, yapan, fark_mesaj, 0, calculated_kg]
-          );
-        }
-
-        // Sevkiyat durumunu güncelle
-        await client.query(
-          `UPDATE temizleme_sevkiyat
-           SET gelis_tarihi = CURRENT_TIMESTAMP, durum = 'geldi'
-           WHERE id = $1`,
-          [sevkiyat_id]
-        );
-      }
-    }
-
     // Log
     await client.query(`
       INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, donus_kg)
@@ -403,8 +335,7 @@ router.post('/temizlemeden-getir', async (req, res) => {
     res.json({
       success: true,
       message: 'Transfer başarılı',
-      calculated_kg: calculated_kg,
-      calculated_pis_kg: calculated_pis_kg
+      calculated_kg: calculated_kg
     });
   } catch (error) {
     await client.query('ROLLBACK');

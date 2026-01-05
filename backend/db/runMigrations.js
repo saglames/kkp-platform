@@ -1,4 +1,4 @@
-const pool = require('./index');
+const pool = require('../db');
 const fs = require('fs');
 const path = require('path');
 

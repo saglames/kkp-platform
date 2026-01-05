@@ -3,7 +3,8 @@ import { partiTakipAPI } from '../../services/api';
 
 const TemizlemePartiTakip = () => {
   const [partiler, setPartiler] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [selectedParti, setSelectedParti] = useState(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [showMukerrerModal, setShowMukerrerModal] = useState(false);
@@ -15,12 +16,16 @@ const TemizlemePartiTakip = () => {
 
   const fetchPartiler = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await partiTakipAPI.getPartiler();
-      setPartiler(data);
+      console.log('Parti verileri:', data);
+      setPartiler(data || []);
     } catch (error) {
       console.error('Veri yükleme hatası:', error);
-      alert('Veri yüklenirken hata oluştu!');
+      console.error('Hata detayı:', error.response?.data || error.message);
+      setError(error.response?.data?.error || error.message || 'Veri yüklenirken bir hata oluştu');
+      setPartiler([]);
     } finally {
       setLoading(false);
     }
@@ -78,8 +83,9 @@ const TemizlemePartiTakip = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      <div className="flex flex-col justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
+        <p className="text-gray-600">Yükleniyor...</p>
       </div>
     );
   }
@@ -90,6 +96,21 @@ const TemizlemePartiTakip = () => {
         <h2 className="text-3xl font-bold text-gray-800 mb-2">Temizleme Parti/İrsaliye Takip</h2>
         <p className="text-gray-600">Temizlemeye gönderilen partilerin detaylı takibi</p>
       </div>
+
+      {error && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div className="flex items-center">
+            <span className="text-red-600 font-semibold mr-2">⚠️ Hata:</span>
+            <span className="text-red-700">{error}</span>
+          </div>
+          <button
+            onClick={fetchPartiler}
+            className="mt-3 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+          >
+            Tekrar Dene
+          </button>
+        </div>
+      )}
 
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
         <div className="overflow-x-auto">

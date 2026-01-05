@@ -213,6 +213,7 @@ const TemizlemePartiTakip = () => {
                         <th className="px-4 py-3 text-right text-xs font-semibold text-gray-700">Giden Kg</th>
                         <th className="px-4 py-3 text-right text-xs font-semibold text-gray-700">Gelen Adet</th>
                         <th className="px-4 py-3 text-right text-xs font-semibold text-gray-700">Gelen Kg</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">Geliş Tarihi</th>
                         <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700">Durum</th>
                       </tr>
                     </thead>
@@ -230,6 +231,15 @@ const TemizlemePartiTakip = () => {
                           </td>
                           <td className="px-4 py-3 text-sm text-right text-gray-900">
                             {urun.gelen_kg ? `${parseFloat(urun.gelen_kg).toFixed(2)} kg` : '-'}
+                          </td>
+                          <td className="px-4 py-3 text-sm text-gray-700">
+                            {urun.gelis_tarihi ? new Date(urun.gelis_tarihi).toLocaleDateString('tr-TR', {
+                              day: '2-digit',
+                              month: '2-digit',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            }) : '-'}
                           </td>
                           <td className="px-4 py-3 text-center">
                             {urun.is_mukerrer ? (

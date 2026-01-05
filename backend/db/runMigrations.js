@@ -3,17 +3,26 @@ const fs = require('fs');
 const path = require('path');
 
 async function runMigrations() {
-  try {
-    const migrationFile = path.join(__dirname, '../migrations/add-kg-to-temizlemeden-gelen.sql');
+  const migrations = [
+    'add-kg-to-temizlemeden-gelen.sql',
+    'add-problemli-columns.sql'
+  ];
 
-    if (fs.existsSync(migrationFile)) {
-      console.log('🔄 Running database migration...');
-      const sql = fs.readFileSync(migrationFile, 'utf8');
-      await pool.query(sql);
-      console.log('✅ Migration completed: add-kg-to-temizlemeden-gelen');
-    } else {
-      console.log('ℹ️  No migration file found (this is OK if already migrated)');
+  try {
+    console.log('🔄 Running database migrations...');
+
+    for (const migrationName of migrations) {
+      const migrationFile = path.join(__dirname, '../migrations', migrationName);
+
+      if (fs.existsSync(migrationFile)) {
+        console.log(`  ➜ Running: ${migrationName}`);
+        const sql = fs.readFileSync(migrationFile, 'utf8');
+        await pool.query(sql);
+        console.log(`  ✅ Completed: ${migrationName}`);
+      }
     }
+
+    console.log('✅ All migrations completed successfully');
   } catch (error) {
     console.error('❌ Migration error:', error.message);
     // Don't crash the server, just log the error

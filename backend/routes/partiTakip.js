@@ -58,6 +58,7 @@ router.get('/partiler/:parti_no', async (req, res) => {
     // Partideki ürünler
     const urunlerResult = await pool.query(`
       SELECT
+        id,
         urun_kodu,
         parca_tipi,
         giden_adet,
@@ -66,6 +67,8 @@ router.get('/partiler/:parti_no', async (req, res) => {
         gelen_kg,
         pis_adet,
         pis_kg,
+        problemli_adet,
+        problemli_kg,
         is_mukerrer,
         gonderim_tarihi,
         gelis_tarihi
@@ -143,6 +146,31 @@ router.post('/partiler/:parti_no/mukerrer', async (req, res) => {
     res.status(500).json({ error: error.message });
   } finally {
     client.release();
+  }
+});
+
+// Problemli ürün bilgilerini güncelle
+router.post('/urun/:urun_id/problemli', async (req, res) => {
+  const { urun_id } = req.params;
+  const { problemli_adet, problemli_kg } = req.body;
+
+  try {
+    await pool.query(
+      `UPDATE sevkiyat_urunler
+       SET problemli_adet = $1, problemli_kg = $2
+       WHERE id = $3`,
+      [problemli_adet || 0, problemli_kg || 0, urun_id]
+    );
+
+    res.json({
+      success: true,
+      message: 'Problemli ürün bilgisi güncellendi!',
+      problemli_adet,
+      problemli_kg
+    });
+  } catch (error) {
+    console.error('Problemli ürün güncelleme hatası:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 

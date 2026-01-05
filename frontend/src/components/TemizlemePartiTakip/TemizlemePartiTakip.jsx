@@ -45,6 +45,36 @@ const TemizlemePartiTakip = () => {
     }
   };
 
+  const handleProblematicChange = async (urunId, field, value) => {
+    try {
+      // Update local state immediately for better UX
+      setSelectedParti(prev => ({
+        ...prev,
+        urunler: prev.urunler.map(u =>
+          u.id === urunId
+            ? { ...u, [field]: value }
+            : u
+        )
+      }));
+
+      // Prepare data for API
+      const urun = selectedParti.urunler.find(u => u.id === urunId);
+      const data = {
+        problemli_adet: field === 'problemli_adet' ? parseInt(value) || 0 : urun.problemli_adet || 0,
+        problemli_kg: field === 'problemli_kg' ? parseFloat(value) || 0 : urun.problemli_kg || 0
+      };
+
+      // Save to backend
+      await partiTakipAPI.saveProblematic(urunId, data);
+      console.log('Problemli bilgi kaydedildi:', urunId, data);
+    } catch (err) {
+      console.error('Problemli bilgi kaydetme hatası:', err);
+      alert('Kaydetme hatası: ' + err.message);
+      // Reload to get correct data
+      handleShowDetail({ parti_no: selectedParti.parti_no });
+    }
+  };
+
   console.log('Render - loading:', loading, 'error:', error, 'partiler:', partiler.length);
 
   if (loading) {
@@ -214,6 +244,9 @@ const TemizlemePartiTakip = () => {
                         <th className="px-4 py-3 text-right text-xs font-semibold text-gray-700">Gelen Adet</th>
                         <th className="px-4 py-3 text-right text-xs font-semibold text-gray-700">Gelen Kg</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">Geliş Tarihi</th>
+                        <th className="px-4 py-3 text-right text-xs font-semibold text-red-700 bg-red-50">Problemli Adet</th>
+                        <th className="px-4 py-3 text-right text-xs font-semibold text-red-700 bg-red-50">Problemli Kg</th>
+                        <th className="px-4 py-3 text-right text-xs font-semibold text-green-700 bg-green-50">Ödenecek Kg</th>
                         <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700">Durum</th>
                       </tr>
                     </thead>
@@ -241,6 +274,32 @@ const TemizlemePartiTakip = () => {
                               minute: '2-digit'
                             }) : '-'}
                           </td>
+                          <td className="px-4 py-3 text-right bg-red-50">
+                            <input
+                              type="number"
+                              min="0"
+                              value={urun.problemli_adet || ''}
+                              onChange={(e) => handleProblematicChange(urun.id, 'problemli_adet', e.target.value)}
+                              className="w-20 px-2 py-1 text-sm text-right border border-red-300 rounded focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                              placeholder="0"
+                            />
+                          </td>
+                          <td className="px-4 py-3 text-right bg-red-50">
+                            <input
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              value={urun.problemli_kg || ''}
+                              onChange={(e) => handleProblematicChange(urun.id, 'problemli_kg', e.target.value)}
+                              className="w-24 px-2 py-1 text-sm text-right border border-red-300 rounded focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                              placeholder="0.00"
+                            />
+                          </td>
+                          <td className="px-4 py-3 text-right bg-green-50">
+                            <span className="font-semibold text-green-800">
+                              {((parseFloat(urun.giden_kg) || 0) - (parseFloat(urun.problemli_kg) || 0)).toFixed(2)} kg
+                            </span>
+                          </td>
                           <td className="px-4 py-3 text-center">
                             {urun.is_mukerrer ? (
                               <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
@@ -258,6 +317,35 @@ const TemizlemePartiTakip = () => {
                           </td>
                         </tr>
                       ))}
+                      {/* Toplam Satırı */}
+                      <tr className="bg-blue-50 font-bold border-t-2 border-blue-300">
+                        <td className="px-4 py-3 text-sm text-gray-900" colSpan="2">TOPLAM</td>
+                        <td className="px-4 py-3 text-sm text-right text-gray-900">
+                          {selectedParti.urunler.reduce((sum, u) => sum + (parseInt(u.giden_adet) || 0), 0)}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-right text-gray-900">
+                          {selectedParti.urunler.reduce((sum, u) => sum + (parseFloat(u.giden_kg) || 0), 0).toFixed(2)} kg
+                        </td>
+                        <td className="px-4 py-3 text-sm text-right text-gray-900">
+                          {selectedParti.urunler.reduce((sum, u) => sum + (parseInt(u.gelen_adet) || 0), 0)}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-right text-gray-900">
+                          {selectedParti.urunler.reduce((sum, u) => sum + (parseFloat(u.gelen_kg) || 0), 0).toFixed(2)} kg
+                        </td>
+                        <td className="px-4 py-3"></td>
+                        <td className="px-4 py-3 text-sm text-right text-red-900 bg-red-100">
+                          {selectedParti.urunler.reduce((sum, u) => sum + (parseInt(u.problemli_adet) || 0), 0)}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-right text-red-900 bg-red-100">
+                          {selectedParti.urunler.reduce((sum, u) => sum + (parseFloat(u.problemli_kg) || 0), 0).toFixed(2)} kg
+                        </td>
+                        <td className="px-4 py-3 text-sm text-right text-green-900 bg-green-100">
+                          {selectedParti.urunler.reduce((sum, u) =>
+                            sum + ((parseFloat(u.giden_kg) || 0) - (parseFloat(u.problemli_kg) || 0)), 0
+                          ).toFixed(2)} kg
+                        </td>
+                        <td className="px-4 py-3"></td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>

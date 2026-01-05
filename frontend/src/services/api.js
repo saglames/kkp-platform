@@ -294,6 +294,7 @@ export const partiTakipAPI = {
   getPartiler: async () => (await api.get('/parti-takip/partiler')).data,
   getPartiDetay: async (parti_no) => (await api.get(`/parti-takip/partiler/${parti_no}`)).data,
   saveMukerrer: async (data) => (await api.post(`/parti-takip/partiler/${data.parti_no}/mukerrer`, data)).data,
+  saveProblematic: async (urun_id, data) => (await api.post(`/parti-takip/urun/${urun_id}/problemli`, data)).data,
   getIstatistikler: async () => (await api.get('/parti-takip/istatistikler')).data,
 };
 

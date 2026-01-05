@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { partiTakipAPI } from '../../services/api';
+import { exportSingleParti, exportAllPartiler } from '../../utils/excelExport';
 
 const TemizlemePartiTakip = () => {
   const [partiler, setPartiler] = useState([]);
@@ -111,9 +112,20 @@ const TemizlemePartiTakip = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Temizleme Parti/İrsaliye Takip</h2>
-        <p className="text-gray-600">Temizlemeye gönderilen partilerin detaylı takibi</p>
+      <div className="mb-6 flex justify-between items-start">
+        <div>
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">Temizleme Parti/İrsaliye Takip</h2>
+          <p className="text-gray-600">Temizlemeye gönderilen partilerin detaylı takibi</p>
+        </div>
+        {partiler.length > 0 && (
+          <button
+            onClick={() => exportAllPartiler(partiler, partiTakipAPI)}
+            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-2 font-medium shadow-md"
+          >
+            <span>📥</span>
+            <span>Excel İndir</span>
+          </button>
+        )}
       </div>
 
       <div className="bg-white rounded-lg shadow-md p-6">
@@ -355,8 +367,15 @@ const TemizlemePartiTakip = () => {
                 </div>
               )}
 
-              {/* Kapama Butonu */}
-              <div className="mt-6 flex justify-end">
+              {/* Butonlar */}
+              <div className="mt-6 flex justify-end gap-3">
+                <button
+                  onClick={() => exportSingleParti(selectedParti)}
+                  className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-2"
+                >
+                  <span>📥</span>
+                  <span>Excel İndir</span>
+                </button>
                 <button
                   onClick={() => setShowDetailModal(false)}
                   className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"

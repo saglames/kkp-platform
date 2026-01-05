@@ -86,12 +86,55 @@ router.post('/temizlemeye-gidecek/ekle', async (req, res) => {
 });
 
 // TEMİZLEMEYE GÖNDER - Temizlemeye Gidecek'ten Temizlemede Olan'a transfer
+// VE Sevkiyat Takip sistemine kayıt
 router.post('/temizlemeye-gonder', async (req, res) => {
-  const { urun_id, adet, yapan } = req.body;
+  const { urun_id, adet, kg, yapan, irsaliye_no, sevkiyat_id } = req.body;
   const client = await pool.connect();
 
   try {
     await client.query('BEGIN');
+
+    // Ürün bilgilerini al (urun_kodu ve parca_tipi için)
+    const urunResult = await client.query(
+      'SELECT urun_kodu, tip FROM surec_urunler WHERE id = $1',
+      [urun_id]
+    );
+
+    if (urunResult.rows.length === 0) {
+      throw new Error('Ürün bulunamadı!');
+    }
+
+    const { urun_kodu, tip: parca_tipi } = urunResult.rows[0];
+
+    // Kg hesaplaması (eğer girilmemişse)
+    let calculated_kg = kg;
+    if (!kg && adet) {
+      // Ürün kodundan base kodu al (parantez içini çıkar)
+      const base_urun_kodu = urun_kodu.replace(/\s*\([ABCD]\)\s*$/, '').trim();
+
+      // Ağırlık bilgisini al
+      const agirlikResult = await client.query(
+        `SELECT agirlik_a, agirlik_b, agirlik_c, agirlik_d
+         FROM urun_agirliklari_master
+         WHERE urun_kodu = $1`,
+        [base_urun_kodu]
+      );
+
+      if (agirlikResult.rows.length > 0) {
+        const agirlik = agirlikResult.rows[0];
+        const parca = parca_tipi?.toUpperCase();
+
+        if (parca === 'A' && agirlik.agirlik_a) {
+          calculated_kg = adet * parseFloat(agirlik.agirlik_a);
+        } else if (parca === 'B' && agirlik.agirlik_b) {
+          calculated_kg = adet * parseFloat(agirlik.agirlik_b);
+        } else if (parca === 'C' && agirlik.agirlik_c) {
+          calculated_kg = adet * parseFloat(agirlik.agirlik_c);
+        } else if (parca === 'D' && agirlik.agirlik_d) {
+          calculated_kg = adet * parseFloat(agirlik.agirlik_d);
+        }
+      }
+    }
 
     // Temizlemeye Gidecek'ten düş
     const gidecek = await client.query(
@@ -123,14 +166,50 @@ router.post('/temizlemeye-gonder', async (req, res) => {
       DO UPDATE SET adet = $2, updated_by = $3, updated_at = CURRENT_TIMESTAMP
     `, [urun_id, yeniOlanAdet, yapan]);
 
+    // ===== SEVKIYAT TAKİP SİSTEMİNE KAYIT =====
+    let final_sevkiyat_id = sevkiyat_id;
+
+    // Eğer sevkiyat_id verilmemişse yeni sevkiyat oluştur
+    if (!sevkiyat_id) {
+      // Yeni sevkiyat numarası al
+      const sevkiyatNoResult = await client.query(
+        "SELECT COALESCE(MAX(sevkiyat_no), 0) + 1 as next_no FROM temizleme_sevkiyat"
+      );
+      const sevkiyat_no = sevkiyatNoResult.rows[0].next_no;
+
+      // Sevkiyat oluştur
+      const sevkiyatResult = await client.query(
+        `INSERT INTO temizleme_sevkiyat
+         (sevkiyat_no, irsaliye_no, gonderim_tarihi, durum)
+         VALUES ($1, $2, CURRENT_TIMESTAMP, 'gonderildi')
+         RETURNING id`,
+        [sevkiyat_no, irsaliye_no]
+      );
+
+      final_sevkiyat_id = sevkiyatResult.rows[0].id;
+    }
+
+    // Sevkiyata ürün ekle
+    await client.query(
+      `INSERT INTO sevkiyat_urunler
+       (sevkiyat_id, urun_kodu, parca_tipi, giden_adet, giden_kg, gonderim_tarihi, is_mukerrer)
+       VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP, false)`,
+      [final_sevkiyat_id, urun_kodu, parca_tipi, adet, calculated_kg || 0]
+    );
+
     // Log
     await client.query(`
-      INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, yapan)
-      VALUES ($1, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', $2, $3)
-    `, [urun_id, adet, yapan]);
+      INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, gidis_kg)
+      VALUES ($1, 'temizlemeye_gonder', 'temizlemeye_gidecek', 'temizlemede_olan', $2, $3, $4, $5)
+    `, [urun_id, adet, calculated_kg, yapan, calculated_kg]);
 
     await client.query('COMMIT');
-    res.json({ success: true, message: 'Transfer başarılı' });
+    res.json({
+      success: true,
+      message: 'Transfer başarılı',
+      sevkiyat_id: final_sevkiyat_id,
+      calculated_kg: calculated_kg
+    });
   } catch (error) {
     await client.query('ROLLBACK');
     console.error('Temizlemeye gönderme hatası:', error);
@@ -158,12 +237,81 @@ router.get('/temizlemede-olan', async (req, res) => {
 });
 
 // TEMİZLEMEDEN GETİR - Temizlemede Olan'dan Temizlemeden Gelen'e transfer
+// VE Sevkiyat Takip sistemini güncelle
 router.post('/temizlemeden-getir', async (req, res) => {
-  const { urun_id, adet, kg, yapan } = req.body;
+  const { urun_id, adet, kg, yapan, sevkiyat_id, pis_adet, pis_kg } = req.body;
   const client = await pool.connect();
 
   try {
     await client.query('BEGIN');
+
+    // Ürün bilgilerini al
+    const urunResult = await client.query(
+      'SELECT urun_kodu, tip FROM surec_urunler WHERE id = $1',
+      [urun_id]
+    );
+
+    if (urunResult.rows.length === 0) {
+      throw new Error('Ürün bulunamadı!');
+    }
+
+    const { urun_kodu, tip: parca_tipi } = urunResult.rows[0];
+
+    // Kg hesaplaması (eğer girilmemişse)
+    let calculated_kg = kg;
+    if (!kg && adet) {
+      const base_urun_kodu = urun_kodu.replace(/\s*\([ABCD]\)\s*$/, '').trim();
+
+      const agirlikResult = await client.query(
+        `SELECT agirlik_a, agirlik_b, agirlik_c, agirlik_d
+         FROM urun_agirliklari_master
+         WHERE urun_kodu = $1`,
+        [base_urun_kodu]
+      );
+
+      if (agirlikResult.rows.length > 0) {
+        const agirlik = agirlikResult.rows[0];
+        const parca = parca_tipi?.toUpperCase();
+
+        if (parca === 'A' && agirlik.agirlik_a) {
+          calculated_kg = adet * parseFloat(agirlik.agirlik_a);
+        } else if (parca === 'B' && agirlik.agirlik_b) {
+          calculated_kg = adet * parseFloat(agirlik.agirlik_b);
+        } else if (parca === 'C' && agirlik.agirlik_c) {
+          calculated_kg = adet * parseFloat(agirlik.agirlik_c);
+        } else if (parca === 'D' && agirlik.agirlik_d) {
+          calculated_kg = adet * parseFloat(agirlik.agirlik_d);
+        }
+      }
+    }
+
+    // Pis ürün kg hesaplama
+    let calculated_pis_kg = pis_kg;
+    if (!pis_kg && pis_adet) {
+      const base_urun_kodu = urun_kodu.replace(/\s*\([ABCD]\)\s*$/, '').trim();
+
+      const agirlikResult = await client.query(
+        `SELECT agirlik_a, agirlik_b, agirlik_c, agirlik_d
+         FROM urun_agirliklari_master
+         WHERE urun_kodu = $1`,
+        [base_urun_kodu]
+      );
+
+      if (agirlikResult.rows.length > 0) {
+        const agirlik = agirlikResult.rows[0];
+        const parca = parca_tipi?.toUpperCase();
+
+        if (parca === 'A' && agirlik.agirlik_a) {
+          calculated_pis_kg = pis_adet * parseFloat(agirlik.agirlik_a);
+        } else if (parca === 'B' && agirlik.agirlik_b) {
+          calculated_pis_kg = pis_adet * parseFloat(agirlik.agirlik_b);
+        } else if (parca === 'C' && agirlik.agirlik_c) {
+          calculated_pis_kg = pis_adet * parseFloat(agirlik.agirlik_c);
+        } else if (parca === 'D' && agirlik.agirlik_d) {
+          calculated_pis_kg = pis_adet * parseFloat(agirlik.agirlik_d);
+        }
+      }
+    }
 
     // Temizlemede Olan'dan düş
     const olan = await client.query(
@@ -188,7 +336,7 @@ router.post('/temizlemeden-getir', async (req, res) => {
     );
 
     const yeniGelenAdet = (gelen.rows[0]?.adet || 0) + adet;
-    const yeniKg = (gelen.rows[0]?.kg || 0) + (kg || 0);
+    const yeniKg = (gelen.rows[0]?.kg || 0) + (calculated_kg || 0);
 
     await client.query(`
       INSERT INTO surec_temizlemeden_gelen (urun_id, adet, kg, updated_by)
@@ -197,14 +345,67 @@ router.post('/temizlemeden-getir', async (req, res) => {
       DO UPDATE SET adet = $2, kg = $3, updated_by = $4, updated_at = CURRENT_TIMESTAMP
     `, [urun_id, yeniGelenAdet, yeniKg, yapan]);
 
+    // ===== SEVKIYAT TAKİP SİSTEMİNİ GÜNCELLE =====
+    if (sevkiyat_id) {
+      // Sevkiyattaki ürünü bul ve güncelle
+      const sevkiyatUrunResult = await client.query(
+        `SELECT id, giden_adet FROM sevkiyat_urunler
+         WHERE sevkiyat_id = $1 AND urun_kodu = $2 AND parca_tipi = $3 AND is_mukerrer = false
+         ORDER BY id DESC LIMIT 1`,
+        [sevkiyat_id, urun_kodu, parca_tipi]
+      );
+
+      if (sevkiyatUrunResult.rows.length > 0) {
+        const sevkiyat_urun_id = sevkiyatUrunResult.rows[0].id;
+        const giden_adet = sevkiyatUrunResult.rows[0].giden_adet;
+
+        // Gelen bilgileri kaydet
+        await client.query(
+          `UPDATE sevkiyat_urunler
+           SET gelen_adet = $1, gelen_kg = $2, gelis_tarihi = CURRENT_TIMESTAMP,
+               pis_adet = $3, pis_kg = $4
+           WHERE id = $5`,
+          [adet, calculated_kg || 0, pis_adet || 0, calculated_pis_kg || 0, sevkiyat_urun_id]
+        );
+
+        // Eksik/Fazla kontrolü ve log
+        const fark_adet = giden_adet - adet;
+        if (fark_adet !== 0) {
+          const fark_mesaj = fark_adet > 0
+            ? `${fark_adet} adet eksik geldi`
+            : `${Math.abs(fark_adet)} adet fazla geldi`;
+
+          await client.query(
+            `INSERT INTO surec_hareket_log
+             (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, notlar, gidis_kg, donus_kg)
+             VALUES ($1, 'temizlemeden_getir_fark', 'temizlemede_olan', 'temizlemeden_gelen', $2, $3, $4, $5, $6, $7)`,
+            [urun_id, fark_adet, 0, yapan, fark_mesaj, 0, calculated_kg]
+          );
+        }
+
+        // Sevkiyat durumunu güncelle
+        await client.query(
+          `UPDATE temizleme_sevkiyat
+           SET gelis_tarihi = CURRENT_TIMESTAMP, durum = 'geldi'
+           WHERE id = $1`,
+          [sevkiyat_id]
+        );
+      }
+    }
+
     // Log
     await client.query(`
-      INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan)
-      VALUES ($1, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', $2, $3, $4)
-    `, [urun_id, adet, kg, yapan]);
+      INSERT INTO surec_hareket_log (urun_id, islem_tipi, kaynak, hedef, adet, kg, yapan, donus_kg)
+      VALUES ($1, 'temizlemeden_getir', 'temizlemede_olan', 'temizlemeden_gelen', $2, $3, $4, $5)
+    `, [urun_id, adet, calculated_kg, yapan, calculated_kg]);
 
     await client.query('COMMIT');
-    res.json({ success: true, message: 'Transfer başarılı' });
+    res.json({
+      success: true,
+      message: 'Transfer başarılı',
+      calculated_kg: calculated_kg,
+      calculated_pis_kg: calculated_pis_kg
+    });
   } catch (error) {
     await client.query('ROLLBACK');
     console.error('Temizlemeden getirme hatası:', error);

@@ -38,9 +38,15 @@ const TemizlemeyeGidecek = () => {
     }
   };
 
+  const [transferKg, setTransferKg] = useState('');
+  const [irsaliyeNo, setIrsaliyeNo] = useState('');
+  const [currentSevkiyatId, setCurrentSevkiyatId] = useState(null);
+
   const handleTransferClick = (urun) => {
     setSelectedUrun(urun);
     setTransferAdet('');
+    setTransferKg('');
+    setIrsaliyeNo('');
     setYapan('');
     setShowTransferModal(true);
   };
@@ -53,14 +59,26 @@ const TemizlemeyeGidecek = () => {
   };
 
   const handleTransfer = async () => {
-    if (!transferAdet || !yapan) {
-      alert('Lütfen tüm alanları doldurun!');
+    if (!yapan) {
+      alert('Lütfen işlemi yapan kişiyi girin!');
+      return;
+    }
+
+    if (!transferAdet && !transferKg) {
+      alert('Lütfen adet veya kg girin!');
       return;
     }
 
     const adet = parseInt(transferAdet);
-    if (isNaN(adet) || adet <= 0) {
+    const kg = parseFloat(transferKg);
+
+    if (transferAdet && (isNaN(adet) || adet <= 0)) {
       alert('Geçerli bir adet girin!');
+      return;
+    }
+
+    if (transferKg && (isNaN(kg) || kg <= 0)) {
+      alert('Geçerli bir kg girin!');
       return;
     }
 
@@ -70,17 +88,32 @@ const TemizlemeyeGidecek = () => {
     }
 
     try {
-      await tumSurecAPI.temizlemeyeGonder({
+      const response = await tumSurecAPI.temizlemeyeGonder({
         urun_id: selectedUrun.urun_id,
-        adet: adet,
-        yapan: yapan.trim()
+        adet: adet || null,
+        kg: kg || null,
+        yapan: yapan.trim(),
+        irsaliye_no: irsaliyeNo.trim() || null,
+        sevkiyat_id: currentSevkiyatId
       });
-      alert('Ürün temizlemeye gönderildi!');
+
+      // Sevkiyat ID'yi kaydet (başka ürünler eklenebilir)
+      if (response.sevkiyat_id) {
+        setCurrentSevkiyatId(response.sevkiyat_id);
+      }
+
+      const message = response.calculated_kg
+        ? `Ürün temizlemeye gönderildi! (${response.calculated_kg.toFixed(2)} kg)`
+        : 'Ürün temizlemeye gönderildi!';
+
+      alert(message);
       setShowTransferModal(false);
+      setTransferAdet('');
+      setTransferKg('');
       fetchData();
     } catch (error) {
       console.error('Transfer hatası:', error);
-      alert('Transfer sırasında hata oluştu!');
+      alert(error.response?.data?.error || 'Transfer sırasında hata oluştu!');
     }
   };
 
@@ -385,56 +418,96 @@ const TemizlemeyeGidecek = () => {
       {/* Transfer Modal */}
       {showTransferModal && selectedUrun && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+          <div className="bg-white rounded-lg p-8 max-w-lg w-full mx-4">
             <h3 className="text-2xl font-bold mb-6 text-gray-800">Temizlemeye Gönder</h3>
 
-            <div className="mb-4">
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
               <div className="text-lg text-gray-700 mb-2">
                 <strong>Ürün:</strong> {selectedUrun.urun_kodu}
               </div>
-              <div className="text-lg text-gray-700 mb-4">
+              <div className="text-lg text-gray-700">
                 <strong>Mevcut Adet:</strong> <span className="text-blue-600 font-bold">{selectedUrun.adet}</span>
+              </div>
+              {currentSevkiyatId && (
+                <div className="mt-2 text-sm text-green-600 font-semibold">
+                  ✓ Aktif Sevkiyat Var (Aynı sevkiyata ekleniyor)
+                </div>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Adet *
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  max={selectedUrun.adet}
+                  value={transferAdet}
+                  onChange={(e) => setTransferAdet(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  placeholder="Adet"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Kg (opsiyonel)
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={transferKg}
+                  onChange={(e) => setTransferKg(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  placeholder="Kg"
+                />
               </div>
             </div>
 
             <div className="mb-4">
-              <label className="block text-lg font-medium text-gray-700 mb-2">
-                Gönderilecek Adet
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                İrsaliye No (opsiyonel)
               </label>
               <input
-                type="number"
-                min="1"
-                max={selectedUrun.adet}
-                value={transferAdet}
-                onChange={(e) => setTransferAdet(e.target.value)}
-                className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                placeholder="Adet girin"
+                type="text"
+                value={irsaliyeNo}
+                onChange={(e) => setIrsaliyeNo(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                placeholder="İrsaliye numarası"
               />
             </div>
 
             <div className="mb-6">
-              <label className="block text-lg font-medium text-gray-700 mb-2">
-                İşlemi Yapan
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                İşlemi Yapan *
               </label>
               <input
                 type="text"
                 value={yapan}
                 onChange={(e) => setYapan(e.target.value)}
-                className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 placeholder="Adınızı girin"
               />
             </div>
 
+            <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded text-sm text-gray-600">
+              <strong>Not:</strong> Kg girilmezse otomatik hesaplanacak. Sevkiyat numarası otomatik verilecek.
+            </div>
+
             <div className="flex gap-3">
               <button
-                onClick={() => setShowTransferModal(false)}
-                className="flex-1 px-6 py-3 bg-gray-300 text-gray-700 text-lg font-medium rounded-lg hover:bg-gray-400 transition-colors"
+                onClick={() => {
+                  setShowTransferModal(false);
+                  setCurrentSevkiyatId(null);
+                }}
+                className="flex-1 px-6 py-3 bg-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-400 transition-colors"
               >
-                İptal
+                İptal ve Sevkiyatı Kapat
               </button>
               <button
                 onClick={handleTransfer}
-                className="flex-1 px-6 py-3 bg-green-500 text-white text-lg font-medium rounded-lg hover:bg-green-600 transition-colors"
+                className="flex-1 px-6 py-3 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition-colors"
               >
                 Gönder
               </button>

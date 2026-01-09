@@ -11,6 +11,7 @@ const SiparisHazirlik = () => {
   const [siparisler, setSiparisler] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -138,9 +139,58 @@ const SiparisHazirlik = () => {
     }
   };
 
+  // Malzeme listesi oluşturucu - eksik malzemeler
+  const renderEksikMalzemeler = (siparis) => {
+    const malzemeler = [];
+    if (siparis.eksik_koli > 0) malzemeler.push(`📦 Koli ${siparis.eksik_koli}`);
+    if (siparis.eksik_kutu > 0) malzemeler.push(`📋 Kutu ${siparis.eksik_kutu}`);
+    if (siparis.eksik_izolasyon > 0) malzemeler.push(`🔹 İzolasyon ${siparis.eksik_izolasyon}`);
+    if (siparis.eksik_tapa > 0) malzemeler.push(`🔘 Tapa ${siparis.eksik_tapa}`);
+    if (siparis.eksik_poset > 0) malzemeler.push(`🛍️ Poşet ${siparis.eksik_poset}`);
+    if (siparis.eksik_ek_parca > 0) malzemeler.push(`🔧 Ek Parça ${siparis.eksik_ek_parca}`);
+
+    return malzemeler.length > 0 ? (
+      <div className="flex flex-wrap gap-1">
+        {malzemeler.map((m, idx) => (
+          <span key={idx} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+            {m}
+          </span>
+        ))}
+      </div>
+    ) : <span className="text-gray-400 text-xs">-</span>;
+  };
+
+  // Malzeme listesi oluşturucu - hazır malzemeler
+  const renderHazirMalzemeler = (siparis) => {
+    const malzemeler = [];
+    if (siparis.hazir_koli > 0) malzemeler.push(`📦 Koli ${siparis.hazir_koli}`);
+    if (siparis.hazir_kutu > 0) malzemeler.push(`📋 Kutu ${siparis.hazir_kutu}`);
+    if (siparis.hazir_izolasyon > 0) malzemeler.push(`🔹 İzolasyon ${siparis.hazir_izolasyon}`);
+    if (siparis.hazir_ek_parca > 0) malzemeler.push(`🔧 Ek Parça ${siparis.hazir_ek_parca}`);
+
+    return malzemeler.length > 0 ? (
+      <div className="flex flex-wrap gap-1">
+        {malzemeler.map((m, idx) => (
+          <span key={idx} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+            {m}
+          </span>
+        ))}
+      </div>
+    ) : <span className="text-gray-400 text-xs">-</span>;
+  };
+
+  // Filtrele ve ara
   const filteredSiparisler = siparisler.filter(s => {
-    if (filter === 'all') return true;
-    return s.durum === filter;
+    // Durum filtresi
+    if (filter !== 'all' && s.durum !== filter) return false;
+
+    // Arama filtresi (ürün kodu)
+    if (searchTerm) {
+      const search = searchTerm.toLowerCase();
+      return s.urun_kodu && s.urun_kodu.toLowerCase().includes(search);
+    }
+
+    return true;
   });
 
   if (loading) return <LoadingSpinner />;
@@ -192,18 +242,31 @@ const SiparisHazirlik = () => {
         </div>
       </div>
 
+      {/* Arama */}
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Ürün kodu ara (örn: MXJ)..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+      </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tarih</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Operator</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sipariş No</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ürün Kodu</th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Sipariş Tarihi</th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Tamamlanma Tarihi</th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Sipariş Adet</th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Gönderilen</th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Kalan</th>
-              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Malzemeler</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Eksik Malzeme</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hazır Malzeme</th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Durum</th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
             </tr>
@@ -213,10 +276,15 @@ const SiparisHazirlik = () => {
               const kalanAdet = siparis.siparis_adet - (siparis.gonderilen_adet || 0);
               return (
                 <tr key={siparis.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{siparis.tarih}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{siparis.operator}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">{siparis.siparis_no}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{siparis.urun_kodu}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">
+                    {siparis.siparis_tarihi || siparis.tarih || '-'}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">
+                    {siparis.tamamlanma_tarihi || '-'}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-semibold text-gray-900">
                     {siparis.siparis_adet}
                   </td>
@@ -239,36 +307,10 @@ const SiparisHazirlik = () => {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="flex flex-wrap gap-1">
-                      {siparis.malzeme_koli && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 cursor-pointer hover:bg-blue-200 transition-colors">
-                          📦 Koli
-                        </span>
-                      )}
-                      {siparis.malzeme_kutu && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 cursor-pointer hover:bg-purple-200 transition-colors">
-                          📋 Kutu
-                        </span>
-                      )}
-                      {siparis.malzeme_izolasyon && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 cursor-pointer hover:bg-indigo-200 transition-colors">
-                          🔹 İzolasyon
-                        </span>
-                      )}
-                      {siparis.malzeme_tapa && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 cursor-pointer hover:bg-green-200 transition-colors">
-                          🔘 Tapa
-                        </span>
-                      )}
-                      {siparis.malzeme_poset && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 cursor-pointer hover:bg-yellow-200 transition-colors">
-                          🛍️ Poşet
-                        </span>
-                      )}
-                      {!siparis.malzeme_koli && !siparis.malzeme_kutu && !siparis.malzeme_izolasyon && !siparis.malzeme_tapa && !siparis.malzeme_poset && (
-                        <span className="text-gray-400 text-xs">-</span>
-                      )}
-                    </div>
+                    {renderEksikMalzemeler(siparis)}
+                  </td>
+                  <td className="px-6 py-4">
+                    {renderHazirMalzemeler(siparis)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-center">
                     <span className={`px-3 py-1 rounded-full text-xs font-medium border ${durumRenk(siparis.durum)}`}>
@@ -316,7 +358,7 @@ const SiparisHazirlik = () => {
 
       {filteredSiparisler.length === 0 && (
         <div className="text-center py-12 text-gray-500">
-          {filter === 'all' ? 'Henüz sipariş eklenmemiş.' : `"${filter}" durumunda sipariş bulunmuyor.`}
+          {searchTerm ? 'Arama sonucu bulunamadı.' : (filter === 'all' ? 'Henüz sipariş eklenmemiş.' : `"${filter}" durumunda sipariş bulunmuyor.`)}
         </div>
       )}
 

@@ -112,18 +112,24 @@ router.get('/siparis-hazirlik', async (req, res) => {
 router.post('/siparis-hazirlik', async (req, res) => {
   const {
     tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet,
-    durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar
+    durum, notlar,
+    siparis_tarihi, tamamlanma_tarihi,
+    eksik_koli, eksik_kutu, eksik_izolasyon, eksik_tapa, eksik_poset, eksik_ek_parca,
+    hazir_koli, hazir_kutu, hazir_izolasyon, hazir_ek_parca
   } = req.body;
 
   try {
     const result = await pool.query(
       `INSERT INTO siparis_hazirlik
-       (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum,
-        malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *`,
-      [tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet || 0, durum || 'beklemede',
-       malzeme_koli || false, malzeme_kutu || false, malzeme_izolasyon || false,
-       malzeme_tapa || false, malzeme_poset || false, notlar]
+       (tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, notlar,
+        siparis_tarihi, tamamlanma_tarihi,
+        eksik_koli, eksik_kutu, eksik_izolasyon, eksik_tapa, eksik_poset, eksik_ek_parca,
+        hazir_koli, hazir_kutu, hazir_izolasyon, hazir_ek_parca)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20) RETURNING *`,
+      [tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet || 0, durum || 'beklemede', notlar,
+       siparis_tarihi || tarih, tamamlanma_tarihi,
+       eksik_koli || 0, eksik_kutu || 0, eksik_izolasyon || 0, eksik_tapa || 0, eksik_poset || 0, eksik_ek_parca || 0,
+       hazir_koli || 0, hazir_kutu || 0, hazir_izolasyon || 0, hazir_ek_parca || 0]
     );
     res.json(result.rows[0]);
   } catch (error) {
@@ -137,8 +143,10 @@ router.put('/siparis-hazirlik/:id', async (req, res) => {
   const { id } = req.params;
   const {
     tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet,
-    durum, malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar,
-    degistiren
+    durum, notlar, degistiren,
+    siparis_tarihi, tamamlanma_tarihi,
+    eksik_koli, eksik_kutu, eksik_izolasyon, eksik_tapa, eksik_poset, eksik_ek_parca,
+    hazir_koli, hazir_kutu, hazir_izolasyon, hazir_ek_parca
   } = req.body;
 
   try {
@@ -150,12 +158,17 @@ router.put('/siparis-hazirlik/:id', async (req, res) => {
     const result = await pool.query(
       `UPDATE siparis_hazirlik SET
        tarih = $1, operator = $2, siparis_no = $3, urun_kodu = $4, siparis_adet = $5,
-       gonderilen_adet = $6, durum = $7, malzeme_koli = $8, malzeme_kutu = $9,
-       malzeme_izolasyon = $10, malzeme_tapa = $11, malzeme_poset = $12, notlar = $13,
+       gonderilen_adet = $6, durum = $7, notlar = $8,
+       siparis_tarihi = $9, tamamlanma_tarihi = $10,
+       eksik_koli = $11, eksik_kutu = $12, eksik_izolasyon = $13, eksik_tapa = $14, eksik_poset = $15, eksik_ek_parca = $16,
+       hazir_koli = $17, hazir_kutu = $18, hazir_izolasyon = $19, hazir_ek_parca = $20,
        son_guncelleme = CURRENT_TIMESTAMP
-       WHERE id = $14 RETURNING *`,
-      [tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum,
-       malzeme_koli, malzeme_kutu, malzeme_izolasyon, malzeme_tapa, malzeme_poset, notlar, id]
+       WHERE id = $21 RETURNING *`,
+      [tarih, operator, siparis_no, urun_kodu, siparis_adet, gonderilen_adet, durum, notlar,
+       siparis_tarihi, tamamlanma_tarihi,
+       eksik_koli || 0, eksik_kutu || 0, eksik_izolasyon || 0, eksik_tapa || 0, eksik_poset || 0, eksik_ek_parca || 0,
+       hazir_koli || 0, hazir_kutu || 0, hazir_izolasyon || 0, hazir_ek_parca || 0,
+       id]
     );
 
     // Değişiklikleri logla
@@ -184,21 +197,40 @@ router.put('/siparis-hazirlik/:id', async (req, res) => {
       if (eskiSiparis.durum !== durum) {
         degisiklikler.push({ alan: 'Durum', eski: eskiSiparis.durum, yeni: durum });
       }
-      if (eskiSiparis.malzeme_koli !== malzeme_koli) {
-        degisiklikler.push({ alan: 'Malzeme - Koli', eski: eskiSiparis.malzeme_koli ? 'Evet' : 'Hayır', yeni: malzeme_koli ? 'Evet' : 'Hayır' });
+
+      // Yeni malzeme alanları için değişiklik kontrolü
+      if ((eskiSiparis.eksik_koli || 0) !== (eksik_koli || 0)) {
+        degisiklikler.push({ alan: 'Eksik Koli', eski: (eskiSiparis.eksik_koli || 0).toString(), yeni: (eksik_koli || 0).toString() });
       }
-      if (eskiSiparis.malzeme_kutu !== malzeme_kutu) {
-        degisiklikler.push({ alan: 'Malzeme - Kutu', eski: eskiSiparis.malzeme_kutu ? 'Evet' : 'Hayır', yeni: malzeme_kutu ? 'Evet' : 'Hayır' });
+      if ((eskiSiparis.eksik_kutu || 0) !== (eksik_kutu || 0)) {
+        degisiklikler.push({ alan: 'Eksik Kutu', eski: (eskiSiparis.eksik_kutu || 0).toString(), yeni: (eksik_kutu || 0).toString() });
       }
-      if (eskiSiparis.malzeme_izolasyon !== malzeme_izolasyon) {
-        degisiklikler.push({ alan: 'Malzeme - İzolasyon', eski: eskiSiparis.malzeme_izolasyon ? 'Evet' : 'Hayır', yeni: malzeme_izolasyon ? 'Evet' : 'Hayır' });
+      if ((eskiSiparis.eksik_izolasyon || 0) !== (eksik_izolasyon || 0)) {
+        degisiklikler.push({ alan: 'Eksik İzolasyon', eski: (eskiSiparis.eksik_izolasyon || 0).toString(), yeni: (eksik_izolasyon || 0).toString() });
       }
-      if (eskiSiparis.malzeme_tapa !== malzeme_tapa) {
-        degisiklikler.push({ alan: 'Malzeme - Tapa', eski: eskiSiparis.malzeme_tapa ? 'Evet' : 'Hayır', yeni: malzeme_tapa ? 'Evet' : 'Hayır' });
+      if ((eskiSiparis.eksik_tapa || 0) !== (eksik_tapa || 0)) {
+        degisiklikler.push({ alan: 'Eksik Tapa', eski: (eskiSiparis.eksik_tapa || 0).toString(), yeni: (eksik_tapa || 0).toString() });
       }
-      if (eskiSiparis.malzeme_poset !== malzeme_poset) {
-        degisiklikler.push({ alan: 'Malzeme - Poşet', eski: eskiSiparis.malzeme_poset ? 'Evet' : 'Hayır', yeni: malzeme_poset ? 'Evet' : 'Hayır' });
+      if ((eskiSiparis.eksik_poset || 0) !== (eksik_poset || 0)) {
+        degisiklikler.push({ alan: 'Eksik Poşet', eski: (eskiSiparis.eksik_poset || 0).toString(), yeni: (eksik_poset || 0).toString() });
       }
+      if ((eskiSiparis.eksik_ek_parca || 0) !== (eksik_ek_parca || 0)) {
+        degisiklikler.push({ alan: 'Eksik Ek Parça', eski: (eskiSiparis.eksik_ek_parca || 0).toString(), yeni: (eksik_ek_parca || 0).toString() });
+      }
+
+      if ((eskiSiparis.hazir_koli || 0) !== (hazir_koli || 0)) {
+        degisiklikler.push({ alan: 'Hazır Koli', eski: (eskiSiparis.hazir_koli || 0).toString(), yeni: (hazir_koli || 0).toString() });
+      }
+      if ((eskiSiparis.hazir_kutu || 0) !== (hazir_kutu || 0)) {
+        degisiklikler.push({ alan: 'Hazır Kutu', eski: (eskiSiparis.hazir_kutu || 0).toString(), yeni: (hazir_kutu || 0).toString() });
+      }
+      if ((eskiSiparis.hazir_izolasyon || 0) !== (hazir_izolasyon || 0)) {
+        degisiklikler.push({ alan: 'Hazır İzolasyon', eski: (eskiSiparis.hazir_izolasyon || 0).toString(), yeni: (hazir_izolasyon || 0).toString() });
+      }
+      if ((eskiSiparis.hazir_ek_parca || 0) !== (hazir_ek_parca || 0)) {
+        degisiklikler.push({ alan: 'Hazır Ek Parça', eski: (eskiSiparis.hazir_ek_parca || 0).toString(), yeni: (hazir_ek_parca || 0).toString() });
+      }
+
       // Notlar karşılaştırması için null kontrolü
       const eskiNotlar = eskiSiparis.notlar || '';
       const yeniNotlar = notlar || '';

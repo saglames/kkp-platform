@@ -7,6 +7,7 @@ const HistoryTable = () => {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
   const itemsPerPage = 50;
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const HistoryTable = () => {
         ['Tarih', 'Kategori', 'Ürün', 'İşlem', 'Miktar', 'Eski Stok', 'Yeni Stok', 'Açıklama']
       ];
 
-      history.forEach(item => {
+      filteredHistory.forEach(item => {
         ws_data.push([
           formatDate(item.created_at),
           item.category,
@@ -83,18 +84,30 @@ const HistoryTable = () => {
       // Save file
       XLSX.writeFile(wb, filename);
 
-      alert(`${history.length} kayıt Excel'e aktarıldı!`);
+      alert(`${filteredHistory.length} kayıt Excel'e aktarıldı!`);
     } catch (error) {
       console.error('Excel export hatası:', error);
       alert('Excel dosyası oluşturulurken bir hata oluştu!');
     }
   };
 
+  // Arama filtresi
+  const filteredHistory = history.filter(item => {
+    const search = searchTerm.toLowerCase();
+    return (
+      (item.category && item.category.toLowerCase().includes(search)) ||
+      (item.item_name && item.item_name.toLowerCase().includes(search)) ||
+      (item.action && item.action.toLowerCase().includes(search)) ||
+      (item.reason && item.reason.toLowerCase().includes(search)) ||
+      formatDate(item.created_at).toLowerCase().includes(search)
+    );
+  });
+
   // Pagination calculations
-  const totalPages = Math.ceil(history.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredHistory.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentPageData = history.slice(startIndex, endIndex);
+  const currentPageData = filteredHistory.slice(startIndex, endIndex);
 
   const goToPage = (page) => {
     setCurrentPage(page);
@@ -164,7 +177,7 @@ const HistoryTable = () => {
             className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
             disabled={history.length === 0}
           >
-            📥 Excel İndir ({history.length} kayıt)
+            📥 Excel İndir ({filteredHistory.length} kayıt)
           </button>
           <button
             onClick={fetchHistory}
@@ -175,10 +188,25 @@ const HistoryTable = () => {
         </div>
       </div>
 
+      {/* Arama */}
+      <div className="mb-3">
+        <input
+          type="text"
+          placeholder="Ara (kategori, ürün, işlem, açıklama, tarih)..."
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setCurrentPage(1);
+          }}
+          className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+      </div>
+
       {/* Pagination info */}
       {history.length > 0 && (
         <div className="mb-3 text-sm text-gray-600">
-          Gösterilen: <span className="font-semibold">{startIndex + 1}-{Math.min(endIndex, history.length)}</span> / Toplam: <span className="font-semibold">{history.length}</span> kayıt
+          Gösterilen: <span className="font-semibold">{startIndex + 1}-{Math.min(endIndex, filteredHistory.length)}</span> / Toplam: <span className="font-semibold">{filteredHistory.length}</span> kayıt
+          {searchTerm && <span className="ml-2 text-gray-500">({history.length} kayıttan filtrelendi)</span>}
         </div>
       )}
 

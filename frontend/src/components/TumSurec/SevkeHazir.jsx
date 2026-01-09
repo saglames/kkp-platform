@@ -103,7 +103,7 @@ const SevkeHazir = () => {
 
   const handleEditClick = (urun) => {
     setSelectedUrun(urun);
-    setEditAdet(urun.toplam_adet.toString());
+    setEditAdet(urun.adet.toString());
     setYapan('');
     setShowEditModal(true);
   };
@@ -119,7 +119,7 @@ const SevkeHazir = () => {
       return;
     }
     try {
-      await tumSurecAPI.updateSevkeHazir(selectedUrun.urun_id, {
+      await tumSurecAPI.updateSevkeHazir(selectedUrun.id, {
         adet: adet,
         yapan: yapan.trim()
       });
@@ -132,12 +132,12 @@ const SevkeHazir = () => {
     }
   };
 
-  const handleDelete = async (urun_id) => {
+  const handleDelete = async (id) => {
     if (!window.confirm('Bu ürünü silmek istediğinizden emin misiniz?')) {
       return;
     }
     try {
-      await tumSurecAPI.deleteSevkeHazir(urun_id);
+      await tumSurecAPI.deleteSevkeHazir(id);
       alert('Ürün silindi!');
       fetchData();
     } catch (error) {
@@ -227,7 +227,7 @@ const SevkeHazir = () => {
                         Düzenle
                       </button>
                       <button
-                        onClick={() => handleDelete(urun.urun_id)}
+                        onClick={() => handleDelete(urun.id)}
                         className="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors"
                       >
                         Sil
@@ -345,7 +345,7 @@ const SevkeHazir = () => {
                 <strong>Ürün:</strong> {selectedUrun.urun_kodu_base}
               </div>
               <div className="text-lg text-gray-700 mb-4">
-                <strong>Mevcut Adet:</strong> <span className="text-green-600 font-bold">{selectedUrun.toplam_adet}</span>
+                <strong>Mevcut Adet:</strong> <span className="text-green-600 font-bold">{selectedUrun.adet}</span>
               </div>
             </div>
             <div className="mb-4">

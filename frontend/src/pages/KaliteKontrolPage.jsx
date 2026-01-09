@@ -4,6 +4,7 @@ import SiparisHazirlik from '../components/KaliteKontrol/SiparisHazirlik';
 import UrunSiparisler from '../components/KaliteKontrol/UrunSiparisler';
 import SimulasyonStok from '../components/KaliteKontrol/SimulasyonStok';
 import VeriAktarma from '../components/KaliteKontrol/VeriAktarma';
+import IslemGecmisi from '../components/KaliteKontrol/IslemGecmisi';
 
 const KaliteKontrolPage = () => {
   const [activeTab, setActiveTab] = useState('guncel-isler');
@@ -13,6 +14,7 @@ const KaliteKontrolPage = () => {
     { id: 'siparis-hazirlik', label: 'Sipariş Hazırlığı', icon: '📦' },
     { id: 'urun-siparisler', label: 'İç Siparişler', icon: '🛒' },
     { id: 'simulasyon-stok', label: 'Simülasyon Stok', icon: '📊' },
+    { id: 'islem-gecmisi', label: 'İşlem Geçmişi', icon: '📋' },
     { id: 'veri-aktarma', label: 'Veri Aktarma', icon: '💾' }
   ];
 
@@ -26,6 +28,8 @@ const KaliteKontrolPage = () => {
         return <UrunSiparisler />;
       case 'simulasyon-stok':
         return <SimulasyonStok />;
+      case 'islem-gecmisi':
+        return <IslemGecmisi />;
       case 'veri-aktarma':
         return <VeriAktarma />;
       default:

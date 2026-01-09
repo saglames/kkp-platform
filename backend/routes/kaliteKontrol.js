@@ -305,6 +305,38 @@ router.get('/siparis-hazirlik/stats', async (req, res) => {
   }
 });
 
+// Sipariş Hazırlık değişiklik loglarını getir (tümü)
+router.get('/siparis-hazirlik/degisiklik-log', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT sdl.*, sh.siparis_no, sh.urun_kodu
+      FROM siparis_degisiklik_log sdl
+      LEFT JOIN siparis_hazirlik sh ON sdl.siparis_id = sh.id
+      ORDER BY sdl.tarih DESC
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Değişiklik log getirme hatası:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// İç Siparişler değişiklik loglarını getir (tümü)
+router.get('/urun-siparisler/degisiklik-log', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT usdl.*, us.urun_adi
+      FROM urun_siparis_degisiklik_log usdl
+      LEFT JOIN urun_siparisler us ON usdl.siparis_id = us.id
+      ORDER BY usdl.tarih DESC
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Değişiklik log getirme hatası:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // GÖNDERİM TAKIP ROUTES
 // Sipariş için gönderim ekle
 router.post('/siparis-hazirlik/:id/gonderim', async (req, res) => {

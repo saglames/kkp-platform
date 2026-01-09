@@ -70,6 +70,7 @@ export const kaliteKontrolAPI = {
 
   // Değişiklik Logları
   getDegisiklikLog: async (siparisId) => (await api.get(`/kalite-kontrol/siparis-hazirlik/${siparisId}/degisiklik-log`)).data,
+  getSiparisHazirlikDegisiklikLog: async () => (await api.get('/kalite-kontrol/siparis-hazirlik/degisiklik-log')).data,
 
   // Ürün Siparişleri
   getUrunSiparisler: async () => (await api.get('/kalite-kontrol/urun-siparisler')).data,
@@ -77,6 +78,7 @@ export const kaliteKontrolAPI = {
   updateUrunSiparis: async (id, data) => (await api.put(`/kalite-kontrol/urun-siparisler/${id}`, data)).data,
   deleteUrunSiparis: async (id) => (await api.delete(`/kalite-kontrol/urun-siparisler/${id}`)).data,
   getUrunSiparisDegisiklikLog: async (id) => (await api.get(`/kalite-kontrol/urun-siparisler/${id}/degisiklik-log`)).data,
+  getUrunSiparislerDegisiklikLog: async () => (await api.get('/kalite-kontrol/urun-siparisler/degisiklik-log')).data,
 };
 
 // SİMÜLASYON STOK API

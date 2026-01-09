@@ -109,6 +109,10 @@ const KamyonetYukleme = ({ hesaplamaResult }) => {
     koliTipleri.reduce((acc, koli) => ({ ...acc, [koli.kod]: 0 }), {})
   );
 
+  // Palet adetleri
+  const [palet100x100, setPalet100x100] = useState(0);
+  const [palet100x120, setPalet100x120] = useState(0);
+
   // Otomatik hesaplama: Hesaplama sonucuna göre koli sayısını güncelle
   useEffect(() => {
     if (hesaplamaResult && hesaplamaResult.urun_kodu && hesaplamaResult.adet) {
@@ -141,10 +145,16 @@ const KamyonetYukleme = ({ hesaplamaResult }) => {
 
   // Toplam hacim hesaplama
   const calculateTotalVolume = () => {
-    return koliTipleri.reduce((total, koli) => {
+    let totalVolume = koliTipleri.reduce((total, koli) => {
       const adet = koliAdedi[koli.kod] || 0;
       return total + (calculateVolume(koli.olculer) * adet);
     }, 0);
+
+    // Palet hacimlerini ekle (100x100x14 cm ve 100x120x14 cm)
+    totalVolume += calculateVolume({ uzunluk: 100, genislik: 100, yukseklik: 14 }) * palet100x100;
+    totalVolume += calculateVolume({ uzunluk: 100, genislik: 120, yukseklik: 14 }) * palet100x120;
+
+    return totalVolume;
   };
 
   // Kamyonet hacmi
@@ -168,9 +178,12 @@ const KamyonetYukleme = ({ hesaplamaResult }) => {
 
   const handleClear = () => {
     setKoliAdedi(koliTipleri.reduce((acc, koli) => ({ ...acc, [koli.kod]: 0 }), {}));
+    setPalet100x100(0);
+    setPalet100x120(0);
   };
 
   const toplamKoli = Object.values(koliAdedi).reduce((a, b) => a + b, 0);
+  const toplamPalet = palet100x100 + palet100x120;
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
@@ -239,12 +252,51 @@ const KamyonetYukleme = ({ hesaplamaResult }) => {
         </div>
       </div>
 
+      {/* Palet Adetleri */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-2">Palet Adetleri</label>
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 bg-amber-50 p-2 rounded">
+            <div className="flex-1">
+              <div className="font-medium text-sm text-gray-800">100x100 cm Palet</div>
+              <div className="text-xs text-gray-500">100x100x14 cm</div>
+            </div>
+            <input
+              type="number"
+              min="0"
+              value={palet100x100}
+              onChange={(e) => setPalet100x100(parseInt(e.target.value) || 0)}
+              className="w-20 px-2 py-1 border rounded text-center"
+              placeholder="0"
+            />
+          </div>
+          <div className="flex items-center gap-2 bg-amber-50 p-2 rounded">
+            <div className="flex-1">
+              <div className="font-medium text-sm text-gray-800">100x120 cm Palet</div>
+              <div className="text-xs text-gray-500">100x120x14 cm</div>
+            </div>
+            <input
+              type="number"
+              min="0"
+              value={palet100x120}
+              onChange={(e) => setPalet100x120(parseInt(e.target.value) || 0)}
+              className="w-20 px-2 py-1 border rounded text-center"
+              placeholder="0"
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Sonuçlar */}
       <div className="border-t pt-4">
         <div className="mb-4">
           <div className="flex justify-between items-center mb-2">
             <span className="text-sm font-medium text-gray-700">Toplam Koli:</span>
             <span className="text-lg font-bold text-gray-900">{toplamKoli} adet</span>
+          </div>
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm font-medium text-gray-700">Toplam Palet:</span>
+            <span className="text-lg font-bold text-amber-700">{toplamPalet} adet</span>
           </div>
           <div className="flex justify-between items-center mb-2">
             <span className="text-sm font-medium text-gray-700">Kullanılan Hacim:</span>

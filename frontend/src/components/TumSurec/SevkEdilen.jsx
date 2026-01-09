@@ -218,7 +218,9 @@ const SevkEdilen = () => {
                     className="w-full px-3 py-2 border rounded"
                   >
                     <option value="A">A</option>
+                    <option value="B">B</option>
                     <option value="Joint">Joint</option>
+                    <option value="Fittings">Fittings</option>
                   </select>
                 </div>
                 <div>
@@ -314,7 +316,9 @@ const SevkEdilen = () => {
                     className="w-full px-3 py-2 border rounded"
                   >
                     <option value="A">A</option>
+                    <option value="B">B</option>
                     <option value="Joint">Joint</option>
+                    <option value="Fittings">Fittings</option>
                   </select>
                 </div>
                 <div>

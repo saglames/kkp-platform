@@ -279,7 +279,9 @@ const Kalan = () => {
                 className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
               >
                 <option value="A">A</option>
+                <option value="B">B</option>
                 <option value="Joint">Joint</option>
+                <option value="Fittings">Fittings</option>
               </select>
             </div>
 

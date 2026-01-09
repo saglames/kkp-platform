@@ -8,6 +8,7 @@ import UrunSiparisDegisiklikLogModal from './UrunSiparisDegisiklikLogModal';
 const UrunSiparisler = () => {
   const [siparisler, setSiparisler] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -107,13 +108,29 @@ const UrunSiparisler = () => {
     });
   };
 
+  // Arama filtresi
+  const filteredSiparisler = siparisler.filter(siparis => {
+    const search = searchTerm.toLowerCase();
+    return (
+      (siparis.urun_adi && siparis.urun_adi.toLowerCase().includes(search)) ||
+      (siparis.adet_miktar && siparis.adet_miktar.toLowerCase().includes(search)) ||
+      (siparis.olcu && siparis.olcu.toLowerCase().includes(search)) ||
+      (siparis.talep_eden && siparis.talep_eden.toLowerCase().includes(search)) ||
+      (siparis.siparis_veren_yer && siparis.siparis_veren_yer.toLowerCase().includes(search)) ||
+      (siparis.aciklama && siparis.aciklama.toLowerCase().includes(search)) ||
+      (siparis.gelen_notlar && siparis.gelen_notlar.toLowerCase().includes(search)) ||
+      (siparis.durum && siparis.durum.toLowerCase().includes(search)) ||
+      (siparis.gelen_adet && siparis.gelen_adet.toLowerCase().includes(search))
+    );
+  });
+
   if (loading) return <LoadingSpinner />;
 
   return (
     <div>
       <div className="mb-6 flex justify-between items-center gap-4">
         <h3 className="text-lg font-semibold text-gray-800">
-          İç Siparişler ({siparisler.length} sipariş)
+          İç Siparişler ({filteredSiparisler.length}/{siparisler.length} sipariş)
         </h3>
         <div className="flex items-center gap-3">
           <button
@@ -130,6 +147,16 @@ const UrunSiparisler = () => {
             Yeni Sipariş
           </button>
         </div>
+      </div>
+
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Ürün adı, talep eden, durum, açıklama ile ara..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
       </div>
 
       <div className="overflow-x-auto">
@@ -149,7 +176,7 @@ const UrunSiparisler = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {siparisler.map((siparis) => (
+            {filteredSiparisler.map((siparis) => (
               <tr key={siparis.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 text-sm font-medium text-gray-900">{siparis.urun_adi}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
@@ -212,6 +239,12 @@ const UrunSiparisler = () => {
       {siparisler.length === 0 && (
         <div className="text-center py-12 text-gray-500">
           Henüz iç sipariş eklenmemiş.
+        </div>
+      )}
+
+      {siparisler.length > 0 && filteredSiparisler.length === 0 && (
+        <div className="text-center py-12 text-gray-500">
+          Arama kriterine uygun sipariş bulunamadı.
         </div>
       )}
 

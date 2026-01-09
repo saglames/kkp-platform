@@ -1,6 +1,6 @@
--- İç Siparişler Tablosuna "Siparişi Veren Yer" Kolonu Ekleme
+-- İç Siparişler Tablosuna "Sipariş Verilen Yer" Kolonu Ekleme
 -- Tarih: 2026-01-09
--- Açıklama: Ürün siparişlerinde siparişi veren yeri takip etmek için yeni alan
+-- Açıklama: Ürün siparişlerinde sipariş verilen yeri takip etmek için yeni alan
 
 -- 1. Yeni kolonu ekle
 ALTER TABLE urun_siparisler

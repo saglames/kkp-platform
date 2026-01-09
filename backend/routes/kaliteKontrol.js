@@ -498,11 +498,11 @@ router.put('/urun-siparisler/:id', async (req, res) => {
       if (eskiGelenNotlar !== yeniGelenNotlar) {
         degisiklikler.push({ alan: 'Gelen Notlar', eski: eskiGelenNotlar || '-', yeni: yeniGelenNotlar || '-' });
       }
-      // Siparişi veren yer karşılaştırması için null kontrolü
+      // Sipariş verilen yer karşılaştırması için null kontrolü
       const eskiSiparisVerenYer = eskiSiparis.siparis_veren_yer || '';
       const yeniSiparisVerenYer = siparis_veren_yer || '';
       if (eskiSiparisVerenYer !== yeniSiparisVerenYer) {
-        degisiklikler.push({ alan: 'Siparişi Veren Yer', eski: eskiSiparisVerenYer || '-', yeni: yeniSiparisVerenYer || '-' });
+        degisiklikler.push({ alan: 'Sipariş Verilen Yer', eski: eskiSiparisVerenYer || '-', yeni: yeniSiparisVerenYer || '-' });
       }
     }
 

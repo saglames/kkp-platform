@@ -152,7 +152,7 @@ const IcSiparisModal = ({ isOpen, onClose, onSubmit, siparis = null }) => {
 
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Siparişi Veren Yer
+            Sipariş Verilen Yer
           </label>
           <input
             type="text"

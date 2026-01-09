@@ -10,6 +10,7 @@ const Kalan = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedUrun, setSelectedUrun] = useState(null);
   const [editAdet, setEditAdet] = useState('');
+  const [editTip, setEditTip] = useState('');
   const [formData, setFormData] = useState({
     tip: 'Joint',
     urun_kodu: '',
@@ -86,12 +87,13 @@ const Kalan = () => {
   const handleEditAdetClick = (urun) => {
     setSelectedUrun(urun);
     setEditAdet(urun.adet.toString());
+    setEditTip(urun.tip);
     setShowEditModal(true);
   };
 
   const handleUpdateAdet = async () => {
-    if (!editAdet) {
-      alert('Lütfen adet giriniz!');
+    if (!editAdet || !editTip) {
+      alert('Lütfen tüm alanları giriniz!');
       return;
     }
     const adet = parseInt(editAdet);
@@ -100,8 +102,8 @@ const Kalan = () => {
       return;
     }
     try {
-      await tumSurecAPI.updateKalan(selectedUrun.id, { adet });
-      alert('Adet güncellendi!');
+      await tumSurecAPI.updateKalan(selectedUrun.id, { adet, tip: editTip });
+      alert('Ürün güncellendi!');
       setShowEditModal(false);
       fetchData();
     } catch (error) {
@@ -267,6 +269,18 @@ const Kalan = () => {
               <div className="text-lg text-gray-700 mb-4">
                 <strong>Mevcut Adet:</strong> <span className="text-red-600 font-bold">{selectedUrun.adet}</span>
               </div>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-lg font-medium text-gray-700 mb-2">Tip</label>
+              <select
+                value={editTip}
+                onChange={(e) => setEditTip(e.target.value)}
+                className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+              >
+                <option value="A">A</option>
+                <option value="Joint">Joint</option>
+              </select>
             </div>
 
             <div className="mb-6">

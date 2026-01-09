@@ -12,6 +12,7 @@ const TemizlemeyeGidecek = () => {
   const [selectedUrun, setSelectedUrun] = useState(null);
   const [transferAdet, setTransferAdet] = useState('');
   const [editAdet, setEditAdet] = useState('');
+  const [editTip, setEditTip] = useState('');
   const [yapan, setYapan] = useState('');
   const [selectedItems, setSelectedItems] = useState([]); // Multi-select için
   const [formData, setFormData] = useState({
@@ -55,6 +56,7 @@ const TemizlemeyeGidecek = () => {
   const handleEditClick = (urun) => {
     setSelectedUrun(urun);
     setEditAdet(urun.adet.toString());
+    setEditTip(urun.tip);
     setYapan('');
     setShowEditModal(true);
   };
@@ -120,7 +122,7 @@ const TemizlemeyeGidecek = () => {
   };
 
   const handleEdit = async () => {
-    if (!editAdet || !yapan) {
+    if (!editAdet || !yapan || !editTip) {
       alert('Lütfen tüm alanları doldurun!');
       return;
     }
@@ -134,9 +136,10 @@ const TemizlemeyeGidecek = () => {
     try {
       await tumSurecAPI.updateTemizlemeyeGidecek(selectedUrun.id, {
         adet: adet,
+        tip: editTip,
         yapan: yapan.trim()
       });
-      alert('Adet güncellendi!');
+      alert('Ürün güncellendi!');
       setShowEditModal(false);
       fetchData();
     } catch (error) {
@@ -370,6 +373,18 @@ const TemizlemeyeGidecek = () => {
               <div className="text-lg text-gray-700 mb-4">
                 <strong>Mevcut Adet:</strong> <span className="text-blue-600 font-bold">{selectedUrun.adet}</span>
               </div>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-lg font-medium text-gray-700 mb-2">Tip</label>
+              <select
+                value={editTip}
+                onChange={(e) => setEditTip(e.target.value)}
+                className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="A">A</option>
+                <option value="Joint">Joint</option>
+              </select>
             </div>
 
             <div className="mb-4">

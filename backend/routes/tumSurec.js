@@ -756,20 +756,56 @@ router.post('/temizlemeye-gidecek', async (req, res) => {
 // TEMİZLEMEYE GİDECEK - Direkt güncelle
 router.put('/temizlemeye-gidecek/:id', async (req, res) => {
   const { id } = req.params;
-  const { adet, yapan } = req.body;
+  const { adet, tip, yapan } = req.body;
+  const client = await pool.connect();
 
   try {
-    const result = await pool.query(`
+    await client.query('BEGIN');
+
+    // Get urun_id from surec_temizlemeye_gidecek
+    const gidecekResult = await client.query(
+      'SELECT urun_id FROM surec_temizlemeye_gidecek WHERE id = $1',
+      [id]
+    );
+
+    if (gidecekResult.rows.length === 0) {
+      throw new Error('Kayıt bulunamadı');
+    }
+
+    const urun_id = gidecekResult.rows[0].urun_id;
+
+    // Update adet in surec_temizlemeye_gidecek
+    await client.query(`
       UPDATE surec_temizlemeye_gidecek
       SET adet = $1, updated_by = $2, updated_at = CURRENT_TIMESTAMP
       WHERE id = $3
-      RETURNING *
     `, [adet, yapan || 'Manuel Güncelleme', id]);
 
+    // Update tip in surec_urunler if tip is provided
+    if (tip) {
+      await client.query(`
+        UPDATE surec_urunler
+        SET tip = $1
+        WHERE id = $2
+      `, [tip, urun_id]);
+    }
+
+    // Get updated record with tip
+    const result = await client.query(`
+      SELECT tg.*, u.tip, u.urun_kodu, u.urun_kodu_base
+      FROM surec_temizlemeye_gidecek tg
+      JOIN surec_urunler u ON tg.urun_id = u.id
+      WHERE tg.id = $1
+    `, [id]);
+
+    await client.query('COMMIT');
     res.json(result.rows[0]);
   } catch (error) {
+    await client.query('ROLLBACK');
     console.error('Temizlemeye gidecek güncelleme hatası:', error);
     res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
   }
 });
 
@@ -829,20 +865,56 @@ router.post('/temizlemede-olan', async (req, res) => {
 // TEMİZLEMEDE OLAN - Direkt güncelle
 router.put('/temizlemede-olan/:id', async (req, res) => {
   const { id } = req.params;
-  const { adet, yapan } = req.body;
+  const { adet, tip, yapan } = req.body;
+  const client = await pool.connect();
 
   try {
-    const result = await pool.query(`
+    await client.query('BEGIN');
+
+    // Get urun_id from surec_temizlemede_olan
+    const olanResult = await client.query(
+      'SELECT urun_id FROM surec_temizlemede_olan WHERE id = $1',
+      [id]
+    );
+
+    if (olanResult.rows.length === 0) {
+      throw new Error('Kayıt bulunamadı');
+    }
+
+    const urun_id = olanResult.rows[0].urun_id;
+
+    // Update adet in surec_temizlemede_olan
+    await client.query(`
       UPDATE surec_temizlemede_olan
       SET adet = $1, updated_by = $2, updated_at = CURRENT_TIMESTAMP
       WHERE id = $3
-      RETURNING *
     `, [adet, yapan || 'Manuel Güncelleme', id]);
 
+    // Update tip in surec_urunler if tip is provided
+    if (tip) {
+      await client.query(`
+        UPDATE surec_urunler
+        SET tip = $1
+        WHERE id = $2
+      `, [tip, urun_id]);
+    }
+
+    // Get updated record with tip
+    const result = await client.query(`
+      SELECT to2.*, u.tip, u.urun_kodu, u.urun_kodu_base
+      FROM surec_temizlemede_olan to2
+      JOIN surec_urunler u ON to2.urun_id = u.id
+      WHERE to2.id = $1
+    `, [id]);
+
+    await client.query('COMMIT');
     res.json(result.rows[0]);
   } catch (error) {
+    await client.query('ROLLBACK');
     console.error('Temizlemede olan güncelleme hatası:', error);
     res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
   }
 });
 
@@ -900,20 +972,56 @@ router.post('/temizlemeden-gelen', async (req, res) => {
 // TEMİZLEMEDEN GELEN - Direkt güncelle
 router.put('/temizlemeden-gelen/:id', async (req, res) => {
   const { id } = req.params;
-  const { adet, yapan } = req.body;
+  const { adet, tip, yapan } = req.body;
+  const client = await pool.connect();
 
   try {
-    const result = await pool.query(`
+    await client.query('BEGIN');
+
+    // Get urun_id from surec_temizlemeden_gelen
+    const gelenResult = await client.query(
+      'SELECT urun_id FROM surec_temizlemeden_gelen WHERE id = $1',
+      [id]
+    );
+
+    if (gelenResult.rows.length === 0) {
+      throw new Error('Kayıt bulunamadı');
+    }
+
+    const urun_id = gelenResult.rows[0].urun_id;
+
+    // Update adet in surec_temizlemeden_gelen
+    await client.query(`
       UPDATE surec_temizlemeden_gelen
       SET adet = $1, updated_by = $2, updated_at = CURRENT_TIMESTAMP
       WHERE id = $3
-      RETURNING *
     `, [adet, yapan || 'Manuel Güncelleme', id]);
 
+    // Update tip in surec_urunler if tip is provided
+    if (tip) {
+      await client.query(`
+        UPDATE surec_urunler
+        SET tip = $1
+        WHERE id = $2
+      `, [tip, urun_id]);
+    }
+
+    // Get updated record with tip
+    const result = await client.query(`
+      SELECT tg.*, u.tip, u.urun_kodu, u.urun_kodu_base
+      FROM surec_temizlemeden_gelen tg
+      JOIN surec_urunler u ON tg.urun_id = u.id
+      WHERE tg.id = $1
+    `, [id]);
+
+    await client.query('COMMIT');
     res.json(result.rows[0]);
   } catch (error) {
+    await client.query('ROLLBACK');
     console.error('Temizlemeden gelen güncelleme hatası:', error);
     res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
   }
 });
 
@@ -1041,16 +1149,23 @@ router.post('/kalan', async (req, res) => {
 // KALAN - Güncelle
 router.put('/kalan/:id', async (req, res) => {
   const { id } = req.params;
-  const { adet } = req.body;
+  const { adet, tip } = req.body;
 
   try {
-    const result = await pool.query(`
-      UPDATE surec_urunler
-      SET adet = $1
-      WHERE id = $2
-      RETURNING *
-    `, [adet, id]);
+    let query = 'UPDATE surec_urunler SET adet = $1';
+    const values = [adet];
 
+    if (tip) {
+      query += ', tip = $2 WHERE id = $3';
+      values.push(tip, id);
+    } else {
+      query += ' WHERE id = $2';
+      values.push(id);
+    }
+
+    query += ' RETURNING *';
+
+    const result = await pool.query(query, values);
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Kalan güncelleme hatası:', error);

@@ -11,6 +11,7 @@ const TemizlemedOlan = () => {
   const [transferAdet, setTransferAdet] = useState('');
   const [transferKg, setTransferKg] = useState('');
   const [editAdet, setEditAdet] = useState('');
+  const [editTip, setEditTip] = useState('');
   const [yapan, setYapan] = useState('');
   const [formData, setFormData] = useState({
     tip: 'Joint',
@@ -47,6 +48,7 @@ const TemizlemedOlan = () => {
   const handleEditClick = (urun) => {
     setSelectedUrun(urun);
     setEditAdet(urun.adet.toString());
+    setEditTip(urun.tip);
     setYapan('');
     setShowEditModal(true);
   };
@@ -103,7 +105,7 @@ const TemizlemedOlan = () => {
   };
 
   const handleEdit = async () => {
-    if (!editAdet || !yapan) {
+    if (!editAdet || !yapan || !editTip) {
       alert('Lütfen tüm alanları doldurun!');
       return;
     }
@@ -117,9 +119,10 @@ const TemizlemedOlan = () => {
     try {
       await tumSurecAPI.updateTemizlemedOlan(selectedUrun.id, {
         adet: adet,
+        tip: editTip,
         yapan: yapan.trim()
       });
-      alert('Adet güncellendi!');
+      alert('Ürün güncellendi!');
       setShowEditModal(false);
       fetchData();
     } catch (error) {
@@ -288,6 +291,18 @@ const TemizlemedOlan = () => {
               <div className="text-lg text-gray-700 mb-4">
                 <strong>Mevcut Adet:</strong> <span className="text-yellow-600 font-bold">{selectedUrun.adet}</span>
               </div>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-lg font-medium text-gray-700 mb-2">Tip</label>
+              <select
+                value={editTip}
+                onChange={(e) => setEditTip(e.target.value)}
+                className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500"
+              >
+                <option value="A">A</option>
+                <option value="Joint">Joint</option>
+              </select>
             </div>
 
             <div className="mb-4">

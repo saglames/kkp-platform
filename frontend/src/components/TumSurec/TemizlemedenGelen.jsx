@@ -10,6 +10,7 @@ const TemizlemedenGelen = () => {
   const [selectedUrun, setSelectedUrun] = useState(null);
   const [transferAdet, setTransferAdet] = useState('');
   const [editAdet, setEditAdet] = useState('');
+  const [editTip, setEditTip] = useState('');
   const [yapan, setYapan] = useState('');
   const [formData, setFormData] = useState({
     tip: 'Joint',
@@ -106,12 +107,13 @@ const TemizlemedenGelen = () => {
   const handleEditClick = (urun) => {
     setSelectedUrun(urun);
     setEditAdet(urun.adet.toString());
+    setEditTip(urun.tip);
     setYapan('');
     setShowEditModal(true);
   };
 
   const handleEdit = async () => {
-    if (!editAdet || !yapan) {
+    if (!editAdet || !yapan || !editTip) {
       alert('Lütfen tüm alanları doldurun!');
       return;
     }
@@ -123,9 +125,10 @@ const TemizlemedenGelen = () => {
     try {
       await tumSurecAPI.updateTemizlemedenGelen(selectedUrun.id, {
         adet: adet,
+        tip: editTip,
         yapan: yapan.trim()
       });
-      alert('Adet güncellendi!');
+      alert('Ürün güncellendi!');
       setShowEditModal(false);
       fetchData();
     } catch (error) {
@@ -319,7 +322,7 @@ const TemizlemedenGelen = () => {
       {showEditModal && selectedUrun && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-            <h3 className="text-2xl font-bold mb-6 text-gray-800">Adet Düzenle</h3>
+            <h3 className="text-2xl font-bold mb-6 text-gray-800">Ürün Düzenle</h3>
             <div className="mb-4">
               <div className="text-lg text-gray-700 mb-2">
                 <strong>Ürün:</strong> {selectedUrun.urun_kodu}
@@ -327,6 +330,17 @@ const TemizlemedenGelen = () => {
               <div className="text-lg text-gray-700 mb-4">
                 <strong>Mevcut Adet:</strong> <span className="text-purple-600 font-bold">{selectedUrun.adet}</span>
               </div>
+            </div>
+            <div className="mb-4">
+              <label className="block text-lg font-medium text-gray-700 mb-2">Tip</label>
+              <select
+                value={editTip}
+                onChange={(e) => setEditTip(e.target.value)}
+                className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+              >
+                <option value="A">A</option>
+                <option value="Joint">Joint</option>
+              </select>
             </div>
             <div className="mb-4">
               <label className="block text-lg font-medium text-gray-700 mb-2">Yeni Adet</label>

@@ -212,12 +212,14 @@ const SevkEdilen = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">Tip</label>
-                  <input
-                    type="text"
+                  <select
                     value={formData.tip}
                     onChange={(e) => setFormData({...formData, tip: e.target.value})}
                     className="w-full px-3 py-2 border rounded"
-                  />
+                  >
+                    <option value="A">A</option>
+                    <option value="Joint">Joint</option>
+                  </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Ürün Kodu *</label>
@@ -306,12 +308,14 @@ const SevkEdilen = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">Tip</label>
-                  <input
-                    type="text"
+                  <select
                     value={formData.tip}
                     onChange={(e) => setFormData({...formData, tip: e.target.value})}
                     className="w-full px-3 py-2 border rounded"
-                  />
+                  >
+                    <option value="A">A</option>
+                    <option value="Joint">Joint</option>
+                  </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Ürün Kodu *</label>

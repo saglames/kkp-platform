@@ -9,6 +9,7 @@ import StokHareketLogModal from '../SimulasyonStok/StokHareketLogModal';
 const SimulasyonStok = () => {
   const [stok, setStok] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -142,9 +143,18 @@ const SimulasyonStok = () => {
     }
   };
 
-  const filteredStok = selectedCategory === 'all'
-    ? stok
-    : stok.filter(item => item.malzeme_turu === selectedCategory);
+  // Kategori ve arama filtresi
+  const filteredStok = stok
+    .filter(item => selectedCategory === 'all' || item.malzeme_turu === selectedCategory)
+    .filter(item => {
+      const search = searchTerm.toLowerCase();
+      return (
+        (item.urun_adi && item.urun_adi.toLowerCase().includes(search)) ||
+        (item.malzeme_turu && item.malzeme_turu.toLowerCase().includes(search)) ||
+        (item.olculeri && item.olculeri.toLowerCase().includes(search)) ||
+        (item.ekleyen && item.ekleyen.toLowerCase().includes(search))
+      );
+    });
 
   const formatDate = (dateString) => {
     if (!dateString) return '-';
@@ -164,8 +174,19 @@ const SimulasyonStok = () => {
     <div>
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">
-          Simülasyon Stok ({filteredStok.length} ürün)
+          Simülasyon Stok ({filteredStok.length}/{stok.length} ürün)
         </h3>
+
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Ürün adı, malzeme türü, ölçü, ekleyen ile ara..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
+
         <div className="flex flex-wrap gap-2">
           {categories.map((cat) => (
             <button

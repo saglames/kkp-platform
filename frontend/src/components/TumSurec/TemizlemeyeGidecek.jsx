@@ -14,6 +14,7 @@ const TemizlemeyeGidecek = () => {
   const [editAdet, setEditAdet] = useState('');
   const [editTip, setEditTip] = useState('');
   const [yapan, setYapan] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedItems, setSelectedItems] = useState([]); // Multi-select için
   const [formData, setFormData] = useState({
     tip: 'Joint',
@@ -222,6 +223,16 @@ const TemizlemeyeGidecek = () => {
     }
   };
 
+  // Arama filtresi
+  const filteredUrunler = urunler.filter(urun => {
+    const search = searchTerm.toLowerCase();
+    return (
+      (urun.urun_kodu && urun.urun_kodu.toLowerCase().includes(search)) ||
+      (urun.tip && urun.tip.toLowerCase().includes(search)) ||
+      (urun.updated_by && urun.updated_by.toLowerCase().includes(search))
+    );
+  });
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
@@ -265,6 +276,22 @@ const TemizlemeyeGidecek = () => {
         </div>
       </div>
 
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Ürün kodu, tip veya güncelleyen ile ara... (örn: MXJ)"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+      </div>
+
+      {filteredUrunler.length > 0 && (
+        <div className="mb-3 text-sm text-gray-600">
+          {filteredUrunler.length} / {urunler.length} ürün gösteriliyor
+        </div>
+      )}
+
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300">
           <thead className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
@@ -287,14 +314,14 @@ const TemizlemeyeGidecek = () => {
             </tr>
           </thead>
           <tbody>
-            {urunler.length === 0 ? (
+            {filteredUrunler.length === 0 ? (
               <tr>
                 <td colSpan="7" className="px-4 py-8 text-center text-gray-500 text-lg">
-                  Temizlemeye gidecek ürün yok
+                  {searchTerm ? 'Arama kriterine uygun ürün bulunamadı.' : 'Temizlemeye gidecek ürün yok'}
                 </td>
               </tr>
             ) : (
-              urunler.map((urun) => {
+              filteredUrunler.map((urun) => {
                 const isSelected = selectedItems.some(item => item.id === urun.id);
                 return (
                   <tr key={urun.id} className={`border-b hover:bg-gray-50 transition-colors ${isSelected ? 'bg-blue-50' : ''}`}>

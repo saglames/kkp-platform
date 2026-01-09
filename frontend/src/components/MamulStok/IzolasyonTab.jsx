@@ -3,8 +3,10 @@ import { mamulStokAPI } from '../../services/api';
 import LoadingSpinner from '../Shared/LoadingSpinner';
 import StockChangeModal from './StockChangeModal';
 import AddIzolasyonModal from './AddIzolasyonModal';
+import EditIzolasyonModal from './EditIzolasyonModal';
 import ExcelImportModal from './ExcelImportModal';
 import BulkEditModal from './BulkEditModal';
+import ConfirmModal from './ConfirmModal';
 import * as XLSX from 'xlsx';
 
 const IzolasyonTab = () => {
@@ -14,11 +16,16 @@ const IzolasyonTab = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
   const [showBulkEditModal, setShowBulkEditModal] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [colorFilter, setColorFilter] = useState('');
   const [stockFilter, setStockFilter] = useState('');
+  const [sortBy, setSortBy] = useState('name');
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [deleteItem, setDeleteItem] = useState(null);
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
   useEffect(() => {
     fetchItems();
@@ -64,6 +71,42 @@ const IzolasyonTab = () => {
     } catch (error) {
       console.error('Ekleme hatası:', error);
       alert('Ürün eklenirken bir hata oluştu!');
+    }
+  };
+
+  const handleEditSubmit = async (data) => {
+    try {
+      await mamulStokAPI.updateIzolasyon(selectedItem.id, data);
+      setShowEditModal(false);
+      setSelectedItem(null);
+      fetchItems();
+      alert('İzolasyon başarıyla güncellendi!');
+    } catch (error) {
+      console.error('Güncelleme hatası:', error);
+      alert('Ürün güncellenirken bir hata oluştu!');
+    }
+  };
+
+  const handleEdit = (item) => {
+    setSelectedItem(item);
+    setShowEditModal(true);
+  };
+
+  const handleDelete = (item) => {
+    setDeleteItem(item);
+    setConfirmModalOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      await mamulStokAPI.deleteIzolasyon(deleteItem.id);
+      setConfirmModalOpen(false);
+      setDeleteItem(null);
+      fetchItems();
+      alert('İzolasyon başarıyla silindi!');
+    } catch (error) {
+      console.error('Silme hatası:', error);
+      alert('Ürün silinirken bir hata oluştu!');
     }
   };
 
@@ -115,13 +158,12 @@ const IzolasyonTab = () => {
 
   const handleExcelExport = () => {
     // Excel'e aktarılacak veriyi hazırla
-    const exportData = filteredItems.map(item => ({
+    const exportData = sortedAndFilteredItems.map(item => ({
       'Ürün Adı (Kod)': item.name,
       'Çin Adı (Ölçü)': item.cin_adi || '',
       'Türk Adı': item.turk_adi || '',
       'Renk': item.renk || '',
-      'Adet': item.stock,
-      'Kullanılan Ürünler': item.kullanilan_urunler?.join(', ') || ''
+      'Adet': item.stock
     }));
 
     // Workbook ve worksheet oluştur
@@ -143,15 +185,25 @@ const IzolasyonTab = () => {
   };
 
   const toggleAllSelection = () => {
-    if (selectedItems.length === filteredItems.length) {
+    if (selectedItems.length === sortedAndFilteredItems.length) {
       setSelectedItems([]);
     } else {
-      setSelectedItems(filteredItems.map(item => item.id));
+      setSelectedItems(sortedAndFilteredItems.map(item => item.id));
     }
   };
 
+  const handleSort = (field) => {
+    if (sortBy === field) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(field);
+      setSortOrder('asc');
+    }
+  };
+
+  // Filtreleme ve sıralama
   const filteredItems = items.filter(item => {
-    // Arama filtresi
+    // Arama filtresi - Çin adı ve Türk adı dahil
     const matchesSearch =
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (item.cin_adi && item.cin_adi.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -170,6 +222,24 @@ const IzolasyonTab = () => {
     return matchesSearch && matchesColor && matchesStock;
   });
 
+  // Sıralama
+  const sortedAndFilteredItems = [...filteredItems].sort((a, b) => {
+    let aVal = a[sortBy] || '';
+    let bVal = b[sortBy] || '';
+
+    // String karşılaştırma
+    if (typeof aVal === 'string') {
+      aVal = aVal.toLowerCase();
+      bVal = bVal.toLowerCase();
+    }
+
+    if (sortOrder === 'asc') {
+      return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+    } else {
+      return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+    }
+  });
+
   if (loading) return <LoadingSpinner />;
 
   return (
@@ -180,7 +250,7 @@ const IzolasyonTab = () => {
           <div className="flex-1 max-w-md">
             <input
               type="text"
-              placeholder="İzolasyon ara..."
+              placeholder="Ürün adı, Çin adı, Türk adı veya renk ara..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -210,7 +280,7 @@ const IzolasyonTab = () => {
           </select>
 
           <div className="text-sm text-gray-600">
-            Toplam: <span className="font-semibold">{filteredItems.length}</span> ürün
+            Toplam: <span className="font-semibold">{sortedAndFilteredItems.length}</span> ürün
             {selectedItems.length > 0 && (
               <span className="ml-2 text-blue-600">
                 ({selectedItems.length} seçili)
@@ -245,7 +315,7 @@ const IzolasyonTab = () => {
             <button
               onClick={handleExcelExport}
               className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
-              disabled={filteredItems.length === 0}
+              disabled={sortedAndFilteredItems.length === 0}
             >
               <span>📤</span>
               Excel İndir
@@ -269,22 +339,71 @@ const IzolasyonTab = () => {
               <th className="px-6 py-3 text-center">
                 <input
                   type="checkbox"
-                  checked={selectedItems.length === filteredItems.length && filteredItems.length > 0}
+                  checked={selectedItems.length === sortedAndFilteredItems.length && sortedAndFilteredItems.length > 0}
                   onChange={toggleAllSelection}
                   className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
                 />
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ürün Adı</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Çin Adı</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Türk Adı</th>
-              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Renk</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kullanılan Ürünler</th>
-              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Stok</th>
+              <th
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                onClick={() => handleSort('name')}
+              >
+                <div className="flex items-center gap-1">
+                  Ürün Adı
+                  {sortBy === 'name' && (
+                    <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
+                  )}
+                </div>
+              </th>
+              <th
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                onClick={() => handleSort('cin_adi')}
+              >
+                <div className="flex items-center gap-1">
+                  Çin Adı
+                  {sortBy === 'cin_adi' && (
+                    <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
+                  )}
+                </div>
+              </th>
+              <th
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                onClick={() => handleSort('turk_adi')}
+              >
+                <div className="flex items-center gap-1">
+                  Türk Adı
+                  {sortBy === 'turk_adi' && (
+                    <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
+                  )}
+                </div>
+              </th>
+              <th
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                onClick={() => handleSort('renk')}
+              >
+                <div className="flex items-center justify-center gap-1">
+                  Renk
+                  {sortBy === 'renk' && (
+                    <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
+                  )}
+                </div>
+              </th>
+              <th
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                onClick={() => handleSort('stock')}
+              >
+                <div className="flex items-center justify-center gap-1">
+                  Stok
+                  {sortBy === 'stock' && (
+                    <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
+                  )}
+                </div>
+              </th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {filteredItems.map((item) => (
+            {sortedAndFilteredItems.map((item) => (
               <tr key={item.id} className={`hover:bg-gray-50 ${selectedItems.includes(item.id) ? 'bg-blue-50' : ''}`}>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
                   <input
@@ -294,7 +413,7 @@ const IzolasyonTab = () => {
                     className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
                   />
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.name}</td>
+                <td className="px-6 py-4 text-sm font-medium text-gray-900">{item.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                   {item.cin_adi || <span className="text-gray-400">-</span>}
                 </td>
@@ -307,23 +426,14 @@ const IzolasyonTab = () => {
                       item.renk === 'GRİ' ? 'bg-gray-200 text-gray-800' :
                       item.renk === 'MAVİ' ? 'bg-blue-100 text-blue-800' :
                       item.renk === 'YEŞİL' ? 'bg-green-100 text-green-800' :
+                      item.renk === 'SARI' ? 'bg-yellow-100 text-yellow-800' :
+                      item.renk === 'KIRMIZI' ? 'bg-red-100 text-red-800' :
+                      item.renk === 'SİYAH' ? 'bg-gray-800 text-white' :
+                      item.renk === 'BEYAZ' ? 'bg-gray-50 text-gray-800 border border-gray-300' :
                       'bg-gray-100 text-gray-800'
                     }`}>
                       {item.renk}
                     </span>
-                  ) : (
-                    <span className="text-gray-400">-</span>
-                  )}
-                </td>
-                <td className="px-6 py-4 text-sm text-gray-600">
-                  {item.kullanilan_urunler && item.kullanilan_urunler.length > 0 ? (
-                    <div className="flex flex-wrap gap-1">
-                      {item.kullanilan_urunler.map((urun, idx) => (
-                        <span key={idx} className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                          {urun}
-                        </span>
-                      ))}
-                    </div>
                   ) : (
                     <span className="text-gray-400">-</span>
                   )}
@@ -338,12 +448,29 @@ const IzolasyonTab = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
-                  <button
-                    onClick={() => handleStockChange(item)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-                  >
-                    Stok Değiştir
-                  </button>
+                  <div className="flex justify-center gap-2">
+                    <button
+                      onClick={() => handleEdit(item)}
+                      className="text-blue-600 hover:text-blue-800 text-xl"
+                      title="Düzenle"
+                    >
+                      ✏️
+                    </button>
+                    <button
+                      onClick={() => handleDelete(item)}
+                      className="text-red-600 hover:text-red-800 text-xl"
+                      title="Sil"
+                    >
+                      🗑️
+                    </button>
+                    <button
+                      onClick={() => handleStockChange(item)}
+                      className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded-lg text-sm font-medium transition-colors"
+                      title="Stok Değiştir"
+                    >
+                      📊
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -351,9 +478,9 @@ const IzolasyonTab = () => {
         </table>
       </div>
 
-      {filteredItems.length === 0 && (
+      {sortedAndFilteredItems.length === 0 && (
         <div className="text-center py-12 text-gray-500">
-          {searchTerm ? 'Arama sonucu bulunamadı.' : 'Henüz izolasyon eklenmemiş.'}
+          {searchTerm || colorFilter || stockFilter ? 'Arama sonucu bulunamadı.' : 'Henüz izolasyon eklenmemiş.'}
         </div>
       )}
 
@@ -376,6 +503,16 @@ const IzolasyonTab = () => {
         onSubmit={handleAddSubmit}
       />
 
+      <EditIzolasyonModal
+        isOpen={showEditModal}
+        onClose={() => {
+          setShowEditModal(false);
+          setSelectedItem(null);
+        }}
+        onSubmit={handleEditSubmit}
+        item={selectedItem}
+      />
+
       <ExcelImportModal
         isOpen={showImportModal}
         onClose={() => setShowImportModal(false)}
@@ -388,6 +525,19 @@ const IzolasyonTab = () => {
         selectedItems={selectedItems}
         onSubmit={handleBulkEdit}
       />
+
+      {confirmModalOpen && deleteItem && (
+        <ConfirmModal
+          isOpen={confirmModalOpen}
+          onClose={() => {
+            setConfirmModalOpen(false);
+            setDeleteItem(null);
+          }}
+          onConfirm={handleConfirmDelete}
+          title="İzolasyon Sil"
+          message={`"${deleteItem.name}" adlı izolasyonu silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.`}
+        />
+      )}
     </div>
   );
 };

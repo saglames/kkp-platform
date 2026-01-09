@@ -346,7 +346,7 @@ router.delete('/tapa/:id', async (req, res) => {
 // GEÇMİŞ
 router.get('/history', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM mamul_history ORDER BY created_at DESC LIMIT 20');
+    const result = await pool.query('SELECT * FROM mamul_history ORDER BY created_at DESC');
     res.json(result.rows);
   } catch (error) {
     res.status(500).json({ error: error.message });

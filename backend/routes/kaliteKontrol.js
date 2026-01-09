@@ -422,12 +422,12 @@ router.get('/urun-siparisler', async (req, res) => {
 
 // Ürün siparişi ekle
 router.post('/urun-siparisler', async (req, res) => {
-  const { urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum } = req.body;
+  const { urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, siparis_veren_yer } = req.body;
   try {
     const result = await pool.query(
-      `INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum)
-       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum || 'bekleniyor']
+      `INSERT INTO urun_siparisler (urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, siparis_veren_yer)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      [urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum || 'bekleniyor', siparis_veren_yer]
     );
     res.json(result.rows[0]);
   } catch (error) {
@@ -439,7 +439,7 @@ router.post('/urun-siparisler', async (req, res) => {
 // Ürün siparişi güncelle
 router.put('/urun-siparisler/:id', async (req, res) => {
   const { id } = req.params;
-  const { urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, gelis_tarihi, degistiren } = req.body;
+  const { urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, gelis_tarihi, degistiren, siparis_veren_yer } = req.body;
 
   try {
     // Önce eski değerleri al
@@ -455,9 +455,9 @@ router.put('/urun-siparisler/:id', async (req, res) => {
     const result = await pool.query(
       `UPDATE urun_siparisler SET
        urun_adi = $1, adet_miktar = $2, olcu = $3, talep_eden = $4, aciklama = $5,
-       durum = $6, gelen_adet = $7, gelen_notlar = $8, gelis_tarihi = $9
-       WHERE id = $10 RETURNING *`,
-      [urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, gelisTarihiValue, id]
+       durum = $6, gelen_adet = $7, gelen_notlar = $8, gelis_tarihi = $9, siparis_veren_yer = $10
+       WHERE id = $11 RETURNING *`,
+      [urun_adi, adet_miktar, olcu, talep_eden, aciklama, durum, gelen_adet, gelen_notlar, gelisTarihiValue, siparis_veren_yer, id]
     );
 
     // Değişiklikleri logla
@@ -497,6 +497,12 @@ router.put('/urun-siparisler/:id', async (req, res) => {
       const yeniGelenNotlar = gelen_notlar || '';
       if (eskiGelenNotlar !== yeniGelenNotlar) {
         degisiklikler.push({ alan: 'Gelen Notlar', eski: eskiGelenNotlar || '-', yeni: yeniGelenNotlar || '-' });
+      }
+      // Siparişi veren yer karşılaştırması için null kontrolü
+      const eskiSiparisVerenYer = eskiSiparis.siparis_veren_yer || '';
+      const yeniSiparisVerenYer = siparis_veren_yer || '';
+      if (eskiSiparisVerenYer !== yeniSiparisVerenYer) {
+        degisiklikler.push({ alan: 'Siparişi Veren Yer', eski: eskiSiparisVerenYer || '-', yeni: yeniSiparisVerenYer || '-' });
       }
     }
 

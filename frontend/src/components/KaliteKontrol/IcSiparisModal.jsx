@@ -7,6 +7,7 @@ const IcSiparisModal = ({ isOpen, onClose, onSubmit, siparis = null }) => {
     adet_miktar: '',
     olcu: '',
     talep_eden: '',
+    siparis_veren_yer: '',
     aciklama: '',
     gelen_adet: '',
     gelen_notlar: '',
@@ -22,6 +23,7 @@ const IcSiparisModal = ({ isOpen, onClose, onSubmit, siparis = null }) => {
         adet_miktar: siparis.adet_miktar || '',
         olcu: siparis.olcu || '',
         talep_eden: siparis.talep_eden || '',
+        siparis_veren_yer: siparis.siparis_veren_yer || '',
         aciklama: siparis.aciklama || '',
         gelen_adet: siparis.gelen_adet || '',
         gelen_notlar: siparis.gelen_notlar || '',
@@ -36,6 +38,7 @@ const IcSiparisModal = ({ isOpen, onClose, onSubmit, siparis = null }) => {
         adet_miktar: '',
         olcu: '',
         talep_eden: '',
+        siparis_veren_yer: '',
         aciklama: '',
         gelen_adet: '',
         gelen_notlar: '',
@@ -145,6 +148,20 @@ const IcSiparisModal = ({ isOpen, onClose, onSubmit, siparis = null }) => {
               required
             />
           </div>
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Siparişi Veren Yer
+          </label>
+          <input
+            type="text"
+            name="siparis_veren_yer"
+            value={formData.siparis_veren_yer}
+            onChange={handleChange}
+            placeholder="Örn: Depo, Üretim, Kalite Kontrol..."
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
         </div>
 
         <div className="mb-4">

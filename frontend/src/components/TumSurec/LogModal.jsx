@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { sevkiyatTakipAPI } from '../../services/api';
 import LoadingSpinner from '../Shared/LoadingSpinner';
+import * as XLSX from 'xlsx';
 
 const LogModal = ({ isOpen, onClose, sevkiyatId = null }) => {
   const [logs, setLogs] = useState([]);
@@ -15,7 +16,8 @@ const LogModal = ({ isOpen, onClose, sevkiyatId = null }) => {
   const fetchLogs = async () => {
     try {
       setLoading(true);
-      const data = await sevkiyatTakipAPI.getLogs(sevkiyatId, 200);
+      // limit=0 ile tüm kayıtları getir
+      const data = await sevkiyatTakipAPI.getLogs(sevkiyatId, 0);
       setLogs(data);
     } catch (error) {
       console.error('Log getirme hatası:', error);
@@ -65,6 +67,53 @@ const LogModal = ({ isOpen, onClose, sevkiyatId = null }) => {
       return JSON.stringify(jsonData, null, 2);
     } catch (e) {
       return 'Veri formatlanamadı';
+    }
+  };
+
+  const handleExportExcel = () => {
+    try {
+      // Excel için veri hazırla
+      const excelData = logs.map(log => ({
+        'Tarih': formatDate(log.created_at),
+        'İşlem Tipi': getIslemTipiLabel(log.islem_tipi),
+        'Sevkiyat No': log.sevkiyat_no || '-',
+        'İrsaliye No': log.irsaliye_no || '-',
+        'Ürün Kodu': log.urun_kodu || '-',
+        'Yapan': log.yapan,
+        'Açıklama': log.aciklama || '-',
+        'Eski Değer': log.eski_deger ? JSON.stringify(log.eski_deger) : '-',
+        'Yeni Değer': log.yeni_deger ? JSON.stringify(log.yeni_deger) : '-'
+      }));
+
+      // Workbook oluştur
+      const ws = XLSX.utils.json_to_sheet(excelData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'İşlem Logları');
+
+      // Kolon genişliklerini ayarla
+      const colWidths = [
+        { wch: 20 }, // Tarih
+        { wch: 25 }, // İşlem Tipi
+        { wch: 15 }, // Sevkiyat No
+        { wch: 15 }, // İrsaliye No
+        { wch: 20 }, // Ürün Kodu
+        { wch: 15 }, // Yapan
+        { wch: 30 }, // Açıklama
+        { wch: 40 }, // Eski Değer
+        { wch: 40 }  // Yeni Değer
+      ];
+      ws['!cols'] = colWidths;
+
+      // Dosya adı oluştur
+      const fileName = sevkiyatId
+        ? `Sevkiyat_${sevkiyatId}_Loglar_${new Date().toISOString().split('T')[0]}.xlsx`
+        : `Tum_Islem_Loglari_${new Date().toISOString().split('T')[0]}.xlsx`;
+
+      // İndir
+      XLSX.writeFile(wb, fileName);
+    } catch (error) {
+      console.error('Excel export hatası:', error);
+      alert('Excel dosyası oluşturulurken hata oluştu!');
     }
   };
 
@@ -171,13 +220,27 @@ const LogModal = ({ isOpen, onClose, sevkiyatId = null }) => {
           )}
 
           {/* Footer */}
-          <div className="flex justify-end mt-6 pt-6 border-t">
-            <button
-              onClick={onClose}
-              className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-medium transition-colors"
-            >
-              Kapat
-            </button>
+          <div className="flex justify-between items-center mt-6 pt-6 border-t">
+            <div className="text-sm text-gray-600">
+              Toplam {logs.length} kayıt
+            </div>
+            <div className="flex gap-3">
+              {logs.length > 0 && (
+                <button
+                  onClick={handleExportExcel}
+                  className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors flex items-center gap-2"
+                >
+                  <span>📥</span>
+                  Excel İndir
+                </button>
+              )}
+              <button
+                onClick={onClose}
+                className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-medium transition-colors"
+              >
+                Kapat
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -86,19 +86,31 @@ const TemizlemePartiTakip = () => {
 
   const handleEditParti = async (parti) => {
     try {
-      // Parti verilerini sevkiyat formatına çevir
-      const sevkiyatData = await sevkiyatTakipAPI.getSevkiyatlar();
-      const sevkiyat = sevkiyatData.find(s => s.sevkiyat_no === parti.parti_no);
+      // Parti detayını al - içinde sevkiyat ID'si de var
+      const partiDetay = await partiTakipAPI.getPartiDetay(parti.parti_no);
+
+      // Sevkiyat listesinden ID'yi bul
+      const sevkiyatlar = await sevkiyatTakipAPI.getSevkiyatlar();
+      const sevkiyat = sevkiyatlar.find(s => s.sevkiyat_no === parti.parti_no);
 
       if (sevkiyat) {
-        setEditingParti(sevkiyat);
+        // Parti detayından gelen bilgileri sevkiyat formatına ekle
+        const editData = {
+          ...sevkiyat,
+          irsaliye_no: partiDetay.irsaliye_no || sevkiyat.irsaliye_no,
+          gonderim_tarihi: partiDetay.gonderim_tarihi || sevkiyat.gonderim_tarihi,
+          gelis_tarihi: partiDetay.gelis_tarihi || sevkiyat.gelis_tarihi,
+          durum: partiDetay.durum || sevkiyat.durum
+        };
+
+        setEditingParti(editData);
         setShowEditModal(true);
       } else {
         alert('Parti bilgisi bulunamadı!');
       }
     } catch (err) {
       console.error('Parti düzenleme hatası:', err);
-      alert('Parti bilgisi yüklenirken hata oluştu!');
+      alert('Parti bilgisi yüklenirken hata oluştu: ' + err.message);
     }
   };
 

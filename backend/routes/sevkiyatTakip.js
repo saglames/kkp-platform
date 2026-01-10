@@ -132,8 +132,19 @@ router.put('/sevkiyat/:id', async (req, res) => {
   const { id } = req.params;
   const { irsaliye_no, gonderim_tarihi, gelis_tarihi, durum, notlar } = req.body;
 
+  const client = await pool.connect();
   try {
-    const result = await pool.query(
+    await client.query('BEGIN');
+
+    // Eski değeri al
+    const eskiVeri = await client.query('SELECT * FROM temizleme_sevkiyat WHERE id = $1', [id]);
+
+    if (eskiVeri.rows.length === 0) {
+      throw new Error('Sevkiyat bulunamadı');
+    }
+
+    // Güncelle
+    const result = await client.query(
       `UPDATE temizleme_sevkiyat
        SET irsaliye_no = COALESCE($1, irsaliye_no),
            gonderim_tarihi = COALESCE($2, gonderim_tarihi),
@@ -145,14 +156,26 @@ router.put('/sevkiyat/:id', async (req, res) => {
       [irsaliye_no, gonderim_tarihi, gelis_tarihi, durum, notlar, id]
     );
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Sevkiyat bulunamadı' });
-    }
+    // Log kaydet
+    await client.query(`
+      INSERT INTO temizleme_takip_log (sevkiyat_id, islem_tipi, eski_deger, yeni_deger, yapan, aciklama)
+      VALUES ($1, 'sevkiyat_guncelle', $2, $3, $4, $5)
+    `, [
+      id,
+      JSON.stringify(eskiVeri.rows[0]),
+      JSON.stringify(result.rows[0]),
+      'Kullanıcı',
+      'Sevkiyat bilgileri güncellendi'
+    ]);
 
+    await client.query('COMMIT');
     res.json(result.rows[0]);
   } catch (error) {
+    await client.query('ROLLBACK');
     console.error('Sevkiyat güncelleme hatası:', error);
     res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
   }
 });
 
@@ -368,7 +391,7 @@ router.delete('/sevkiyat/:id', async (req, res) => {
 
 // İşlem loglarını getir
 router.get('/logs', async (req, res) => {
-  const { sevkiyat_id, limit = 100 } = req.query;
+  const { sevkiyat_id, limit } = req.query;
 
   try {
     let query = `
@@ -388,8 +411,13 @@ router.get('/logs', async (req, res) => {
       params.push(sevkiyat_id);
     }
 
-    query += ' ORDER BY l.created_at DESC LIMIT $' + (params.length + 1);
-    params.push(limit);
+    query += ' ORDER BY l.created_at DESC';
+
+    // Limit varsa ve 0 değilse ekle (0 veya undefined = tüm kayıtlar)
+    if (limit && parseInt(limit) > 0) {
+      query += ' LIMIT $' + (params.length + 1);
+      params.push(limit);
+    }
 
     const result = await pool.query(query, params);
     res.json(result.rows);

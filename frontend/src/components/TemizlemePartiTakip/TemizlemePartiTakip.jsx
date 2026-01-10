@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { partiTakipAPI } from '../../services/api';
+import { partiTakipAPI, sevkiyatTakipAPI } from '../../services/api';
 import { exportSingleParti, exportAllPartiler } from '../../utils/excelExport';
+import EditSevkiyatModal from '../TumSurec/EditSevkiyatModal';
+import DeleteConfirmModal from '../TumSurec/DeleteConfirmModal';
+import LogModal from '../TumSurec/LogModal';
 
 const TemizlemePartiTakip = () => {
   const [partiler, setPartiler] = useState([]);
@@ -8,6 +11,11 @@ const TemizlemePartiTakip = () => {
   const [error, setError] = useState(null);
   const [selectedParti, setSelectedParti] = useState(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showLogModal, setShowLogModal] = useState(false);
+  const [editingParti, setEditingParti] = useState(null);
+  const [deletingParti, setDeletingParti] = useState(null);
 
   useEffect(() => {
     console.log('Component yüklendi');
@@ -76,6 +84,71 @@ const TemizlemePartiTakip = () => {
     }
   };
 
+  const handleEditParti = async (parti) => {
+    try {
+      // Parti verilerini sevkiyat formatına çevir
+      const sevkiyatData = await sevkiyatTakipAPI.getSevkiyatlar();
+      const sevkiyat = sevkiyatData.find(s => s.sevkiyat_no === parti.parti_no);
+
+      if (sevkiyat) {
+        setEditingParti(sevkiyat);
+        setShowEditModal(true);
+      } else {
+        alert('Parti bilgisi bulunamadı!');
+      }
+    } catch (err) {
+      console.error('Parti düzenleme hatası:', err);
+      alert('Parti bilgisi yüklenirken hata oluştu!');
+    }
+  };
+
+  const handleSaveEdit = async (formData) => {
+    try {
+      await sevkiyatTakipAPI.updateSevkiyat(editingParti.id, formData);
+      setShowEditModal(false);
+      setEditingParti(null);
+      fetchPartiler();
+      alert('Parti başarıyla güncellendi!');
+    } catch (err) {
+      console.error('Parti güncelleme hatası:', err);
+      alert('Parti güncellenirken hata oluştu!');
+    }
+  };
+
+  const handleDeleteClick = async (parti) => {
+    try {
+      // Parti verilerini sevkiyat formatına çevir
+      const sevkiyatData = await sevkiyatTakipAPI.getSevkiyatlar();
+      const sevkiyat = sevkiyatData.find(s => s.sevkiyat_no === parti.parti_no);
+
+      if (sevkiyat) {
+        setDeletingParti(sevkiyat);
+        setShowDeleteModal(true);
+      } else {
+        alert('Parti bilgisi bulunamadı!');
+      }
+    } catch (err) {
+      console.error('Parti silme hatası:', err);
+      alert('Parti bilgisi yüklenirken hata oluştu!');
+    }
+  };
+
+  const handleConfirmDelete = async (neden) => {
+    try {
+      await sevkiyatTakipAPI.deleteSevkiyat(deletingParti.id, {
+        neden,
+        yapan: 'Kullanıcı'
+      });
+      setShowDeleteModal(false);
+      setDeletingParti(null);
+      fetchPartiler();
+      alert('Parti başarıyla silindi!');
+    } catch (err) {
+      console.error('Parti silme hatası:', err);
+      alert('Parti silinirken hata oluştu!');
+    }
+  };
+
   console.log('Render - loading:', loading, 'error:', error, 'partiler:', partiler.length);
 
   if (loading) {
@@ -117,15 +190,24 @@ const TemizlemePartiTakip = () => {
           <h2 className="text-3xl font-bold text-gray-800 mb-2">Temizleme Parti/İrsaliye Takip</h2>
           <p className="text-gray-600">Temizlemeye gönderilen partilerin detaylı takibi</p>
         </div>
-        {partiler.length > 0 && (
+        <div className="flex items-center gap-3">
           <button
-            onClick={() => exportAllPartiler(partiler, partiTakipAPI)}
-            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-2 font-medium shadow-md"
+            onClick={() => setShowLogModal(true)}
+            className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 flex items-center gap-2 font-medium shadow-md"
           >
-            <span>📥</span>
-            <span>Excel İndir</span>
+            <span>📋</span>
+            <span>İşlem Geçmişi</span>
           </button>
-        )}
+          {partiler.length > 0 && (
+            <button
+              onClick={() => exportAllPartiler(partiler, partiTakipAPI)}
+              className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-2 font-medium shadow-md"
+            >
+              <span>📥</span>
+              <span>Excel İndir</span>
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="bg-white rounded-lg shadow-md p-6">
@@ -185,12 +267,28 @@ const TemizlemePartiTakip = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-center">
-                      <button
-                        onClick={() => handleShowDetail(parti)}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium"
-                      >
-                        Detay
-                      </button>
+                      <div className="flex justify-center gap-2">
+                        <button
+                          onClick={() => handleShowDetail(parti)}
+                          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium"
+                        >
+                          Detay
+                        </button>
+                        <button
+                          onClick={() => handleEditParti(parti)}
+                          className="px-3 py-2 text-orange-600 hover:text-orange-800 text-lg font-medium"
+                          title="Düzenle"
+                        >
+                          ✏️
+                        </button>
+                        <button
+                          onClick={() => handleDeleteClick(parti)}
+                          className="px-3 py-2 text-red-600 hover:text-red-800 text-lg font-medium"
+                          title="Sil"
+                        >
+                          🗑️
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -387,6 +485,34 @@ const TemizlemePartiTakip = () => {
           </div>
         </div>
       )}
+
+      {/* Edit Parti Modal */}
+      <EditSevkiyatModal
+        isOpen={showEditModal}
+        onClose={() => {
+          setShowEditModal(false);
+          setEditingParti(null);
+        }}
+        sevkiyat={editingParti}
+        onSubmit={handleSaveEdit}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmModal
+        isOpen={showDeleteModal}
+        onClose={() => {
+          setShowDeleteModal(false);
+          setDeletingParti(null);
+        }}
+        sevkiyat={deletingParti}
+        onConfirm={handleConfirmDelete}
+      />
+
+      {/* Log Modal */}
+      <LogModal
+        isOpen={showLogModal}
+        onClose={() => setShowLogModal(false)}
+      />
     </div>
   );
 };

@@ -228,4 +228,54 @@ router.delete('/gecmis/:id', async (req, res) => {
   }
 });
 
+// Log kaydındaki belirli bir ürünü güncelle
+router.put('/gecmis/:id/urun', async (req, res) => {
+  const { id } = req.params;
+  const { urun_kodu, tamir_edilen_adet } = req.body;
+
+  try {
+    // Mevcut log kaydını getir
+    const logResult = await pool.query(
+      'SELECT veriler FROM hatali_urunler_log WHERE id = $1',
+      [id]
+    );
+
+    if (logResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Log kaydı bulunamadı' });
+    }
+
+    let veriler = logResult.rows[0].veriler;
+
+    // Veriler string ise parse et
+    if (typeof veriler === 'string') {
+      veriler = JSON.parse(veriler);
+    }
+
+    // İlgili ürünü bul ve güncelle
+    const urunIndex = veriler.findIndex(item => item.urun_kodu === urun_kodu);
+
+    if (urunIndex === -1) {
+      return res.status(404).json({ error: 'Ürün bulunamadı' });
+    }
+
+    // Tamir edilen adeti güncelle
+    veriler[urunIndex].tamir_edilen_adet = tamir_edilen_adet || 0;
+
+    // Güncellenmiş verileri kaydet
+    await pool.query(
+      'UPDATE hatali_urunler_log SET veriler = $1 WHERE id = $2',
+      [JSON.stringify(veriler), id]
+    );
+
+    res.json({
+      success: true,
+      message: 'Ürün başarıyla güncellendi',
+      urun: veriler[urunIndex]
+    });
+  } catch (error) {
+    console.error('Ürün güncelleme hatası:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;

@@ -136,6 +136,7 @@ export const hataliUrunlerAPI = {
   getGecmisById: async (id) => (await api.get(`/hatali-urunler/gecmis/${id}`)).data,
   filtrele: async (data) => (await api.post('/hatali-urunler/gecmis/filtrele', data)).data,
   deleteGecmis: async (id) => (await api.delete(`/hatali-urunler/gecmis/${id}`)).data,
+  guncelleLogUrun: async (logId, data) => (await api.put(`/hatali-urunler/gecmis/${logId}/urun`, data)).data,
 };
 
 // TÜM SÜREÇ API

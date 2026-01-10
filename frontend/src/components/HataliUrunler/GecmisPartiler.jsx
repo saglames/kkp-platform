@@ -279,7 +279,11 @@ const GecmisPartiler = ({ gecmisPartiler, onRefresh }) => {
                   {detayGoster === parti.id && (
                     <tr>
                       <td colSpan="5" className="px-6 py-6 bg-gradient-to-br from-gray-50 to-blue-50">
-                        <DetayTablosu veriler={typeof parti.veriler === 'string' ? JSON.parse(parti.veriler) : parti.veriler} />
+                        <DetayTablosu
+                          veriler={typeof parti.veriler === 'string' ? JSON.parse(parti.veriler) : parti.veriler}
+                          logId={parti.id}
+                          onUpdate={onRefresh}
+                        />
                       </td>
                     </tr>
                   )}
@@ -303,9 +307,11 @@ const GecmisPartiler = ({ gecmisPartiler, onRefresh }) => {
 };
 
 // Detay Tablosu Component - Geliştirilmiş
-const DetayTablosu = ({ veriler }) => {
+const DetayTablosu = ({ veriler, logId, onUpdate }) => {
   const [aramaMetni, setAramaMetni] = useState('');
   const [seciliHataTipi, setSeciliHataTipi] = useState('');
+  const [editingUrunKodu, setEditingUrunKodu] = useState(null);
+  const [editingData, setEditingData] = useState({});
 
   // Sadece hatalı ürünleri filtrele
   const hataliUrunler = veriler.filter(item => {
@@ -319,6 +325,38 @@ const DetayTablosu = ({ veriler }) => {
 
     return toplamHata > 0 && aramaEslesmesi && hataEslesmesi;
   });
+
+  const handleEdit = (item) => {
+    setEditingUrunKodu(item.urun_kodu);
+    setEditingData({
+      tamir_edilen_adet: item.tamir_edilen_adet || 0
+    });
+  };
+
+  const handleCancel = () => {
+    setEditingUrunKodu(null);
+    setEditingData({});
+  };
+
+  const handleSave = async (urunKodu) => {
+    try {
+      await hataliUrunlerAPI.guncelleLogUrun(logId, {
+        urun_kodu: urunKodu,
+        tamir_edilen_adet: editingData.tamir_edilen_adet || 0
+      });
+
+      setEditingUrunKodu(null);
+      setEditingData({});
+
+      // Üst component'e güncellemeyi bildir
+      if (onUpdate) {
+        onUpdate();
+      }
+    } catch (error) {
+      console.error('Güncelleme hatası:', error);
+      alert('Güncelleme sırasında bir hata oluştu!');
+    }
+  };
 
   // Hata tipi istatistikleri
   const hataIstatistikleri = HATA_TIPLERI.map(hata => {
@@ -389,12 +427,18 @@ const DetayTablosu = ({ veriler }) => {
               <th className="px-4 py-3 text-center text-sm font-bold text-gray-700 uppercase bg-red-200">
                 Toplam
               </th>
+              <th className="px-4 py-3 text-center text-sm font-bold text-gray-700 uppercase bg-green-100">
+                Tamir Edilen Adet
+              </th>
+              <th className="px-4 py-3 text-center text-sm font-bold text-gray-700 uppercase bg-blue-100">
+                İşlemler
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {hataliUrunler.length === 0 ? (
               <tr>
-                <td colSpan={HATA_TIPLERI.length + 2} className="px-6 py-8 text-center text-gray-500 text-base">
+                <td colSpan={HATA_TIPLERI.length + 4} className="px-6 py-8 text-center text-gray-500 text-base">
                   {aramaMetni || seciliHataTipi ? '🔍 Filtreye uygun hatalı ürün bulunamadı' : '✅ Hatalı ürün bulunmuyor'}
                 </td>
               </tr>
@@ -404,6 +448,8 @@ const DetayTablosu = ({ veriler }) => {
                 HATA_TIPLERI.forEach(hata => {
                   toplamHata += (item[hata.key] || 0);
                 });
+
+                const isEditing = editingUrunKodu === item.urun_kodu;
 
                 return (
                   <tr key={index} className={`hover:bg-red-50 transition-colors ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
@@ -428,6 +474,46 @@ const DetayTablosu = ({ veriler }) => {
                       <span className="inline-flex items-center justify-center min-w-[50px] px-3 py-1 rounded-lg bg-red-600 text-white text-lg font-bold shadow-sm">
                         {toplamHata}
                       </span>
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      {isEditing ? (
+                        <input
+                          type="number"
+                          value={editingData.tamir_edilen_adet || 0}
+                          onChange={(e) => setEditingData({ ...editingData, tamir_edilen_adet: parseInt(e.target.value) || 0 })}
+                          className="w-24 px-3 py-2 text-center border-2 border-green-500 rounded-lg font-semibold focus:ring-2 focus:ring-green-500"
+                          min="0"
+                        />
+                      ) : (
+                        <span className="inline-flex items-center justify-center min-w-[60px] px-3 py-1 rounded-lg bg-green-100 text-green-800 text-base font-bold">
+                          {item.tamir_edilen_adet || 0}
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      {isEditing ? (
+                        <div className="flex justify-center gap-2">
+                          <button
+                            onClick={() => handleSave(item.urun_kodu)}
+                            className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded-lg font-medium transition-colors"
+                          >
+                            ✓ Kaydet
+                          </button>
+                          <button
+                            onClick={handleCancel}
+                            className="px-3 py-1 bg-gray-500 hover:bg-gray-600 text-white text-sm rounded-lg font-medium transition-colors"
+                          >
+                            ✗ İptal
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => handleEdit(item)}
+                          className="px-4 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg font-medium transition-colors"
+                        >
+                          ✏️ Düzenle
+                        </button>
+                      )}
                     </td>
                   </tr>
                 );

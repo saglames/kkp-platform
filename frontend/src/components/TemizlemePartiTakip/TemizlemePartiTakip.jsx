@@ -166,6 +166,8 @@ const TemizlemePartiTakip = () => {
   const handleEditUrun = (urun) => {
     setEditingUrunId(urun.id);
     setEditingUrunData({
+      urun_kodu: urun.urun_kodu || '',
+      parca_tipi: urun.parca_tipi || '',
       giden_adet: urun.giden_adet || 0,
       giden_kg: urun.giden_kg || 0,
       gelen_adet: urun.gelen_adet || 0,
@@ -416,8 +418,35 @@ const TemizlemePartiTakip = () => {
 
                         return (
                           <tr key={index} className={`hover:bg-gray-50 ${isEditing ? 'bg-blue-50' : ''}`}>
-                            <td className="px-4 py-3 text-sm font-medium text-gray-900">{urun.urun_kodu}</td>
-                            <td className="px-4 py-3 text-sm text-gray-600">{urun.parca_tipi}</td>
+                            {/* Ürün Kodu */}
+                            <td className="px-4 py-3 text-sm font-medium text-gray-900">
+                              {isEditing ? (
+                                <input
+                                  type="text"
+                                  value={displayData.urun_kodu}
+                                  onChange={(e) => setEditingUrunData({...editingUrunData, urun_kodu: e.target.value})}
+                                  className="w-full px-2 py-1 text-sm border border-blue-300 rounded focus:ring-2 focus:ring-blue-500"
+                                  placeholder="Ürün Kodu"
+                                />
+                              ) : (
+                                urun.urun_kodu
+                              )}
+                            </td>
+
+                            {/* Parça Tipi */}
+                            <td className="px-4 py-3 text-sm text-gray-600">
+                              {isEditing ? (
+                                <input
+                                  type="text"
+                                  value={displayData.parca_tipi}
+                                  onChange={(e) => setEditingUrunData({...editingUrunData, parca_tipi: e.target.value})}
+                                  className="w-full px-2 py-1 text-sm border border-blue-300 rounded focus:ring-2 focus:ring-blue-500"
+                                  placeholder="Parça Tipi"
+                                />
+                              ) : (
+                                urun.parca_tipi
+                              )}
+                            </td>
 
                             {/* Giden Adet */}
                             <td className="px-4 py-3 text-sm text-right text-gray-900">

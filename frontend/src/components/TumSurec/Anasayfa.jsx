@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { tumSurecAPI } from '../../services/api';
+import AnasayfaEditModal from './AnasayfaEditModal';
 
 const Anasayfa = () => {
   const [urunler, setUrunler] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterTip, setFilterTip] = useState('all');
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedUrun, setSelectedUrun] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -36,6 +39,36 @@ const Anasayfa = () => {
     if (urun.sevke_hazir > 0) return 'bg-green-50';
     if (urun.temizlemede_olan > 0) return 'bg-yellow-50';
     return 'bg-blue-50';
+  };
+
+  const handleEdit = (urun) => {
+    setSelectedUrun(urun);
+    setEditModalOpen(true);
+  };
+
+  const handleDelete = async (urun) => {
+    const confirmed = window.confirm(
+      `${urun.urun_kodu} ürününü silmek istediğinize emin misiniz?\n\nBu işlem tüm adetleri sıfırlayacaktır.`
+    );
+
+    if (!confirmed) return;
+
+    try {
+      // Her bir tablodan ürünü sil (adetleri sıfırla)
+      await Promise.all([
+        tumSurecAPI.deleteTemizlemeyeGidecek(urun.id).catch(() => {}),
+        tumSurecAPI.deleteTemizlemedOlan(urun.id).catch(() => {}),
+        tumSurecAPI.deleteTemizlemedenGelen(urun.id).catch(() => {}),
+        tumSurecAPI.deleteSevkeHazir(urun.id).catch(() => {}),
+        tumSurecAPI.deleteKalan(urun.id).catch(() => {})
+      ]);
+
+      alert('Ürün başarıyla silindi!');
+      fetchData();
+    } catch (error) {
+      console.error('Silme hatası:', error);
+      alert('Silme sırasında bir hata oluştu!');
+    }
   };
 
   if (loading) {
@@ -93,12 +126,13 @@ const Anasayfa = () => {
               <th className="px-4 py-4 text-center text-lg font-semibold border-b border-gray-300">Sevke Hazır</th>
               <th className="px-4 py-4 text-center text-lg font-semibold border-b border-gray-300">Kalan</th>
               <th className="px-4 py-4 text-center text-lg font-semibold border-b border-gray-300 bg-blue-800">TOPLAM</th>
+              <th className="px-4 py-4 text-center text-lg font-semibold border-b border-gray-300 bg-blue-900">İşlemler</th>
             </tr>
           </thead>
           <tbody>
             {filteredUrunler.length === 0 ? (
               <tr>
-                <td colSpan="8" className="px-4 py-8 text-center text-gray-500 text-lg">
+                <td colSpan="9" className="px-4 py-8 text-center text-gray-500 text-lg">
                   Ürün bulunamadı
                 </td>
               </tr>
@@ -146,6 +180,24 @@ const Anasayfa = () => {
                     <td className="px-4 py-4 text-center text-lg font-bold bg-blue-50">
                       {toplam}
                     </td>
+                    <td className="px-4 py-4 text-center">
+                      <div className="flex justify-center gap-2">
+                        <button
+                          onClick={() => handleEdit(urun)}
+                          className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg font-medium transition-colors"
+                          title="Düzenle"
+                        >
+                          ✏️
+                        </button>
+                        <button
+                          onClick={() => handleDelete(urun)}
+                          className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg font-medium transition-colors"
+                          title="Sil"
+                        >
+                          🗑️
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 );
               })
@@ -153,6 +205,14 @@ const Anasayfa = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Edit Modal */}
+      <AnasayfaEditModal
+        isOpen={editModalOpen}
+        onClose={() => setEditModalOpen(false)}
+        urun={selectedUrun}
+        onSuccess={fetchData}
+      />
 
       {/* Summary Stats */}
       <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">

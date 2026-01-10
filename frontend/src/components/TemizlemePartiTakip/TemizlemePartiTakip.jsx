@@ -16,6 +16,8 @@ const TemizlemePartiTakip = () => {
   const [showLogModal, setShowLogModal] = useState(false);
   const [editingParti, setEditingParti] = useState(null);
   const [deletingParti, setDeletingParti] = useState(null);
+  const [editingUrunId, setEditingUrunId] = useState(null);
+  const [editingUrunData, setEditingUrunData] = useState({});
 
   useEffect(() => {
     console.log('Component yüklendi');
@@ -158,6 +160,40 @@ const TemizlemePartiTakip = () => {
     } catch (err) {
       console.error('Parti silme hatası:', err);
       alert('Parti silinirken hata oluştu!');
+    }
+  };
+
+  const handleEditUrun = (urun) => {
+    setEditingUrunId(urun.id);
+    setEditingUrunData({
+      giden_adet: urun.giden_adet || 0,
+      giden_kg: urun.giden_kg || 0,
+      gelen_adet: urun.gelen_adet || 0,
+      gelen_kg: urun.gelen_kg || 0,
+      problemli_adet: urun.problemli_adet || 0,
+      problemli_kg: urun.problemli_kg || 0
+    });
+  };
+
+  const handleCancelEditUrun = () => {
+    setEditingUrunId(null);
+    setEditingUrunData({});
+  };
+
+  const handleSaveUrun = async (urunId) => {
+    try {
+      // Ürün güncelleme API'sini çağır
+      await sevkiyatTakipAPI.updateUrun(urunId, editingUrunData);
+
+      // Modal'ı güncelle
+      handleShowDetail({ parti_no: selectedParti.parti_no });
+
+      setEditingUrunId(null);
+      setEditingUrunData({});
+      alert('Ürün başarıyla güncellendi!');
+    } catch (err) {
+      console.error('Ürün güncelleme hatası:', err);
+      alert('Ürün güncellenirken hata oluştu: ' + err.message);
     }
   };
 
@@ -370,75 +406,191 @@ const TemizlemePartiTakip = () => {
                         <th className="px-4 py-3 text-right text-xs font-semibold text-red-700 bg-red-50">Problemli Kg</th>
                         <th className="px-4 py-3 text-right text-xs font-semibold text-green-700 bg-green-50">Ödenecek Kg</th>
                         <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700">Durum</th>
+                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700">İşlem</th>
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {selectedParti.urunler.map((urun, index) => (
-                        <tr key={index} className="hover:bg-gray-50">
-                          <td className="px-4 py-3 text-sm font-medium text-gray-900">{urun.urun_kodu}</td>
-                          <td className="px-4 py-3 text-sm text-gray-600">{urun.parca_tipi}</td>
-                          <td className="px-4 py-3 text-sm text-right text-gray-900">{urun.giden_adet}</td>
-                          <td className="px-4 py-3 text-sm text-right text-gray-900">
-                            {parseFloat(urun.giden_kg || 0).toFixed(2)} kg
-                          </td>
-                          <td className="px-4 py-3 text-sm text-right text-gray-900">
-                            {urun.gelen_adet || '-'}
-                          </td>
-                          <td className="px-4 py-3 text-sm text-right text-gray-900">
-                            {urun.gelen_kg ? `${parseFloat(urun.gelen_kg).toFixed(2)} kg` : '-'}
-                          </td>
-                          <td className="px-4 py-3 text-sm text-gray-700">
-                            {urun.gelis_tarihi ? new Date(urun.gelis_tarihi).toLocaleDateString('tr-TR', {
-                              day: '2-digit',
-                              month: '2-digit',
-                              year: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit'
-                            }) : '-'}
-                          </td>
-                          <td className="px-4 py-3 text-right bg-red-50">
-                            <input
-                              type="number"
-                              min="0"
-                              value={urun.problemli_adet || ''}
-                              onChange={(e) => handleProblematicChange(urun.id, 'problemli_adet', e.target.value)}
-                              className="w-20 px-2 py-1 text-sm text-right border border-red-300 rounded focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                              placeholder="0"
-                            />
-                          </td>
-                          <td className="px-4 py-3 text-right bg-red-50">
-                            <input
-                              type="number"
-                              min="0"
-                              step="0.01"
-                              value={urun.problemli_kg || ''}
-                              onChange={(e) => handleProblematicChange(urun.id, 'problemli_kg', e.target.value)}
-                              className="w-24 px-2 py-1 text-sm text-right border border-red-300 rounded focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                              placeholder="0.00"
-                            />
-                          </td>
-                          <td className="px-4 py-3 text-right bg-green-50">
-                            <span className="font-semibold text-green-800">
-                              {((parseFloat(urun.giden_kg) || 0) - (parseFloat(urun.problemli_kg) || 0)).toFixed(2)} kg
-                            </span>
-                          </td>
-                          <td className="px-4 py-3 text-center">
-                            {urun.is_mukerrer ? (
-                              <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                Mükerrer
+                      {selectedParti.urunler.map((urun, index) => {
+                        const isEditing = editingUrunId === urun.id;
+                        const displayData = isEditing ? editingUrunData : urun;
+
+                        return (
+                          <tr key={index} className={`hover:bg-gray-50 ${isEditing ? 'bg-blue-50' : ''}`}>
+                            <td className="px-4 py-3 text-sm font-medium text-gray-900">{urun.urun_kodu}</td>
+                            <td className="px-4 py-3 text-sm text-gray-600">{urun.parca_tipi}</td>
+
+                            {/* Giden Adet */}
+                            <td className="px-4 py-3 text-sm text-right text-gray-900">
+                              {isEditing ? (
+                                <input
+                                  type="number"
+                                  min="0"
+                                  value={displayData.giden_adet}
+                                  onChange={(e) => setEditingUrunData({...editingUrunData, giden_adet: parseInt(e.target.value) || 0})}
+                                  className="w-20 px-2 py-1 text-sm text-right border border-blue-300 rounded focus:ring-2 focus:ring-blue-500"
+                                />
+                              ) : (
+                                urun.giden_adet
+                              )}
+                            </td>
+
+                            {/* Giden Kg */}
+                            <td className="px-4 py-3 text-sm text-right text-gray-900">
+                              {isEditing ? (
+                                <input
+                                  type="number"
+                                  min="0"
+                                  step="0.01"
+                                  value={displayData.giden_kg}
+                                  onChange={(e) => setEditingUrunData({...editingUrunData, giden_kg: parseFloat(e.target.value) || 0})}
+                                  className="w-24 px-2 py-1 text-sm text-right border border-blue-300 rounded focus:ring-2 focus:ring-blue-500"
+                                />
+                              ) : (
+                                `${parseFloat(urun.giden_kg || 0).toFixed(2)} kg`
+                              )}
+                            </td>
+
+                            {/* Gelen Adet */}
+                            <td className="px-4 py-3 text-sm text-right text-gray-900">
+                              {isEditing ? (
+                                <input
+                                  type="number"
+                                  min="0"
+                                  value={displayData.gelen_adet}
+                                  onChange={(e) => setEditingUrunData({...editingUrunData, gelen_adet: parseInt(e.target.value) || 0})}
+                                  className="w-20 px-2 py-1 text-sm text-right border border-blue-300 rounded focus:ring-2 focus:ring-blue-500"
+                                />
+                              ) : (
+                                urun.gelen_adet || '-'
+                              )}
+                            </td>
+
+                            {/* Gelen Kg */}
+                            <td className="px-4 py-3 text-sm text-right text-gray-900">
+                              {isEditing ? (
+                                <input
+                                  type="number"
+                                  min="0"
+                                  step="0.01"
+                                  value={displayData.gelen_kg}
+                                  onChange={(e) => setEditingUrunData({...editingUrunData, gelen_kg: parseFloat(e.target.value) || 0})}
+                                  className="w-24 px-2 py-1 text-sm text-right border border-blue-300 rounded focus:ring-2 focus:ring-blue-500"
+                                />
+                              ) : (
+                                urun.gelen_kg ? `${parseFloat(urun.gelen_kg).toFixed(2)} kg` : '-'
+                              )}
+                            </td>
+
+                            <td className="px-4 py-3 text-sm text-gray-700">
+                              {urun.gelis_tarihi ? new Date(urun.gelis_tarihi).toLocaleDateString('tr-TR', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              }) : '-'}
+                            </td>
+
+                            {/* Problemli Adet */}
+                            <td className="px-4 py-3 text-right bg-red-50">
+                              {isEditing ? (
+                                <input
+                                  type="number"
+                                  min="0"
+                                  value={displayData.problemli_adet}
+                                  onChange={(e) => setEditingUrunData({...editingUrunData, problemli_adet: parseInt(e.target.value) || 0})}
+                                  className="w-20 px-2 py-1 text-sm text-right border border-red-300 rounded focus:ring-2 focus:ring-red-500"
+                                  placeholder="0"
+                                />
+                              ) : (
+                                <input
+                                  type="number"
+                                  min="0"
+                                  value={urun.problemli_adet || ''}
+                                  onChange={(e) => handleProblematicChange(urun.id, 'problemli_adet', e.target.value)}
+                                  className="w-20 px-2 py-1 text-sm text-right border border-red-300 rounded focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                  placeholder="0"
+                                />
+                              )}
+                            </td>
+
+                            {/* Problemli Kg */}
+                            <td className="px-4 py-3 text-right bg-red-50">
+                              {isEditing ? (
+                                <input
+                                  type="number"
+                                  min="0"
+                                  step="0.01"
+                                  value={displayData.problemli_kg}
+                                  onChange={(e) => setEditingUrunData({...editingUrunData, problemli_kg: parseFloat(e.target.value) || 0})}
+                                  className="w-24 px-2 py-1 text-sm text-right border border-red-300 rounded focus:ring-2 focus:ring-red-500"
+                                  placeholder="0.00"
+                                />
+                              ) : (
+                                <input
+                                  type="number"
+                                  min="0"
+                                  step="0.01"
+                                  value={urun.problemli_kg || ''}
+                                  onChange={(e) => handleProblematicChange(urun.id, 'problemli_kg', e.target.value)}
+                                  className="w-24 px-2 py-1 text-sm text-right border border-red-300 rounded focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                  placeholder="0.00"
+                                />
+                              )}
+                            </td>
+
+                            <td className="px-4 py-3 text-right bg-green-50">
+                              <span className="font-semibold text-green-800">
+                                {((parseFloat(displayData.giden_kg) || 0) - (parseFloat(displayData.problemli_kg) || 0)).toFixed(2)} kg
                               </span>
-                            ) : urun.gelen_adet ? (
-                              <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                Geldi
-                              </span>
-                            ) : (
-                              <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                Bekliyor
-                              </span>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
+                            </td>
+
+                            <td className="px-4 py-3 text-center">
+                              {urun.is_mukerrer ? (
+                                <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                                  Mükerrer
+                                </span>
+                              ) : urun.gelen_adet ? (
+                                <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                  Geldi
+                                </span>
+                              ) : (
+                                <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                  Bekliyor
+                                </span>
+                              )}
+                            </td>
+
+                            {/* İşlem Butonları */}
+                            <td className="px-4 py-3 text-center">
+                              {isEditing ? (
+                                <div className="flex justify-center gap-2">
+                                  <button
+                                    onClick={() => handleSaveUrun(urun.id)}
+                                    className="px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700"
+                                  >
+                                    Kaydet
+                                  </button>
+                                  <button
+                                    onClick={handleCancelEditUrun}
+                                    className="px-3 py-1 bg-gray-500 text-white text-xs rounded hover:bg-gray-600"
+                                  >
+                                    İptal
+                                  </button>
+                                </div>
+                              ) : (
+                                <button
+                                  onClick={() => handleEditUrun(urun)}
+                                  className="px-3 py-1 text-blue-600 hover:text-blue-800 text-sm font-medium"
+                                  title="Düzenle"
+                                >
+                                  ✏️
+                                </button>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
                       {/* Toplam Satırı */}
                       <tr className="bg-blue-50 font-bold border-t-2 border-blue-300">
                         <td className="px-4 py-3 text-sm text-gray-900" colSpan="2">TOPLAM</td>

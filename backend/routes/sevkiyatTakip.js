@@ -184,20 +184,35 @@ router.put('/sevkiyat/:id', async (req, res) => {
 // Sevkiyat ürünü güncelle (gelen bilgileri ekle)
 router.put('/urun/:id', async (req, res) => {
   const { id } = req.params;
-  const { gelen_adet, gelen_kg, gelis_tarihi, pis_adet, pis_kg, notlar } = req.body;
+  const {
+    giden_adet,
+    giden_kg,
+    gelen_adet,
+    gelen_kg,
+    gelis_tarihi,
+    pis_adet,
+    pis_kg,
+    problemli_adet,
+    problemli_kg,
+    notlar
+  } = req.body;
 
   try {
     const result = await pool.query(
       `UPDATE sevkiyat_urunler
-       SET gelen_adet = COALESCE($1, gelen_adet),
-           gelen_kg = COALESCE($2, gelen_kg),
-           gelis_tarihi = COALESCE($3, gelis_tarihi),
-           pis_adet = COALESCE($4, pis_adet),
-           pis_kg = COALESCE($5, pis_kg),
-           notlar = COALESCE($6, notlar)
-       WHERE id = $7
+       SET giden_adet = COALESCE($1, giden_adet),
+           giden_kg = COALESCE($2, giden_kg),
+           gelen_adet = COALESCE($3, gelen_adet),
+           gelen_kg = COALESCE($4, gelen_kg),
+           gelis_tarihi = COALESCE($5, gelis_tarihi),
+           pis_adet = COALESCE($6, pis_adet),
+           pis_kg = COALESCE($7, pis_kg),
+           problemli_adet = COALESCE($8, problemli_adet),
+           problemli_kg = COALESCE($9, problemli_kg),
+           notlar = COALESCE($10, notlar)
+       WHERE id = $11
        RETURNING *`,
-      [gelen_adet, gelen_kg, gelis_tarihi, pis_adet, pis_kg, notlar, id]
+      [giden_adet, giden_kg, gelen_adet, gelen_kg, gelis_tarihi, pis_adet, pis_kg, problemli_adet, problemli_kg, notlar, id]
     );
 
     if (result.rows.length === 0) {

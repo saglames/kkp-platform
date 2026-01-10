@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../db');
 
+// Test endpoint
+router.get('/test', (req, res) => {
+  res.json({ message: 'Sevkiyat Takip API çalışıyor!', timestamp: new Date() });
+});
+
 // ===== SEVKİYAT İŞLEMLERİ =====
 
 // Tüm sevkiyatları listele (özet bilgilerle)
@@ -307,6 +312,89 @@ router.get('/odeme-raporu/:sevkiyat_id', async (req, res) => {
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Ödeme raporu hatası:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Sevkiyat sil
+router.delete('/sevkiyat/:id', async (req, res) => {
+  const { id } = req.params;
+  const { neden, yapan } = req.body;
+
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    // Sevkiyat bilgisini al (log için)
+    const sevkiyat = await client.query(
+      'SELECT * FROM temizleme_sevkiyat WHERE id = $1',
+      [id]
+    );
+
+    if (sevkiyat.rows.length === 0) {
+      throw new Error('Sevkiyat bulunamadı');
+    }
+
+    // Ürünleri al (log için)
+    const urunler = await client.query(
+      'SELECT * FROM sevkiyat_urunler WHERE sevkiyat_id = $1',
+      [id]
+    );
+
+    // Log kaydet
+    await client.query(`
+      INSERT INTO temizleme_takip_log (sevkiyat_id, islem_tipi, eski_deger, yapan, aciklama)
+      VALUES ($1, 'sevkiyat_sil', $2, $3, $4)
+    `, [
+      id,
+      JSON.stringify({ sevkiyat: sevkiyat.rows[0], urunler: urunler.rows }),
+      yapan || 'Sistem',
+      neden || 'Silme nedeni belirtilmemiş'
+    ]);
+
+    // Sevkiyatı sil (CASCADE ile ürünler de silinir)
+    await client.query('DELETE FROM temizleme_sevkiyat WHERE id = $1', [id]);
+
+    await client.query('COMMIT');
+    res.json({ message: 'Sevkiyat başarıyla silindi' });
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error('Sevkiyat silme hatası:', error);
+    res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
+  }
+});
+
+// İşlem loglarını getir
+router.get('/logs', async (req, res) => {
+  const { sevkiyat_id, limit = 100 } = req.query;
+
+  try {
+    let query = `
+      SELECT
+        l.*,
+        s.sevkiyat_no,
+        s.irsaliye_no,
+        u.urun_kodu
+      FROM temizleme_takip_log l
+      LEFT JOIN temizleme_sevkiyat s ON l.sevkiyat_id = s.id
+      LEFT JOIN sevkiyat_urunler u ON l.urun_id = u.id
+    `;
+
+    const params = [];
+    if (sevkiyat_id) {
+      query += ' WHERE l.sevkiyat_id = $1';
+      params.push(sevkiyat_id);
+    }
+
+    query += ' ORDER BY l.created_at DESC LIMIT $' + (params.length + 1);
+    params.push(limit);
+
+    const result = await pool.query(query, params);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Log getirme hatası:', error);
     res.status(500).json({ error: error.message });
   }
 });

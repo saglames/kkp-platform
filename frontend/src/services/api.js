@@ -347,6 +347,17 @@ export const sevkiyatTakipAPI = {
   // Raporlar
   getOdemeRaporu: async (sevkiyatId) => (await api.get(`/sevkiyat-takip/odeme-raporu/${sevkiyatId}`)).data,
   getIstatistikler: async () => (await api.get('/sevkiyat-takip/istatistikler')).data,
+
+  // Silme İşlemi
+  deleteSevkiyat: async (id, data) => (await api.delete(`/sevkiyat-takip/sevkiyat/${id}`, { data })).data,
+
+  // Log İşlemleri
+  getLogs: async (sevkiyatId = null, limit = 100) => {
+    const params = {};
+    if (sevkiyatId) params.sevkiyat_id = sevkiyatId;
+    if (limit) params.limit = limit;
+    return (await api.get('/sevkiyat-takip/logs', { params })).data;
+  },
 };
 
 export default api;

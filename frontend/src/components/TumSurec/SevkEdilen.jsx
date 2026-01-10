@@ -4,6 +4,7 @@ import { tumSurecAPI } from '../../services/api';
 const SevkEdilen = () => {
   const [sevkiyatlar, setSevkiyatlar] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
@@ -112,6 +113,11 @@ const SevkEdilen = () => {
     }
   };
 
+  // Arama filtresi
+  const filteredUrunler = sevkiyatlar.filter(urun =>
+    urun.urun_kodu_base.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
@@ -143,6 +149,17 @@ const SevkEdilen = () => {
         </div>
       </div>
 
+      {/* Arama Çubuğu */}
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Ürün kodu ara... (örn: MXJ)"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+        />
+      </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300">
           <thead className="bg-gradient-to-r from-green-600 to-green-700 text-white">
@@ -164,7 +181,7 @@ const SevkEdilen = () => {
                 </td>
               </tr>
             ) : (
-              sevkiyatlar.map((sevk) => (
+              filteredUrunler.map((sevk) => (
                 <tr key={sevk.id} className="border-b hover:bg-gray-50 transition-colors">
                   <td className="px-4 py-3 text-sm border-r">{sevk.tip || 'Joint'}</td>
                   <td className="px-4 py-3 font-medium text-gray-900 text-sm border-r">

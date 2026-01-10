@@ -4,6 +4,7 @@ import { tumSurecAPI } from '../../services/api';
 const TemizlemedenGelen = () => {
   const [urunler, setUrunler] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -151,6 +152,11 @@ const TemizlemedenGelen = () => {
     }
   };
 
+  // Arama filtresi
+  const filteredUrunler = urunler.filter(urun =>
+    urun.urun_kodu.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
@@ -182,6 +188,17 @@ const TemizlemedenGelen = () => {
         </div>
       </div>
 
+      {/* Arama Çubuğu */}
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Ürün kodu ara... (örn: MXJ)"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+        />
+      </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300">
           <thead className="bg-gradient-to-r from-purple-600 to-purple-700 text-white">
@@ -202,7 +219,7 @@ const TemizlemedenGelen = () => {
                 </td>
               </tr>
             ) : (
-              urunler.map((urun) => (
+              filteredUrunler.map((urun) => (
                 <tr key={urun.id} className="border-b hover:bg-purple-50 transition-colors">
                   <td className="px-4 py-4 text-center border-r">
                     <span className={`inline-block px-3 py-1 rounded-full text-lg font-bold ${

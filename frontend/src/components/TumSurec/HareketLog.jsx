@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { tumSurecAPI } from '../../services/api';
+import * as XLSX from 'xlsx';
 
 const HareketLog = () => {
   const [hareketler, setHareketler] = useState([]);
@@ -69,6 +70,49 @@ const HareketLog = () => {
     }
   };
 
+  const handleExportExcel = () => {
+    try {
+      // Excel için veri hazırla
+      const excelData = hareketler.map(hareket => ({
+        'Tarih': new Date(hareket.created_at).toLocaleString('tr-TR'),
+        'Tip': hareket.tip || '-',
+        'Ürün Kodu': hareket.urun_kodu,
+        'İşlem': getIslemText(hareket.islem),
+        'Adet': hareket.adet || '-',
+        'Kg': hareket.kg || '-',
+        'Yapan': hareket.yapan || '-',
+        'Açıklama': hareket.aciklama || '-'
+      }));
+
+      // Workbook oluştur
+      const ws = XLSX.utils.json_to_sheet(excelData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Hareket Logları');
+
+      // Kolon genişliklerini ayarla
+      const colWidths = [
+        { wch: 20 }, // Tarih
+        { wch: 10 }, // Tip
+        { wch: 20 }, // Ürün Kodu
+        { wch: 25 }, // İşlem
+        { wch: 10 }, // Adet
+        { wch: 10 }, // Kg
+        { wch: 15 }, // Yapan
+        { wch: 30 }  // Açıklama
+      ];
+      ws['!cols'] = colWidths;
+
+      // Dosya adı oluştur
+      const fileName = `Hareket_Loglari_${new Date().toISOString().split('T')[0]}.xlsx`;
+
+      // İndir
+      XLSX.writeFile(wb, fileName);
+    } catch (error) {
+      console.error('Excel export hatası:', error);
+      alert('Excel dosyası oluşturulurken hata oluştu!');
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
@@ -95,6 +139,15 @@ const HareketLog = () => {
             <option value={200}>Son 200</option>
             <option value={500}>Son 500</option>
           </select>
+          {hareketler.length > 0 && (
+            <button
+              onClick={handleExportExcel}
+              className="px-6 py-3 bg-green-600 text-white text-lg font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
+            >
+              <span>📥</span>
+              Excel İndir
+            </button>
+          )}
           <button
             onClick={fetchData}
             className="px-6 py-3 bg-blue-500 text-white text-lg font-medium rounded-lg hover:bg-blue-600 transition-colors"

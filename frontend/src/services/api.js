@@ -361,4 +361,22 @@ export const sevkiyatTakipAPI = {
   },
 };
 
+// YARI MAMÜL JOINTLER API
+export const yariMamulJointlerAPI = {
+  getAll: async () => (await api.get('/yari-mamul-jointler')).data,
+  getLogs: async () => (await api.get('/yari-mamul-jointler/log')).data,
+  add: async (data) => (await api.post('/yari-mamul-jointler', data)).data,
+  update: async (id, data) => (await api.put(`/yari-mamul-jointler/${id}`, data)).data,
+  delete: async (id, yapan) => (await api.delete(`/yari-mamul-jointler/${id}`, { data: { yapan } })).data,
+};
+
+// YARI MAMÜL FITTINGSLER API
+export const yariMamulFittingslerAPI = {
+  getAll: async () => (await api.get('/yari-mamul-fittingsler')).data,
+  getLogs: async () => (await api.get('/yari-mamul-fittingsler/log')).data,
+  add: async (data) => (await api.post('/yari-mamul-fittingsler', data)).data,
+  update: async (id, data) => (await api.put(`/yari-mamul-fittingsler/${id}`, data)).data,
+  delete: async (id, yapan) => (await api.delete(`/yari-mamul-fittingsler/${id}`, { data: { yapan } })).data,
+};
+
 export default api;

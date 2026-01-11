@@ -11,6 +11,7 @@ const Navbar = () => {
     { path: '/hatali-urunler', label: 'Hatalı Ürünler', icon: '⚠️' },
     { path: '/tum-surec', label: 'Tüm Süreç', icon: '🔄' },
     { path: '/parti-takip', label: 'Temizleme Parti Takip', icon: '📋' },
+    { path: '/yari-mamul', label: 'Yarı Mamül Joint ve Fittingsler', icon: '🔧' },
     { path: '/urun-recetesi', label: 'Ürün Siparişi İhtiyaç Hesaplama', icon: '📊' },
     { path: '/urun-agirliklari', label: 'Joint & Fittings Ağırlıkları', icon: '⚖️' },
     { path: '/teknik-resimler', label: 'Teknik Resimler', icon: '📁' },

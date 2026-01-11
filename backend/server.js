@@ -41,6 +41,8 @@ const kesimOlculeriRoutes = require('./routes/kesimOlculeri');
 const temizlemeTakipRoutes = require('./routes/temizlemeTakip');
 const sevkiyatTakipRoutes = require('./routes/sevkiyatTakip');
 const partiTakipRoutes = require('./routes/partiTakip');
+const yariMamulJointlerRoutes = require('./routes/yariMamulJointler');
+const yariMamulFittingslerRoutes = require('./routes/yariMamulFittingsler');
 
 app.use('/api/mamul-stok', mamulStokRoutes);
 app.use('/api/kalite-kontrol', kaliteKontrolRoutes);
@@ -55,6 +57,8 @@ app.use('/api/kesim-olculeri', kesimOlculeriRoutes);
 app.use('/api/temizleme-takip', temizlemeTakipRoutes);
 app.use('/api/sevkiyat-takip', sevkiyatTakipRoutes);
 app.use('/api/parti-takip', partiTakipRoutes);
+app.use('/api/yari-mamul-jointler', yariMamulJointlerRoutes);
+app.use('/api/yari-mamul-fittingsler', yariMamulFittingslerRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

@@ -42,6 +42,38 @@ const TapaTab = () => {
     setShowModal(true);
   };
 
+  const handleQuickStockChange = async (item, action) => {
+    const actionText = action === 'add' ? 'eklemek' : 'çıkarmak';
+    const amount = prompt(`${item.name} için kaç adet stok ${actionText} istiyorsunuz?`);
+
+    if (!amount) return; // Kullanıcı iptal etti
+
+    const numAmount = parseInt(amount);
+    if (isNaN(numAmount) || numAmount <= 0) {
+      alert('Lütfen geçerli bir sayı girin!');
+      return;
+    }
+
+    const reason = prompt(`Stok ${action === 'add' ? 'ekleme' : 'azaltma'} nedeni:`);
+    if (!reason) {
+      alert('Lütfen bir neden belirtin!');
+      return;
+    }
+
+    try {
+      await mamulStokAPI.changeTapaStock(item.id, {
+        action: action === 'add' ? 'Eklendi' : 'Çıkarıldı',
+        amount: numAmount,
+        reason: reason
+      });
+      fetchItems();
+      alert(`Stok başarıyla ${action === 'add' ? 'artırıldı' : 'azaltıldı'}!`);
+    } catch (error) {
+      console.error('Stok güncelleme hatası:', error);
+      alert('Stok güncellenirken bir hata oluştu!');
+    }
+  };
+
   const handleModalSubmit = async (data) => {
     try {
       await mamulStokAPI.changeTapaStock(selectedItem.id, data);
@@ -202,7 +234,21 @@ const TapaTab = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
-                  <div className="flex items-center justify-center gap-2">
+                  <div className="flex justify-center gap-2">
+                    <button
+                      onClick={() => handleQuickStockChange(item, 'add')}
+                      className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg text-lg font-bold transition-colors"
+                      title="Stok Artır"
+                    >
+                      +
+                    </button>
+                    <button
+                      onClick={() => handleQuickStockChange(item, 'subtract')}
+                      className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-lg font-bold transition-colors"
+                      title="Stok Azalt"
+                    >
+                      −
+                    </button>
                     <button
                       onClick={() => handleEdit(item)}
                       className="text-blue-600 hover:text-blue-800 text-xl"
@@ -216,13 +262,6 @@ const TapaTab = () => {
                       title="Sil"
                     >
                       🗑️
-                    </button>
-                    <button
-                      onClick={() => handleStockChange(item)}
-                      className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded-lg text-sm font-medium transition-colors"
-                      title="Stok Değiştir"
-                    >
-                      📊
                     </button>
                   </div>
                 </td>

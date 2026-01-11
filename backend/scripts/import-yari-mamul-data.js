@@ -62,22 +62,23 @@ async function importFittingsler() {
   for (const row of jsonData) {
     try {
       await pool.query(
-        `INSERT INTO yari_mamul_fittingsler (urun, adet, kg)
-         VALUES ($1, $2, $3)
-         ON CONFLICT (urun) DO UPDATE
+        `INSERT INTO yari_mamul_fittingsler (ebat_kod, urun_tipi, adet, kg)
+         VALUES ($1, $2, $3, $4)
+         ON CONFLICT (ebat_kod, urun_tipi) DO UPDATE
          SET adet = EXCLUDED.adet,
              kg = EXCLUDED.kg`,
         [
-          row['Ürün'],
+          row['Ebat / Kod']?.toString() || '',
+          row['Ürün Tipi'] || '',
           row['Adet'] || 0,
           row['KG'] || 0
         ]
       );
       successCount++;
-      console.log(`✓ ${row['Ürün']} eklendi`);
+      console.log(`✓ ${row['Ebat / Kod']} - ${row['Ürün Tipi']} eklendi (${row['Adet']} adet, ${row['KG']} kg)`);
     } catch (error) {
       errorCount++;
-      console.error(`✗ ${row['Ürün']} eklenemedi:`, error.message);
+      console.error(`✗ ${row['Ebat / Kod']} - ${row['Ürün Tipi']} eklenemedi:`, error.message);
     }
   }
 

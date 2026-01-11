@@ -6,7 +6,7 @@ const pool = require('../db');
 router.get('/', async (req, res) => {
   try {
     const result = await pool.query(
-      'SELECT * FROM yari_mamul_fittingsler ORDER BY urun ASC'
+      'SELECT * FROM yari_mamul_fittingsler ORDER BY ebat_kod ASC, urun_tipi ASC'
     );
     res.json(result.rows);
   } catch (error) {
@@ -30,10 +30,10 @@ router.get('/log', async (req, res) => {
 
 // POST - Yeni fittings ekle
 router.post('/', async (req, res) => {
-  const { urun, adet, kg, yapan } = req.body;
+  const { ebat_kod, urun_tipi, adet, kg, yapan } = req.body;
 
-  if (!urun || yapan === undefined) {
-    return res.status(400).json({ error: 'Ürün adı ve yapan bilgisi zorunludur' });
+  if (!ebat_kod || !urun_tipi || yapan === undefined) {
+    return res.status(400).json({ error: 'Ebat/Kod, Ürün Tipi ve yapan bilgisi zorunludur' });
   }
 
   const client = await pool.connect();
@@ -42,17 +42,17 @@ router.post('/', async (req, res) => {
 
     // Fittings ekle
     const insertResult = await client.query(
-      `INSERT INTO yari_mamul_fittingsler (urun, adet, kg)
-       VALUES ($1, $2, $3)
+      `INSERT INTO yari_mamul_fittingsler (ebat_kod, urun_tipi, adet, kg)
+       VALUES ($1, $2, $3, $4)
        RETURNING *`,
-      [urun, adet || 0, kg || 0]
+      [ebat_kod, urun_tipi, adet || 0, kg || 0]
     );
 
     // Log ekle
     await client.query(
       `INSERT INTO yari_mamul_fittingsler_log (islem_tipi, yapan, yeni_veri, aciklama)
        VALUES ($1, $2, $3, $4)`,
-      ['ekleme', yapan, JSON.stringify(insertResult.rows[0]), `${urun} ürünü eklendi`]
+      ['ekleme', yapan, JSON.stringify(insertResult.rows[0]), `${ebat_kod} - ${urun_tipi} eklendi`]
     );
 
     await client.query('COMMIT');
@@ -73,7 +73,7 @@ router.post('/', async (req, res) => {
 // PUT - Fittings güncelle
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { urun, adet, kg, yapan } = req.body;
+  const { ebat_kod, urun_tipi, adet, kg, yapan } = req.body;
 
   if (yapan === undefined) {
     return res.status(400).json({ error: 'Yapan bilgisi zorunludur' });
@@ -97,17 +97,17 @@ router.put('/:id', async (req, res) => {
     // Güncelle
     const updateResult = await client.query(
       `UPDATE yari_mamul_fittingsler
-       SET urun = $1, adet = $2, kg = $3
-       WHERE id = $4
+       SET ebat_kod = $1, urun_tipi = $2, adet = $3, kg = $4
+       WHERE id = $5
        RETURNING *`,
-      [urun, adet || 0, kg || 0, id]
+      [ebat_kod, urun_tipi, adet || 0, kg || 0, id]
     );
 
     // Log ekle
     await client.query(
       `INSERT INTO yari_mamul_fittingsler_log (islem_tipi, yapan, eski_veri, yeni_veri, aciklama)
        VALUES ($1, $2, $3, $4, $5)`,
-      ['guncelleme', yapan, JSON.stringify(oldData.rows[0]), JSON.stringify(updateResult.rows[0]), `${urun} ürünü güncellendi`]
+      ['guncelleme', yapan, JSON.stringify(oldData.rows[0]), JSON.stringify(updateResult.rows[0]), `${ebat_kod} - ${urun_tipi} güncellendi`]
     );
 
     await client.query('COMMIT');
@@ -116,7 +116,7 @@ router.put('/:id', async (req, res) => {
     await client.query('ROLLBACK');
     console.error('Fittings güncelleme hatası:', error);
     if (error.code === '23505') {
-      res.status(400).json({ error: 'Bu ürün adı zaten kullanılıyor' });
+      res.status(400).json({ error: 'Bu ürün kombinasyonu zaten kullanılıyor' });
     } else {
       res.status(500).json({ error: 'Fittings güncellenemedi' });
     }
@@ -156,7 +156,7 @@ router.delete('/:id', async (req, res) => {
     await client.query(
       `INSERT INTO yari_mamul_fittingsler_log (islem_tipi, yapan, eski_veri, aciklama)
        VALUES ($1, $2, $3, $4)`,
-      ['silme', yapan, JSON.stringify(oldData.rows[0]), `${oldData.rows[0].urun} ürünü silindi`]
+      ['silme', yapan, JSON.stringify(oldData.rows[0]), `${oldData.rows[0].ebat_kod} - ${oldData.rows[0].urun_tipi} silindi`]
     );
 
     await client.query('COMMIT');

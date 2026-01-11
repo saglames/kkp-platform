@@ -12,7 +12,8 @@ const Fittingsler = () => {
   const [editData, setEditData] = useState({});
   const [addMode, setAddMode] = useState(false);
   const [newItem, setNewItem] = useState({
-    urun: '',
+    ebat_kod: '',
+    urun_tipi: '',
     adet: 0,
     kg: 0
   });
@@ -48,7 +49,8 @@ const Fittingsler = () => {
   const handleEdit = (fittings) => {
     setEditingId(fittings.id);
     setEditData({
-      urun: fittings.urun,
+      ebat_kod: fittings.ebat_kod,
+      urun_tipi: fittings.urun_tipi,
       adet: fittings.adet,
       kg: fittings.kg
     });
@@ -67,8 +69,8 @@ const Fittingsler = () => {
     }
   };
 
-  const handleDelete = async (id, urun) => {
-    if (!window.confirm(`${urun} ürününü silmek istediğinize emin misiniz?`)) return;
+  const handleDelete = async (id, ebat_kod, urun_tipi) => {
+    if (!window.confirm(`${ebat_kod} - ${urun_tipi} ürününü silmek istediğinize emin misiniz?`)) return;
 
     const yapan = localStorage.getItem('hatali_urunler_user_name') || 'Admin';
     try {
@@ -83,8 +85,8 @@ const Fittingsler = () => {
 
   const handleAdd = async () => {
     const yapan = localStorage.getItem('hatali_urunler_user_name') || 'Admin';
-    if (!newItem.urun.trim()) {
-      alert('Ürün adı zorunludur!');
+    if (!newItem.ebat_kod.trim() || !newItem.urun_tipi.trim()) {
+      alert('Ebat/Kod ve Ürün Tipi zorunludur!');
       return;
     }
 
@@ -92,7 +94,7 @@ const Fittingsler = () => {
       await yariMamulFittingslerAPI.add({ ...newItem, yapan });
       alert('Ekleme başarılı!');
       setAddMode(false);
-      setNewItem({ urun: '', adet: 0, kg: 0 });
+      setNewItem({ ebat_kod: '', urun_tipi: '', adet: 0, kg: 0 });
       fetchData();
     } catch (error) {
       console.error('Ekleme hatası:', error);
@@ -122,7 +124,8 @@ const Fittingsler = () => {
   };
 
   const filteredFittingsler = fittingsler.filter(f =>
-    f.urun.toLowerCase().includes(searchTerm.toLowerCase())
+    f.ebat_kod.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+    f.urun_tipi.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const getTotalKg = () => filteredFittingsler.reduce((sum, f) => sum + parseFloat(f.kg || 0), 0);
@@ -145,7 +148,7 @@ const Fittingsler = () => {
         <div className="flex gap-4 mb-4">
           <input
             type="text"
-            placeholder="Ürün ara..."
+            placeholder="Ebat/Kod veya Ürün Tipi ara..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="flex-1 px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -175,12 +178,19 @@ const Fittingsler = () => {
       {addMode && (
         <div className="bg-green-50 border border-green-300 rounded-lg p-4 mb-6">
           <h3 className="text-lg font-bold text-gray-800 mb-4">Yeni Fittings Ekle</h3>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-4 gap-4">
             <input
               type="text"
-              placeholder="Ürün"
-              value={newItem.urun}
-              onChange={(e) => setNewItem({ ...newItem, urun: e.target.value })}
+              placeholder="Ebat / Kod"
+              value={newItem.ebat_kod}
+              onChange={(e) => setNewItem({ ...newItem, ebat_kod: e.target.value })}
+              className="px-3 py-2 border border-gray-300 rounded-lg"
+            />
+            <input
+              type="text"
+              placeholder="Ürün Tipi"
+              value={newItem.urun_tipi}
+              onChange={(e) => setNewItem({ ...newItem, urun_tipi: e.target.value })}
               className="px-3 py-2 border border-gray-300 rounded-lg"
             />
             <input
@@ -209,7 +219,7 @@ const Fittingsler = () => {
             <button
               onClick={() => {
                 setAddMode(false);
-                setNewItem({ urun: '', adet: 0, kg: 0 });
+                setNewItem({ ebat_kod: '', urun_tipi: '', adet: 0, kg: 0 });
               }}
               className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
             >
@@ -224,7 +234,8 @@ const Fittingsler = () => {
         <table className="min-w-full bg-white border border-gray-300">
           <thead className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
             <tr>
-              <th className="px-4 py-4 text-left text-lg font-semibold border-b border-gray-300">Ürün</th>
+              <th className="px-4 py-4 text-left text-lg font-semibold border-b border-gray-300">Ebat / Kod</th>
+              <th className="px-4 py-4 text-left text-lg font-semibold border-b border-gray-300">Ürün Tipi</th>
               <th className="px-4 py-4 text-center text-lg font-semibold border-b border-gray-300">Adet</th>
               <th className="px-4 py-4 text-center text-lg font-semibold border-b border-gray-300">KG</th>
               <th className="px-4 py-4 text-center text-lg font-semibold border-b border-gray-300">İşlemler</th>
@@ -233,7 +244,7 @@ const Fittingsler = () => {
           <tbody>
             {filteredFittingsler.length === 0 ? (
               <tr>
-                <td colSpan="4" className="px-4 py-8 text-center text-gray-500 text-lg">
+                <td colSpan="5" className="px-4 py-8 text-center text-gray-500 text-lg">
                   Ürün bulunamadı
                 </td>
               </tr>
@@ -244,12 +255,24 @@ const Fittingsler = () => {
                     {editingId === fittings.id ? (
                       <input
                         type="text"
-                        value={editData.urun}
-                        onChange={(e) => setEditData({ ...editData, urun: e.target.value })}
+                        value={editData.ebat_kod}
+                        onChange={(e) => setEditData({ ...editData, ebat_kod: e.target.value })}
                         className="w-full px-2 py-1 border border-gray-300 rounded"
                       />
                     ) : (
-                      fittings.urun
+                      fittings.ebat_kod
+                    )}
+                  </td>
+                  <td className="px-4 py-4 text-gray-700 text-lg border-r border-gray-200">
+                    {editingId === fittings.id ? (
+                      <input
+                        type="text"
+                        value={editData.urun_tipi}
+                        onChange={(e) => setEditData({ ...editData, urun_tipi: e.target.value })}
+                        className="w-full px-2 py-1 border border-gray-300 rounded"
+                      />
+                    ) : (
+                      fittings.urun_tipi
                     )}
                   </td>
                   <td className="px-4 py-4 text-center text-lg border-r border-gray-200">
@@ -306,7 +329,7 @@ const Fittingsler = () => {
                           Düzenle
                         </button>
                         <button
-                          onClick={() => handleDelete(fittings.id, fittings.urun)}
+                          onClick={() => handleDelete(fittings.id, fittings.ebat_kod, fittings.urun_tipi)}
                           className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg font-medium transition-colors"
                         >
                           Sil
@@ -320,7 +343,7 @@ const Fittingsler = () => {
             {/* Toplam Satırı */}
             {filteredFittingsler.length > 0 && (
               <tr className="bg-blue-100 font-bold">
-                <td className="px-4 py-4 text-lg">TOPLAM</td>
+                <td colSpan="2" className="px-4 py-4 text-lg">TOPLAM</td>
                 <td className="px-4 py-4 text-center text-lg">{getTotalAdet()}</td>
                 <td className="px-4 py-4 text-center text-lg">{getTotalKg().toFixed(3)}</td>
                 <td></td>
